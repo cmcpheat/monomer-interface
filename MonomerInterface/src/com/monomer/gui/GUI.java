@@ -38,7 +38,9 @@ public class GUI implements ActionListener {
 	private JLabel batchLabel;
 	private JLabel batchValidationLabel;
 	private JLabel machineLabel;
+	private JLabel machineValidationLabel;
 	private JLabel bubbleLabel;
+	private JLabel bubbleValidaitonLabel;
 	private JTextField batchText;
 	private JComboBox<String> machineText;
 	private JTextField bubbleText;
@@ -56,7 +58,7 @@ public class GUI implements ActionListener {
 		// Frame set up
 		mainFrame = new JFrame();
 		mainFrame.setResizable(false); // prevents resizing
-		Dimension frameSize = new Dimension(1000, 1000);
+		Dimension frameSize = new Dimension(1000, 700);
 		mainFrame.setPreferredSize(frameSize);
 		ImageIcon icon = new ImageIcon("/icon2.png");
 		mainFrame.setIconImage(icon.getImage());
@@ -127,7 +129,7 @@ public class GUI implements ActionListener {
 		// form panel
 		formPanel = new JPanel(new GridBagLayout());
 		formPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
-		formPanel.setBorder(BorderFactory.createEmptyBorder(100, 10, 10, 10));
+		formPanel.setBorder(BorderFactory.createEmptyBorder(80, 10, 10, 10));
 		
 		// batch ID label
 		batchLabel = new JLabel("Batch ID");
@@ -140,13 +142,14 @@ public class GUI implements ActionListener {
 		formPanel.add(batchLabel, c2);
 		
 		// batch ID validation label // hidden by default
-		batchValidationLabel = new JLabel("test", JLabel.CENTER);
+		batchValidationLabel = new JLabel(" ", JLabel.CENTER);
 		batchValidationLabel.setForeground(Color.red);
-		batchValidationLabel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		batchValidationLabel.setFont (batchValidationLabel.getFont ().deriveFont (11.0f));
 		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 1;
+		c2.ipady = 10;
 		c2.gridx = 1;
 		c2.gridy = 1;
+		c2.insets = new Insets(0,20,0,20);	
 		formPanel.add(batchValidationLabel, c2);
 		
 		// machine no. label
@@ -156,8 +159,18 @@ public class GUI implements ActionListener {
 		c2.weightx = 0.5;
 		c2.gridx = 0;
 		c2.gridy = 2;
-		c2.insets = new Insets(0,20,20,20);
+		c2.insets = new Insets(20,20,0,20);
 		formPanel.add(machineLabel, c2);
+		
+		// machine no. validation label // hidden by default
+		machineValidationLabel = new JLabel("test2", JLabel.CENTER);
+		machineValidationLabel.setForeground(Color.red);
+		c2.fill = GridBagConstraints.HORIZONTAL;
+		c2.ipady = 1;
+		c2.gridx = 1;
+		c2.gridy = 3;
+		c2.insets = new Insets(0,20,0,20);	
+		formPanel.add(machineValidationLabel, c2);
 		 
 		// bubble count label
 		bubbleLabel = new JLabel("Bubble Count");
@@ -166,8 +179,18 @@ public class GUI implements ActionListener {
 		c2.weightx = 0.5;
 		c2.gridx = 0;
 		c2.gridy = 4;
-		c2.insets = new Insets(20,20,20,20);
+		c2.insets = new Insets(20,20,0,20);
 		formPanel.add(bubbleLabel, c2);
+		
+		// bubble count validation label // hidden by default
+		bubbleValidaitonLabel = new JLabel("test3", JLabel.CENTER);
+		bubbleValidaitonLabel.setForeground(Color.red);
+		c2.fill = GridBagConstraints.HORIZONTAL;
+		c2.ipady = 1;
+		c2.gridx = 1;
+		c2.gridy = 5;
+		c2.insets = new Insets(0,20,0,20);	
+		formPanel.add(bubbleValidaitonLabel, c2);
 		
 //		// 'batch id' form validation
 //		NumberFormat format = NumberFormat.getIntegerInstance();
@@ -191,12 +214,11 @@ public class GUI implements ActionListener {
 		c2.weightx = 0.5;
 		c2.gridx = 1;
 		c2.gridy = 0;
-		c2.insets = new Insets(20,20,0,20);		
+		c2.insets = new Insets(20,20,5,20);		
 		formPanel.add(batchText, c2);
 		
 		// machine no. drop down
 		machineText = new JComboBox<String>();
-		
 		machineText.setBorder(BorderFactory.createCompoundBorder(
 		machineText.getBorder(), 
         BorderFactory.createEmptyBorder(10, 10, 10, 0)));
@@ -207,10 +229,10 @@ public class GUI implements ActionListener {
 		c2.weightx = 0.5;
 		c2.gridx = 1;
 		c2.gridy = 2;
-		c2.insets = new Insets(0,20,0,20);
+		c2.insets = new Insets(10,20,5,20);
 		formPanel.add(machineText, c2);
 	    machineText.addItem("Please select...");
-	    machineText.addItem("1");
+	    machineText.addItem("1");c2.insets = new Insets(20,20,5,20);	
 		machineText.addItem("2");
 		machineText.addItem("3");
 		 
@@ -229,12 +251,6 @@ public class GUI implements ActionListener {
 			
 		});
 
-		
-		
-		
-		
-		
-		
 		bubbleText.setBorder(BorderFactory.createCompoundBorder(
 		bubbleText.getBorder(), 
         BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -243,7 +259,7 @@ public class GUI implements ActionListener {
 		c2.weightx = 1.5;
 		c2.gridx = 1;
 		c2.gridy = 4;
-		c2.insets = new Insets(20,20,20,20);
+		c2.insets = new Insets(20,20,5,20);	
 		formPanel.add(bubbleText, c2);
  
 		// clear button
@@ -338,12 +354,14 @@ public class GUI implements ActionListener {
 //			bubbleCount = Integer.parseInt(String.valueOf(bubbleText.getText()));
 			// validateForm(batchId);
 			System.out.println(batchId);
+			batchValidationLabel.setText("Invalid, enter a number between 1-999999");
 		}
 		
 		// handle 'clear' button click
 		else if (e.getSource() == clearBtn) {
 			System.out.println("Clear pressed");
 			batchText.setText("");
+			batchValidationLabel.setText(" ");
 			machineText.setSelectedIndex(0);
 			bubbleText.setText("");
 		}
