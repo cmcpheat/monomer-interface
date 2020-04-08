@@ -248,7 +248,6 @@ public class GUI implements ActionListener {
 					batchValidationLabel.setText("Invalid Batch ID, enter a number between 1-999999");
 				}
 			}
-			
 		});
 
 		bubbleText.setBorder(BorderFactory.createCompoundBorder(
