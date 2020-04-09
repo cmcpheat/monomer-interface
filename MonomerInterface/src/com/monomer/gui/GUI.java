@@ -1,5 +1,9 @@
 package com.monomer.gui;
 
+import com.monomer.json.JSONObject;
+
+import com.monomer.data.DataObject;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,6 +14,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -52,6 +65,11 @@ public class GUI implements ActionListener  {
 	private boolean isActive3 = false;
 	private boolean batchIsValid = false;
 	private boolean bubbleIsValid = false;
+	private int batchId;
+	private int machineNumber;
+	private int bubbleCount;
+	private String dateTime;
+	private DataObject data;
 
 	// GUI constructor 
 	public GUI() {
@@ -385,26 +403,61 @@ public class GUI implements ActionListener  {
 			batchIdValueString = batchText.getText();
 			machineNumValueString = (String) machineText.getSelectedItem();
 			bubbleCountValueString = bubbleText.getText();
+			dateTime = getDateTimeStamp(); // gets date/time stamp when submit is pressed
+					
+			boolean bId = validateBatchId(batchIsValid);
+			boolean mNum = validateMachineNum(machineText.getSelectedIndex());
+			boolean bCount = validateBubbleCount(bubbleIsValid);
 			
-			System.out.println("Batch ID: " + batchIdValueString);
-			System.out.println("Machine Number: " + machineNumValueString);	
-			System.out.println("Bubble Count: " + bubbleCountValueString);	
-			
-			validateBatchId(batchIsValid);
-			validateMachineNum(machineText.getSelectedIndex());
-			validateBubbleCount(bubbleIsValid);
-			
-			showSubmitMessage();
+			// check if form fields are valid then do stuff...
+			if (bId == true && mNum == true && bCount == true) {
+				batchId = Integer.parseInt(batchIdValueString);
+				machineNumber = Integer.parseInt(machineNumValueString);
+				bubbleCount = Integer.parseInt(bubbleCountValueString);
+				
+				// create JSON for form data and add contents 
+//				JSONObject data = new JSONObject();
+//				data.put("batch_id", batchId);
+//				data.put("machine_number", machineNumber);
+//				data.put("bubble_count", bubbleCount);
+//				data.put("date_time", dateTime);
+				
+				DataObject dataObj = new DataObject();
+				
+				dataObj.createDataObject(batchId, machineNumber, bubbleCount, dateTime);
+				
+//				dataObj.put("batch_id", batchId);
+//				dataObj.put("machine_number", machineNumber);
+//				dataObj.put("bubble_count", bubbleCount);
+//				dataObj.put("date_time", dateTime);
+				
+				// sendData(dataObj);				
+				showSubmitMessage();
+				clearForm();
+				System.out.println("here");
+				System.out.println("next:   " + dataObj);
+	
+				ArrayList<Integer> batches = new ArrayList<Integer>();
+				ArrayList<Integer> machines = new ArrayList<Integer>();
+				ArrayList<Integer> bubbles = new ArrayList<Integer>();
+				ArrayList<String> dates = new ArrayList<String>();
+				
+				batches.add(batchId);
+				machines.add(machineNumber);
+				bubbles.add(bubbleCount);
+				dates.add(dateTime);
+				
+//				System.out.println("batch: " + batches.get(0));
+//				System.out.println("machine: " + machines.get(0));
+//				System.out.println("bubble: " + bubbles.get(0));
+//				System.out.println("date: " + dates.get(0));
+			}
 		}
 		
 		// handle 'clear' button click
 		else if (e.getSource() == clearBtn) {
-			batchText.setText("");
-			batchValidationLabel.setText(" ");
-			machineText.setSelectedIndex(0);
-			machineValidationLabel.setText(" ");
-			bubbleText.setText("");
-			bubbleValidationLabel.setText(" ");
+			clearForm();
+			System.out.println("USER HAS CLEARED FORM");
 		}
 	}
 
@@ -461,6 +514,23 @@ public class GUI implements ActionListener  {
 			submitMessageLabel.setText("There has been an error.");
 		}
 	}
-}
+	
+	public void clearForm() {
+		batchText.setText("");
+		batchValidationLabel.setText(" ");
+		machineText.setSelectedIndex(0);
+		machineValidationLabel.setText(" ");
+		bubbleText.setText("");
+		bubbleValidationLabel.setText(" ");
+	}
+	
+	public String getDateTimeStamp() {
+		final LocalDateTime currentDateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String datetime = currentDateTime.format(formatter);
+		// System.out.println("datetime: " + datetime);
+		return datetime;
+	}
+}	
 	
 
