@@ -7,20 +7,19 @@ public class Theme {
 	
 	private static String theme = "Nimbus";
 	
-	// Sets theme to Nimbus
-	public static void setTheme() {
+	// sets GUI theme to 'nimbus'
+	public void setTheme() {
 		try { 
 	    	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	    		if (theme.equals(info.getName())) {
 	    			UIManager.setLookAndFeel(info.getClassName());
-	    			//UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	    			 break;
+	    			break;
 	    		}
 	    	}
 	    }
 
 	    catch (Exception e) { 
-	        System.out.println("Look and Feel not set"); 
+	        System.out.println("There has been an error setting Nimbus theme. Default theme set."); 
 	    }
 	}
 }
