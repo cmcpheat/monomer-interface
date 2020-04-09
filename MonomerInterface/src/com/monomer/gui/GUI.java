@@ -1,8 +1,8 @@
 package com.monomer.gui;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,22 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.text.NumberFormat;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.text.NumberFormatter;
+import javax.swing.Timer;
 
 public class GUI implements ActionListener  {
 	
@@ -140,6 +135,7 @@ public class GUI implements ActionListener  {
 		// batch ID label
 		batchLabel = new JLabel("Batch ID");
 		c2.fill = GridBagConstraints.HORIZONTAL;
+		batchLabel.setFont (batchLabel.getFont ().deriveFont (batchLabel.getFont().getStyle() | Font.BOLD));
 		c2.ipady = 40;      //make this component tall
 		c2.weightx = 0.5;
 		c2.gridx = 0;
@@ -160,12 +156,13 @@ public class GUI implements ActionListener  {
 		
 		// machine no. label
 		machineLabel = new JLabel("Machine Number");
+		machineLabel.setFont (machineLabel.getFont ().deriveFont (machineLabel.getFont().getStyle() | Font.BOLD));
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.ipady = 40;
 		c2.weightx = 0.5;
 		c2.gridx = 0;
 		c2.gridy = 2;
-		c2.insets = new Insets(20,20,0,20);
+		c2.insets = new Insets(20,20,15,20);
 		formPanel.add(machineLabel, c2);
 		
 		// machine no. validation label // hidden by default
@@ -181,6 +178,7 @@ public class GUI implements ActionListener  {
 		 
 		// bubble count label
 		bubbleLabel = new JLabel("Bubble Count");
+		bubbleLabel.setFont (bubbleLabel.getFont ().deriveFont (bubbleLabel.getFont().getStyle() | Font.BOLD));
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.ipady = 40;
 		c2.weightx = 0.5;
@@ -228,6 +226,7 @@ public class GUI implements ActionListener  {
 		batchText.setBorder(BorderFactory.createCompoundBorder(
 		batchText.getBorder(), 
         BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+		batchText.setFont (batchText.getFont ().deriveFont (12.0f));
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.ipady = 20;
 		c2.weightx = 0.5;
@@ -236,24 +235,22 @@ public class GUI implements ActionListener  {
 		c2.insets = new Insets(20,20,5,20);		
 		formPanel.add(batchText, c2);
 		
-		
-		
 		// machine no. drop down
 		machineText = new JComboBox<String>();     
 		machineText.setBorder(BorderFactory.createCompoundBorder(
 		machineText.getBorder(), 
         BorderFactory.createEmptyBorder(10, 10, 10, 0)));
-		machineText.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+		machineText.setFont (machineText.getFont ().deriveFont (12.0f));
 		machineText.setBackground(Color.white);
 		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 40;
+		c2.ipady = 30;
 		c2.weightx = 0.5;
 		c2.gridx = 1;
 		c2.gridy = 2;
 		c2.insets = new Insets(10,20,5,20);
 		formPanel.add(machineText, c2);
 	    machineText.addItem("Please select...");
-	    machineText.addItem("1");c2.insets = new Insets(20,20,5,20);	
+	    machineText.addItem("1");c2.insets = new Insets(10,20,10,20);	
 		machineText.addItem("2");
 		machineText.addItem("3");
 		 
@@ -285,6 +282,7 @@ public class GUI implements ActionListener  {
 		bubbleText.setBorder(BorderFactory.createCompoundBorder(
 		bubbleText.getBorder(), 
         BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+		bubbleText.setFont (bubbleText.getFont ().deriveFont (12.0f));
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.ipady = 20;
 		c2.weightx = 1.5;
@@ -410,9 +408,10 @@ public class GUI implements ActionListener  {
 		}
 	}
 
+	// checks if 'batch ID' is empty and in correct number range
 	public boolean validateBatchId(boolean batch) {
 		if (batch == false || batchText.getText().equals("")) {
-			batchValidationLabel.setText("Enter a number between 000001 - 999999");
+			batchValidationLabel.setText("Enter a number between 1 - 999999");
 			return false;
 		}
 		else {
@@ -421,6 +420,7 @@ public class GUI implements ActionListener  {
 		}
 	}	
 		
+	// checks if 'machine number' is on default selection
 	public boolean validateMachineNum(int machine) {
 		if (machine == 0) {
 			machineValidationLabel.setText("Please select an option");
@@ -432,6 +432,7 @@ public class GUI implements ActionListener  {
 		}
 	}
 	
+	// checks if 'bubble count' is empty and in correct number range
 	public boolean validateBubbleCount(boolean bubble) {
 		if (bubble == false || bubbleText.getText().equals("")) {
 			bubbleValidationLabel.setText("Enter a number between 1 - 600");
@@ -443,28 +444,22 @@ public class GUI implements ActionListener  {
 		}
 	}
 	
+	// shows data submitted message, disappears after 5 seconds
 	public void showSubmitMessage () {
-		
 		submitMessageLabel.setText("The data has been submitted successfully.");
-		
-		int delay = 10000;
-		
-		ActionListener timeDelay = new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				submitMessageLabel.setText(" "); 
-			}
-		};
-		
-		new javax.swing.Timer(delay, timeDelay).start();
-			
-//		submitMessageLabel.setText("The data has been submitted successfully.");
-//		
-//		try {
-//			Thread.sleep(4000);
-//			submitMessageLabel.setText(" ");
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			int delay = 5000;
+			Timer timer = new Timer(delay, new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					submitMessageLabel.setText(" "); 
+				}	
+			});
+			timer.setRepeats(false);
+			timer.start();
+		}
+		catch (Exception e1) {
+			submitMessageLabel.setText("There has been an error.");
+		}
 	}
 }
 	
