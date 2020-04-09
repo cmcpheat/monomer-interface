@@ -1,9 +1,5 @@
 package com.monomer.gui;
 
-import com.monomer.json.JSONObject;
-
-import com.monomer.data.DataObject;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,15 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -69,7 +59,6 @@ public class GUI implements ActionListener  {
 	private int machineNumber;
 	private int bubbleCount;
 	private String dateTime;
-	private DataObject data;
 
 	// GUI constructor 
 	public GUI() {
@@ -422,20 +411,12 @@ public class GUI implements ActionListener  {
 //				data.put("bubble_count", bubbleCount);
 //				data.put("date_time", dateTime);
 				
-				DataObject dataObj = new DataObject();
 				
-				dataObj.createDataObject(batchId, machineNumber, bubbleCount, dateTime);
-				
-//				dataObj.put("batch_id", batchId);
-//				dataObj.put("machine_number", machineNumber);
-//				dataObj.put("bubble_count", bubbleCount);
-//				dataObj.put("date_time", dateTime);
 				
 				// sendData(dataObj);				
 				showSubmitMessage();
 				clearForm();
 				System.out.println("here");
-				System.out.println("next:   " + dataObj);
 	
 				ArrayList<Integer> batches = new ArrayList<Integer>();
 				ArrayList<Integer> machines = new ArrayList<Integer>();
