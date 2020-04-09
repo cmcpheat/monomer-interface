@@ -45,19 +45,18 @@ public class GUI implements ActionListener  {
 	private JLabel machineValidationLabel;
 	private JLabel bubbleLabel;
 	private JLabel bubbleValidationLabel;
+	private JLabel submitMessageLabel;
 	private JTextField batchText;
 	private JComboBox<String> machineText;
 	private JTextField bubbleText;
 	private String batchIdValueString;
 	private String machineNumValueString;
 	private String bubbleCountValueString;
-	private int batchId;
-	private int machineNum;
-	private int bubbleCount;
 	private boolean isActive1 = false;
 	private boolean isActive2 = false;
 	private boolean isActive3 = false;
-	// boolean selectionAllowed = true;
+	private boolean batchIsValid = false;
+	private boolean bubbleIsValid = false;
 
 	// GUI constructor 
 	public GUI() {
@@ -170,8 +169,9 @@ public class GUI implements ActionListener  {
 		formPanel.add(machineLabel, c2);
 		
 		// machine no. validation label // hidden by default
-		machineValidationLabel = new JLabel("test2", JLabel.CENTER);
+		machineValidationLabel = new JLabel(" ", JLabel.CENTER);
 		machineValidationLabel.setForeground(Color.red);
+		machineValidationLabel.setFont (batchValidationLabel.getFont ().deriveFont (11.0f));
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.ipady = 1;
 		c2.gridx = 1;
@@ -190,8 +190,9 @@ public class GUI implements ActionListener  {
 		formPanel.add(bubbleLabel, c2);
 		
 		// bubble count validation label // hidden by default
-		bubbleValidationLabel = new JLabel("test3", JLabel.CENTER);
+		bubbleValidationLabel = new JLabel(" ", JLabel.CENTER);
 		bubbleValidationLabel.setForeground(Color.red);
+		bubbleValidationLabel.setFont (bubbleValidationLabel.getFont ().deriveFont (11.0f));
 		c2.fill = GridBagConstraints.HORIZONTAL;
 		c2.ipady = 1;
 		c2.gridx = 1;
@@ -201,27 +202,26 @@ public class GUI implements ActionListener  {
 	
 		// batch ID text input
 		batchText = new JTextField("", 20);
-		// validates number between 000001 - 999999
+		// validates number between 000001 - 999999 and sets boolean to true/false
 		batchText.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				String str = batchText.getText();
 				 try 
 				 { 
-		            Integer.parseInt(str); 
-		            if (str.length() != 6) {
-						submitBtn.setEnabled(false);
-						batchValidationLabel.setText("Must be number between 000001 - 999999");
+		            Integer.parseInt(str);
+		            int ii = Integer.parseInt(str);
+		            if (ii < 1 || ii > 999999) {
+		            	batchIsValid = false;
 					}
 		            else {
-		            	submitBtn.setEnabled(true);
+		            	batchIsValid = true;
 		            	batchValidationLabel.setText(" ");
 		            }
 		        }  
 		        catch (NumberFormatException e1)  
 		        { 
-		            submitBtn.setEnabled(false);
-		            batchValidationLabel.setText("Must be number between 000001 - 999999");
+		        	batchIsValid = false;
 		        } 
 			}
 		});
@@ -239,20 +239,7 @@ public class GUI implements ActionListener  {
 		
 		
 		// machine no. drop down
-		machineText = new JComboBox<String>();
-		// validates number between 000001 - 999999
-//		machineText.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouse(MouseEvent e) {
-//				String str = String.valueOf(machineText.getSelectedItem());
-//				if (str == "Please select") {
-//							// submitBtn.setEnabled(false);
-//							machineValidationLabel.setText("Required");
-//				}
-//	            else {
-//	            	// submitBtn.setEnabled(true);
-//	            	machineValidationLabel.setText(" ");
-//	            }	       
+		machineText = new JComboBox<String>();     
 		machineText.setBorder(BorderFactory.createCompoundBorder(
 		machineText.getBorder(), 
         BorderFactory.createEmptyBorder(10, 10, 10, 0)));
@@ -272,28 +259,26 @@ public class GUI implements ActionListener  {
 		 
 		// bubble count text input
 		bubbleText = new JTextField("");
-		// validates number between 0-600
+		// validates number between 0-600 and sets boolean to true/false
 		bubbleText.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				String str = bubbleText.getText();
-				int len = str.length();
 				 try 
-			        { 
-			            Integer.parseInt(str); 
-			            if (len > 3 || len < 1) {
-							submitBtn.setEnabled(false);
-							bubbleValidationLabel.setText("Must be number between 0 - 600");
-						}
-			            else {
-			            	submitBtn.setEnabled(true);
-			            	bubbleValidationLabel.setText(" ");
-			            }
-			        }  
+				 { 
+		            Integer.parseInt(str);
+		            int i = Integer.parseInt(str);
+		            if (i < 1 || i > 600) {
+		            	bubbleIsValid = false;
+					}
+		            else {
+		            	bubbleIsValid = true;
+		            	bubbleValidationLabel.setText(" ");
+		            }
+		        }  
 		        catch (NumberFormatException e1)  
 		        { 
-		            submitBtn.setEnabled(false);
-		            bubbleValidationLabel.setText("Must be number between 0 - 600");
+		        	bubbleIsValid = false;
 		        } 
 			}
 		});
@@ -331,12 +316,23 @@ public class GUI implements ActionListener  {
 		c2.gridy = 6;
 		c2.insets = new Insets(20,20,20,20);
 		formPanel.add(submitBtn, c2);
+		
+		// submitted message label (bottom of form)
+		submitMessageLabel = new JLabel(" ");
+		submitMessageLabel.setForeground(Color.red);
+		submitMessageLabel.setFont (bubbleValidationLabel.getFont ().deriveFont (12.0f));
+		c2.fill = GridBagConstraints.CENTER;
+		c2.ipady = 20;      // make this component tall
+		c2.gridwidth = 3;
+		c2.gridx = 0;
+		c2.gridy = 7;
+		c2.insets = new Insets(0,20,20,20);
+		formPanel.add(submitMessageLabel, c2);
 
 		// add form to Create a Record tab
 		createRecordTab.add(formPanel);		
 		
 		// GUI initialisation
-		submitBtn.setEnabled(false); // submit button not clickable by default
 		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
 		mainFrame.setTitle("Monomer Data");
 		mainFrame.pack();
@@ -350,12 +346,10 @@ public class GUI implements ActionListener  {
 		if (e.getSource() == machineOneBtn)
 		{
 			if (isActive1 == false) {
-				System.out.println("Machine 1 active");
 				machineOneBtn.setBackground(Color.gray);
 				isActive1 = true;
 			}	
 			else if (isActive1 == true) {
-				System.out.println("Machine 1 is NOT active");
 				machineOneBtn.setBackground(new JButton().getBackground());
 				isActive1 = false;
 			}
@@ -365,12 +359,10 @@ public class GUI implements ActionListener  {
 		if (e.getSource() == machineTwoBtn)
 		{
 			if (isActive2 == false) {
-				System.out.println("Machine 2 active");
 				machineTwoBtn.setBackground(Color.gray);
 				isActive2 = true;
 			}	
 			else if (isActive2 == true) {
-				System.out.println("Machine 2 is NOT active");
 				machineTwoBtn.setBackground(new JButton().getBackground());
 				isActive2 = false;
 			}
@@ -380,12 +372,10 @@ public class GUI implements ActionListener  {
 		if (e.getSource() == machineThreeBtn)
 		{
 			if (isActive3 == false) {
-				System.out.println("Machine 3 active");
 				machineThreeBtn.setBackground(Color.gray);
 				isActive3 = true;
 			}	
 			else if (isActive3 == true) {
-				System.out.println("Machine 3 is NOT active");
 				machineThreeBtn.setBackground(new JButton().getBackground());
 				isActive3 = false;
 			}
@@ -394,46 +384,88 @@ public class GUI implements ActionListener  {
 		// handle 'submit' button click
 		else if (e.getSource() == submitBtn)
 		{
-			System.out.println("Submit pressed");
-			
 			batchIdValueString = batchText.getText();
 			machineNumValueString = (String) machineText.getSelectedItem();
 			bubbleCountValueString = bubbleText.getText();
 			
-			// batchId = Integer.parseInt(String.valueOf(batchText.getText()));
-//			machineNum = Integer.parseInt(String.valueOf(machineText.getSelectedItem()));
-//			bubbleCount = Integer.parseInt(String.valueOf(bubbleText.getText()));
-			// validateForm(batchId);
-			System.out.println(batchIdValueString);
-			System.out.println(machineNumValueString);
-			System.out.println(bubbleCountValueString);
-			// batchValidationLabel.setText("Invalid, enter a number between 1-999999");
+			System.out.println("Batch ID: " + batchIdValueString);
+			System.out.println("Machine Number: " + machineNumValueString);	
+			System.out.println("Bubble Count: " + bubbleCountValueString);	
+			
+			validateBatchId(batchIsValid);
+			validateMachineNum(machineText.getSelectedIndex());
+			validateBubbleCount(bubbleIsValid);
+			
+			showSubmitMessage();
 		}
 		
 		// handle 'clear' button click
 		else if (e.getSource() == clearBtn) {
-			submitBtn.setEnabled(false);
-			System.out.println("Clear pressed");
 			batchText.setText("");
 			batchValidationLabel.setText(" ");
 			machineText.setSelectedIndex(0);
+			machineValidationLabel.setText(" ");
 			bubbleText.setText("");
+			bubbleValidationLabel.setText(" ");
 		}
 	}
 
-	public void validateNumberFormat(int batch) {
-		System.out.println(batch);
-		if (batch > 0 && batch <= 999999) {
-			System.out.println("batch between 1-999999");
-		} else {
-			System.out.println("batch IS NOT between 1-999999");
+	public boolean validateBatchId(boolean batch) {
+		if (batch == false || batchText.getText().equals("")) {
+			batchValidationLabel.setText("Enter a number between 000001 - 999999");
+			return false;
 		}
-//		System.out.println(bubble);
-//		System.out.println(machine);
+		else {
+			batchValidationLabel.setText(" ");
+			return true;
+		}
+	}	
 		
+	public boolean validateMachineNum(int machine) {
+		if (machine == 0) {
+			machineValidationLabel.setText("Please select an option");
+			return false;
+		}
+		else {
+			machineValidationLabel.setText(" ");
+			return true;
+		}
 	}
 	
-//	public void validateEmptyField(String batch, String machine, String bubble) {
-//		if 
-//	}
+	public boolean validateBubbleCount(boolean bubble) {
+		if (bubble == false || bubbleText.getText().equals("")) {
+			bubbleValidationLabel.setText("Enter a number between 1 - 600");
+			return false;
+		}
+		else {
+			bubbleValidationLabel.setText(" ");
+			return true;
+		}
+	}
+	
+	public void showSubmitMessage () {
+		
+		submitMessageLabel.setText("The data has been submitted successfully.");
+		
+		int delay = 10000;
+		
+		ActionListener timeDelay = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				submitMessageLabel.setText(" "); 
+			}
+		};
+		
+		new javax.swing.Timer(delay, timeDelay).start();
+			
+//		submitMessageLabel.setText("The data has been submitted successfully.");
+//		
+//		try {
+//			Thread.sleep(4000);
+//			submitMessageLabel.setText(" ");
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+	}
 }
+	
+
