@@ -1,5 +1,7 @@
 package com.monomer.gui;
 
+import com.monomer.data.DataObject;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -272,7 +274,7 @@ public class GUI implements ActionListener  {
 				 { 
 		            Integer.parseInt(str);
 		            int i = Integer.parseInt(str);
-		            if (i < 1 || i > 600) {
+		            if (i < 0 || i > 600) {
 		            	bubbleIsValid = false;
 					}
 		            else {
@@ -388,30 +390,33 @@ public class GUI implements ActionListener  {
 		
 		// handle 'submit' button click
 		else if (e.getSource() == submitBtn)
-		{
-			batchIdValueString = batchText.getText();
-			machineNumValueString = (String) machineText.getSelectedItem();
-			bubbleCountValueString = bubbleText.getText();
-			dateTime = getDateTimeStamp(); // gets date/time stamp when submit is pressed
-					
+		{	
 			boolean bId = validateBatchId(batchIsValid);
 			boolean mNum = validateMachineNum(machineText.getSelectedIndex());
 			boolean bCount = validateBubbleCount(bubbleIsValid);
 			
 			// check if form fields are valid then do stuff...
 			if (bId == true && mNum == true && bCount == true) {
-				batchId = Integer.parseInt(batchIdValueString);
-				machineNumber = Integer.parseInt(machineNumValueString);
-				bubbleCount = Integer.parseInt(bubbleCountValueString);
 				
+				DataObject data = new DataObject();
+				
+				data.setBatchId(batchText.getText());
+				data.setMachineNumber((String) machineText.getSelectedItem());
+				data.setBubbleCount(bubbleText.getText());
+				String currentDateTime = data.getCurrentDateTimeStamp();
+				data.setDateTime(currentDateTime);
+				
+				System.out.println("batch test: " + data.getBatchId());
+				System.out.println("machine test: " + data.getMachineNumber());
+				System.out.println("bubble test: " + data.getBubbleCount());
+				System.out.println("date test: " + data.getDateTime());
+			
 				// create JSON for form data and add contents 
 //				JSONObject data = new JSONObject();
 //				data.put("batch_id", batchId);
 //				data.put("machine_number", machineNumber);
 //				data.put("bubble_count", bubbleCount);
 //				data.put("date_time", dateTime);
-				
-				
 				
 				// sendData(dataObj);				
 				showSubmitMessage();
@@ -503,14 +508,6 @@ public class GUI implements ActionListener  {
 		machineValidationLabel.setText(" ");
 		bubbleText.setText("");
 		bubbleValidationLabel.setText(" ");
-	}
-	
-	public String getDateTimeStamp() {
-		final LocalDateTime currentDateTime = LocalDateTime.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String datetime = currentDateTime.format(formatter);
-		// System.out.println("datetime: " + datetime);
-		return datetime;
 	}
 }	
 	
