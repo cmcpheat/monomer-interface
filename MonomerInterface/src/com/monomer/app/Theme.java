@@ -13,7 +13,6 @@ public class Theme {
 	    	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	    		if (theme.equals(info.getName())) {
 	    			UIManager.setLookAndFeel(info.getClassName());
-	    			System.out.println("Nimbus theme set successfully."); 
 	    			break;
 	    		}
 	    	}

@@ -3,11 +3,17 @@ package com.monomer.app;
 public class Main {
 	
 	// run the application
-
+	
 	public static void main(String[] args) {
+		
+		System.out.println("Starting app...");
+		
+		// set theme to 'nimbus'
 		Theme theme = new Theme();
 		theme.setTheme();
-		GUI gui = new GUI();
+		
+		// start GUI
+		new GUI();
 	}
 
 }

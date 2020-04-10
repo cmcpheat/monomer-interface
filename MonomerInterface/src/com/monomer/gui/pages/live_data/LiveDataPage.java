@@ -13,9 +13,7 @@ import com.monomer.gui.components.live_data.LiveDataMachineTwoButton;
 import com.monomer.gui.styles.live_data.LiveDataButtonLayout;
 import com.monomer.gui.styles.live_data.LiveDataPanelLayout;
 
-public class LiveDataPage extends JPanel {
-	
-	private static final long serialVersionUID = 1L;
+public class LiveDataPage {
 
 	public JPanel createLiveDataPage() {
 		

@@ -30,7 +30,7 @@ import javax.swing.border.LineBorder;
 
 public class GUI {
 	
-	private JFrame mainFrame;
+	private JFrame frame;
 	private JPanel chartPanel;
 	private JButton machineOneBtn;
 	private JButton machineTwoBtn;
@@ -46,7 +46,7 @@ public class GUI {
 	private JLabel bubbleValidationLabel;
 	private JLabel submitMessageLabel;
 	private JTextField batchText;
-	private JComboBox<String> machineText;
+	private JComboBox machineText;
 	private JTextField bubbleText;
 	private boolean machineOneActive = false;
 	private boolean machineTwoActive = false;
@@ -61,35 +61,33 @@ public class GUI {
 	// GUI constructor 
 	public GUI() {
 		
-		// Frame set up
-		mainFrame = new JFrame();
-		mainFrame.setResizable(false); // prevents resizing
+		// create frame/window
+		frame = new JFrame();
+		frame.setResizable(false); // prevents resizing
 		Dimension frameSize = new Dimension(1000, 700);
-		mainFrame.setPreferredSize(frameSize);
+		frame.setPreferredSize(frameSize);
 		ImageIcon icon = new ImageIcon("/icon2.png");
-		mainFrame.setIconImage(icon.getImage());
+		frame.setIconImage(icon.getImage());
 		
-		// Tabs set up
+		// create tabs
 		JTabbedPane tabs = new JTabbedPane();
 		tabs.setBounds(0,0,0,0);
 		
-//		JPanel liveDataPage = new JPanel(new GridBagLayout());
-//		liveDataPage.setBorder(new LineBorder(Color.RED, 1, true));
-
+		// create pages
 		JPanel liveDataPage = new LiveDataPage().createLiveDataPage();
-		
 		JPanel createRecordPage = new CreateRecordPage().createCreateRecordPage();
 		
+		// add pages to tabs
 		tabs.add("Live Data", liveDataPage);
 		tabs.add("Create a Record", createRecordPage);
-		mainFrame.add(tabs);
+		frame.add(tabs);
 		
 		// GUI initialisation
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
-		mainFrame.setTitle("Monomer Data");
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-		mainFrame.setLocationRelativeTo(null); // centres the window		
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
+		frame.setTitle("Monomer Data");
+		frame.pack();
+		frame.setVisible(true);
+		frame.setLocationRelativeTo(null); // centres the window		
 	}
 
 	
