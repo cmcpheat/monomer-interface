@@ -1,14 +1,14 @@
-package com.monomer.gui.styles;
+package com.monomer.gui.styles.live_data;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class LiveDataPanels extends GridBagConstraints {
+public class LiveDataPanelLayout extends GridBagConstraints {
 
 	private static final long serialVersionUID = 1L;
 	GridBagConstraints c = new GridBagConstraints();
 	
-	public GridBagConstraints setLiveDataPanelStyles() {
+	public GridBagConstraints setLiveDataPanelLayout() {
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 520;      // make this component tall

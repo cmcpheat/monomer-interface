@@ -1,9 +1,8 @@
 package com.monomer.app;
 
-import com.monomer.gui.pages.GUI;
-import com.monomer.gui.pages.Theme;
-
 public class Main {
+	
+	// run the application
 
 	public static void main(String[] args) {
 		Theme theme = new Theme();

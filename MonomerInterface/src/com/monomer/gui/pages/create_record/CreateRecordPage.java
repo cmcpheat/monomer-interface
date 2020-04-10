@@ -1,4 +1,4 @@
-package com.monomer.gui.pages;
+package com.monomer.gui.pages.create_record;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -23,7 +23,7 @@ import com.monomer.data.DataObject;
 
 public class CreateRecordPage implements ActionListener {
 	
-	private JPanel createRecordTab;
+	private JPanel createRecordPage;
 	private JPanel formPanel;
 	private JButton submitBtn;
 	private JButton clearBtn;
@@ -44,9 +44,9 @@ public class CreateRecordPage implements ActionListener {
 	private int bubbleCount;
 	private String dateTime;
 	
-	public CreateRecordPage() {
+	public JPanel createCreateRecordPage() {
 		
-		createRecordTab = new JPanel(); 
+		createRecordPage = new JPanel(); 
 		
 		// Create a Record page
 		// Grid set up for create record form
@@ -254,7 +254,9 @@ public class CreateRecordPage implements ActionListener {
 		formPanel.add(submitMessageLabel, c2);
 		
 		// add form to Create a Record tab
-		createRecordTab.add(formPanel);	
+		createRecordPage.add(formPanel);
+		
+		return createRecordPage;	
 		
 	}
 	

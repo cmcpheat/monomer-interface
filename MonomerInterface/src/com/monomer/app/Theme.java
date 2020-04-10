@@ -1,4 +1,4 @@
-package com.monomer.gui.pages;
+package com.monomer.app;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -13,6 +13,7 @@ public class Theme {
 	    	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 	    		if (theme.equals(info.getName())) {
 	    			UIManager.setLookAndFeel(info.getClassName());
+	    			System.out.println("Nimbus theme set successfully."); 
 	    			break;
 	    		}
 	    	}

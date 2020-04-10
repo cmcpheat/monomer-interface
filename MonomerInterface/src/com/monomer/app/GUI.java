@@ -1,6 +1,8 @@
-package com.monomer.gui.pages;
+package com.monomer.app;
 
 import com.monomer.data.DataObject;
+import com.monomer.gui.pages.create_record.CreateRecordPage;
+import com.monomer.gui.pages.live_data.LiveDataPage;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -29,8 +31,6 @@ import javax.swing.border.LineBorder;
 public class GUI {
 	
 	private JFrame mainFrame;
-	// private JPanel liveDataPage;
-	private JPanel createRecordTab;
 	private JPanel chartPanel;
 	private JButton machineOneBtn;
 	private JButton machineTwoBtn;
@@ -78,11 +78,10 @@ public class GUI {
 
 		JPanel liveDataPage = new LiveDataPage().createLiveDataPage();
 		
-		
-		// createRecordPage = new CreateRecordPage();
+		JPanel createRecordPage = new CreateRecordPage().createCreateRecordPage();
 		
 		tabs.add("Live Data", liveDataPage);
-		tabs.add("Create a Record", createRecordTab);
+		tabs.add("Create a Record", createRecordPage);
 		mainFrame.add(tabs);
 		
 		// GUI initialisation

@@ -1,4 +1,4 @@
-package com.monomer.gui.components;
+package com.monomer.gui.components.live_data;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
