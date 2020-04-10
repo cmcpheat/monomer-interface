@@ -29,7 +29,7 @@ public class DataObject {
 	
 	public void setDateTime(String dateTimeStamp) {
 		this.dateTime = dateTimeStamp;
-	}
+	} 
 	
 	public int getBatchId() {
 		return this.batchId;

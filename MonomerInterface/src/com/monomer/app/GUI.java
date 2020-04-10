@@ -5,13 +5,10 @@ import com.monomer.gui.pages.live_data.LiveDataPage;
 
 import java.awt.Dimension;
 
-import javax.swing.ImageIcon;
-
 import javax.swing.JFrame;
-
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
+//import javax.swing.ImageIcon;
 
 public class GUI {
 	
@@ -20,13 +17,15 @@ public class GUI {
 	// GUI constructor 
 	public GUI() {
 		
-		// create frame/window
+		// frame setup
 		frame = new JFrame();
 		frame.setResizable(false); // prevents resizing
 		Dimension frameSize = new Dimension(1000, 700);
 		frame.setPreferredSize(frameSize);
-		ImageIcon icon = new ImageIcon("/icon2.png");
-		frame.setIconImage(icon.getImage());
+//		ImageIcon icon = new ImageIcon("/icon2.png");
+//		frame.setIconImage(icon.getImage());
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
+		frame.setTitle("Monomer Data");
 		
 		// create tabs
 		JTabbedPane tabs = new JTabbedPane();
@@ -41,9 +40,7 @@ public class GUI {
 		tabs.add("Create a Record", createRecordPage);
 		frame.add(tabs);
 		
-		// GUI initialisation
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
-		frame.setTitle("Monomer Data");
+		// show GUI
 		frame.pack();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null); // centres the window		
