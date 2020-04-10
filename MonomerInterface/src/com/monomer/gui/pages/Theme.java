@@ -1,4 +1,4 @@
-package com.monomer.gui;
+package com.monomer.gui.pages;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;

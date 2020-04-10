@@ -1,7 +1,7 @@
 package com.monomer.app;
 
-import com.monomer.gui.GUI;
-import com.monomer.gui.Theme;
+import com.monomer.gui.pages.GUI;
+import com.monomer.gui.pages.Theme;
 
 public class Main {
 

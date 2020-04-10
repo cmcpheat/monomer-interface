@@ -1,9 +1,6 @@
-package com.monomer.gui;
-
-import com.monomer.data.DataObject;
+package com.monomer.gui.pages;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,30 +9,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-public class GUI implements ActionListener  {
+import com.monomer.data.DataObject;
+
+public class CreateRecordPage implements ActionListener {
 	
-	private JFrame mainFrame;
-	private JPanel liveDataTab;
 	private JPanel createRecordTab;
-	private JPanel chartPanel;
-	private JButton machineOneBtn;
-	private JButton machineTwoBtn;
-	private JButton machineThreeBtn;
 	private JPanel formPanel;
 	private JButton submitBtn;
 	private JButton clearBtn;
@@ -49,87 +37,16 @@ public class GUI implements ActionListener  {
 	private JTextField batchText;
 	private JComboBox<String> machineText;
 	private JTextField bubbleText;
-	private String batchIdValueString;
-	private String machineNumValueString;
-	private String bubbleCountValueString;
-	private boolean isActive1 = false;
-	private boolean isActive2 = false;
-	private boolean isActive3 = false;
-	private boolean batchIsValid = false;
-	private boolean bubbleIsValid = false;
+	private boolean batchIsValidFormat = false;
+	private boolean bubbleIsValidFormat = false;
 	private int batchId;
 	private int machineNumber;
 	private int bubbleCount;
 	private String dateTime;
-
-	// GUI constructor 
-	public GUI() {
+	
+	public CreateRecordPage() {
 		
-		// Frame set up
-		mainFrame = new JFrame();
-		mainFrame.setResizable(false); // prevents resizing
-		Dimension frameSize = new Dimension(1000, 700);
-		mainFrame.setPreferredSize(frameSize);
-		ImageIcon icon = new ImageIcon("/icon2.png");
-		mainFrame.setIconImage(icon.getImage());
-		
-		// Tabs set up
-		liveDataTab = new JPanel(new GridBagLayout());
 		createRecordTab = new JPanel(); 
-		JTabbedPane tabs = new JTabbedPane();
-		tabs.setBounds(0,0,0,0);
-		tabs.add("Live Data", liveDataTab);
-		tabs.add("Create a Record", createRecordTab);
-		mainFrame.add(tabs);
-		
-		// Grid set up (for buttons and chart)
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		
-		// Live Data page
-		// Machine 1 button
-		machineOneBtn = new JButton("Machine 1");
-		machineOneBtn.addActionListener(this);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 20;      //make this component tall
-		c.insets = new Insets(0,20,15,20);  //top padding
-		c.weightx = 0.5;
-		c.gridx = 0;
-		c.gridy = 0;
-		liveDataTab.add(machineOneBtn, c);
-		
-		// Machine 2 button
-		machineTwoBtn = new JButton("Machine 2");
-		machineTwoBtn.addActionListener(this);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 20;
-		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 0;
-		liveDataTab.add(machineTwoBtn, c);
-		 
-		// Machine 3 button
-		machineThreeBtn = new JButton("Machine 3");
-		machineThreeBtn.addActionListener(this);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 20;
-		c.weightx = 0.5;
-		c.gridx = 2;
-		c.gridy = 0;
-		liveDataTab.add(machineThreeBtn, c);
-		 
-		// Panel for line chart
-		chartPanel = new JPanel();
-		chartPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
-		chartPanel.setBackground(Color.white);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady = 520;      // make this component tall
-		c.weightx = 0.0;
-		c.gridwidth = 3;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.anchor = GridBagConstraints.PAGE_END;
-		liveDataTab.add(chartPanel, c);
 		
 		// Create a Record page
 		// Grid set up for create record form
@@ -219,16 +136,16 @@ public class GUI implements ActionListener  {
 		            Integer.parseInt(str);
 		            int ii = Integer.parseInt(str);
 		            if (ii < 1 || ii > 999999) {
-		            	batchIsValid = false;
+		            	batchIsValidFormat = false;
 					}
 		            else {
-		            	batchIsValid = true;
+		            	batchIsValidFormat = true;
 		            	batchValidationLabel.setText(" ");
 		            }
 		        }  
 		        catch (NumberFormatException e1)  
 		        { 
-		        	batchIsValid = false;
+		        	batchIsValidFormat = false;
 		        } 
 			}
 		});
@@ -275,16 +192,16 @@ public class GUI implements ActionListener  {
 		            Integer.parseInt(str);
 		            int i = Integer.parseInt(str);
 		            if (i < 0 || i > 600) {
-		            	bubbleIsValid = false;
+		            	bubbleIsValidFormat = false;
 					}
 		            else {
-		            	bubbleIsValid = true;
+		            	bubbleIsValidFormat = true;
 		            	bubbleValidationLabel.setText(" ");
 		            }
 		        }  
 		        catch (NumberFormatException e1)  
 		        { 
-		        	bubbleIsValid = false;
+		        	bubbleIsValidFormat = false;
 		        } 
 			}
 		});
@@ -335,65 +252,20 @@ public class GUI implements ActionListener  {
 		c2.gridy = 7;
 		c2.insets = new Insets(0,20,20,20);
 		formPanel.add(submitMessageLabel, c2);
-
-		// add form to Create a Record tab
-		createRecordTab.add(formPanel);		
 		
-		// GUI initialisation
-		mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
-		mainFrame.setTitle("Monomer Data");
-		mainFrame.pack();
-		mainFrame.setVisible(true);
-		mainFrame.setLocationRelativeTo(null); // centres the window		
+		// add form to Create a Record tab
+		createRecordTab.add(formPanel);	
+		
 	}
-
+	
 	public void actionPerformed(ActionEvent e) {
 		
-		// handle 'machine 1' button click
-		if (e.getSource() == machineOneBtn)
-		{
-			if (isActive1 == false) {
-				machineOneBtn.setBackground(Color.gray);
-				isActive1 = true;
-			}	
-			else if (isActive1 == true) {
-				machineOneBtn.setBackground(new JButton().getBackground());
-				isActive1 = false;
-			}
-		}
-
-		// handle 'machine 2' button click
-		if (e.getSource() == machineTwoBtn)
-		{
-			if (isActive2 == false) {
-				machineTwoBtn.setBackground(Color.gray);
-				isActive2 = true;
-			}	
-			else if (isActive2 == true) {
-				machineTwoBtn.setBackground(new JButton().getBackground());
-				isActive2 = false;
-			}
-		}
-
-		// handle 'machine 3' button click
-		if (e.getSource() == machineThreeBtn)
-		{
-			if (isActive3 == false) {
-				machineThreeBtn.setBackground(Color.gray);
-				isActive3 = true;
-			}	
-			else if (isActive3 == true) {
-				machineThreeBtn.setBackground(new JButton().getBackground());
-				isActive3 = false;
-			}
-		}
-		
 		// handle 'submit' button click
-		else if (e.getSource() == submitBtn)
+		if (e.getSource() == submitBtn)
 		{	
-			boolean bId = validateBatchId(batchIsValid);
+			boolean bId = validateBatchId(batchIsValidFormat);
 			boolean mNum = validateMachineNum(machineText.getSelectedIndex());
-			boolean bCount = validateBubbleCount(bubbleIsValid);
+			boolean bCount = validateBubbleCount(bubbleIsValidFormat);
 			
 			// check if form fields are valid then do stuff...
 			if (bId == true && mNum == true && bCount == true) {
@@ -410,13 +282,6 @@ public class GUI implements ActionListener  {
 				System.out.println("machine test: " + data.getMachineNumber());
 				System.out.println("bubble test: " + data.getBubbleCount());
 				System.out.println("date test: " + data.getDateTime());
-			
-				// create JSON for form data and add contents 
-//				JSONObject data = new JSONObject();
-//				data.put("batch_id", batchId);
-//				data.put("machine_number", machineNumber);
-//				data.put("bubble_count", bubbleCount);
-//				data.put("date_time", dateTime);
 				
 				// sendData(dataObj);				
 				showSubmitMessage();
@@ -509,6 +374,8 @@ public class GUI implements ActionListener  {
 		bubbleText.setText("");
 		bubbleValidationLabel.setText(" ");
 	}
-}	
-	
+}
+
+
+
 
