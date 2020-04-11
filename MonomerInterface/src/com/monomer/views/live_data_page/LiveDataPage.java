@@ -1,4 +1,4 @@
-package com.monomer.views.live_data_page.components;
+package com.monomer.views.live_data_page;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -6,12 +6,16 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.monomer.views.live_data_page.components.ChartPanel;
+import com.monomer.views.live_data_page.components.MachineOneButton;
+import com.monomer.views.live_data_page.components.MachineThreeButton;
+import com.monomer.views.live_data_page.components.MachineTwoButton;
 import com.monomer.views.live_data_page.layouts.ButtonLayout;
 import com.monomer.views.live_data_page.layouts.PanelLayout;
 
 public class LiveDataPage {
 
-	public JPanel createLiveDataPage() {
+	public JPanel addLiveDataPage() {
 		
 		JPanel liveDataPage = new JPanel(new GridBagLayout());
 				

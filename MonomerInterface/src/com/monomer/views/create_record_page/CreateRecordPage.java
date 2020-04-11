@@ -1,4 +1,4 @@
-package com.monomer.views.create_record_page.components;
+package com.monomer.views.create_record_page;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -16,6 +16,19 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import com.monomer.models.DataRecordModel;
+import com.monomer.views.create_record_page.components.BatchIdAlertLabel;
+import com.monomer.views.create_record_page.components.BatchIdInput;
+import com.monomer.views.create_record_page.components.BatchIdLabel;
+import com.monomer.views.create_record_page.components.BubbleCountAlertLabel;
+import com.monomer.views.create_record_page.components.BubbleCountInput;
+import com.monomer.views.create_record_page.components.BubbleCountLabel;
+import com.monomer.views.create_record_page.components.ClearButton;
+import com.monomer.views.create_record_page.components.DataSubmittedLabel;
+import com.monomer.views.create_record_page.components.FormPanel;
+import com.monomer.views.create_record_page.components.MachineNumberAlertLabel;
+import com.monomer.views.create_record_page.components.MachineNumberInput;
+import com.monomer.views.create_record_page.components.MachineNumberLabel;
+import com.monomer.views.create_record_page.components.SubmitButton;
 import com.monomer.views.create_record_page.layouts.AlertLayout;
 import com.monomer.views.create_record_page.layouts.ButtonLayout;
 import com.monomer.views.create_record_page.layouts.InputLayout;
@@ -37,12 +50,8 @@ public class CreateRecordPage implements ActionListener {
 	private JButton clearButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
-	private int batchId;
-	private int machineNumber;
-	private int bubbleCount;
-	private String dateTime;
 	
-	public JPanel createCreateRecordPage() {
+	public JPanel addCreateRecordPage() {
 		
 		// create a record page
 		createRecordPage = new JPanel(); 
