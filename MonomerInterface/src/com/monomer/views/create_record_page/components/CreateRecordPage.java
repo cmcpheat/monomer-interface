@@ -20,10 +20,15 @@ import com.monomer.views.create_record_page.layouts.LabelLayout;
 
 public class CreateRecordPage implements ActionListener {
 	
+	private JPanel createRecordPage;
+	private JPanel formPanel;
+	private JLabel batchIdLabel;
 	private JTextField batchIdInput;
 	private JLabel batchIdAlertLabel;
+	private JLabel machineNumberLabel;
 	private JComboBox<String> machineNumberInput;
 	private JLabel machineNumberAlertLabel;
+	private JLabel bubbleCountLabel;
 	private JTextField bubbleCountInput;
 	private JLabel bubbleCountAlertLabel;
 	private JButton clearButton;
@@ -39,7 +44,7 @@ public class CreateRecordPage implements ActionListener {
 	public JPanel createCreateRecordPage() {
 		
 		// create a record page
-		JPanel createRecordPage = new JPanel(); 
+		createRecordPage = new JPanel(); 
 		
 		// set layout for components
 		GridBagConstraints labelLayout = new LabelLayout().setLabelLayout(); // done
@@ -48,68 +53,70 @@ public class CreateRecordPage implements ActionListener {
 		GridBagConstraints alertLayout = new AlertLayout().setAlertLayout(); // done
 		
 		// add form panel to page
-		JPanel formPanel = new FormPanel().setCreateRecordFormPanel();
+		formPanel = new FormPanel().setCreateRecordFormPanel();
 		createRecordPage.add(formPanel);
 		
 		// add 'batch ID' label to form
-		JLabel batchIdLabel = new BatchIdLabel().setBatchIdLabel();
+		batchIdLabel = new BatchIdLabel().setBatchIdLabel();
 		labelLayout.gridy = 0;
 		formPanel.add(batchIdLabel, labelLayout);
 			
 		// add batch ID alert label to form
-		JLabel batchIdAlertLabel = new BatchIdAlertLabel().setBatchIdAlertLabel();
+		batchIdAlertLabel = new BatchIdAlertLabel().setBatchIdAlertLabel();
 		alertLayout.gridy = 1;
 		formPanel.add(batchIdAlertLabel, alertLayout);
 		
 		// add 'machine number' label to form
-		JLabel machineNumberLabel = new MachineNumberLabel().setMachineNumberLabel();
+		machineNumberLabel = new MachineNumberLabel().setMachineNumberLabel();
 		labelLayout.gridy = 2;
 		formPanel.add(machineNumberLabel, labelLayout);
 		
 		// add machine number alert label to form
-		JLabel machineNumberAlertLabel = new MachineNumberAlertLabel().setMachineNumberAlertLabel();
+		machineNumberAlertLabel = new MachineNumberAlertLabel().setMachineNumberAlertLabel();
 		alertLayout.gridy = 3;
 		formPanel.add(machineNumberAlertLabel, alertLayout);
 		
 		// add 'bubble count' label to form
-		JLabel bubbleCountLabel = new BubbleCountLabel().setBubbleCountLabel();
+		bubbleCountLabel = new BubbleCountLabel().setBubbleCountLabel();
 		labelLayout.gridy = 4;		
 		formPanel.add(bubbleCountLabel, labelLayout);
 		
 		// add bubble count alert label to form
-		JLabel bubbleCountAlertLabel = new BubbleCountAlertLabel().setBubbleCountAlertLabel();
+		bubbleCountAlertLabel = new BubbleCountAlertLabel().setBubbleCountAlertLabel();
 		alertLayout.gridy = 5;
 		formPanel.add(bubbleCountAlertLabel, alertLayout);
 		
 		// add 'batch ID' text input to form
-		JTextField batchIdInput = new BatchIdInput().setBatchIdInput();
+		batchIdInput = new BatchIdInput().setBatchIdInput();
 		inputLayout.gridy = 0;
 		formPanel.add(batchIdInput, inputLayout);
 		
 		// add 'machine number' drop-down to form
-		JComboBox<String> machineNumberInput = new MachineNumberInput().setMachineNumberInput();
+		machineNumberInput = new MachineNumberInput().setMachineNumberInput();
 		inputLayout.gridy = 2;
 		inputLayout.ipady = 30;
 		formPanel.add(machineNumberInput, inputLayout);
 		
 		// add 'bubble count' text input to form
-		JTextField bubbleCountTextInput = new BubbleCountInput().setBubbleCountInput();
+		bubbleCountInput = new BubbleCountInput().setBubbleCountInput();
 		inputLayout.ipady = 20;
 		inputLayout.gridy = 4;
-		formPanel.add(bubbleCountTextInput, inputLayout);
+		formPanel.add(bubbleCountInput, inputLayout);
 		
 		// add 'clear' button to form
-		JButton clearButton = new ClearButton().setClearButton();
+		clearButton = new ClearButton().setClearButton();
+		clearButton.addActionListener(this);
 		buttonLayout.gridx = 0;
 		formPanel.add(clearButton, buttonLayout);
 		
 		// add 'submit' button to form
-		JButton submitButton = new SubmitButton().setSubmitButton();
+		submitButton = new SubmitButton().setSubmitButton();
+		submitButton.addActionListener(this);
 		buttonLayout.gridx = 1;
 		formPanel.add(submitButton, buttonLayout);
 		
 		// add 'data submitted' message label to form
-		JLabel dataSubmittedLabel = new DataSubmittedLabel().setDataSubmittedLabel();
+		dataSubmittedLabel = new DataSubmittedLabel().setDataSubmittedLabel();
 		labelLayout.gridy = 7;
 		formPanel.add(dataSubmittedLabel, labelLayout);
 		
@@ -129,9 +136,11 @@ public class CreateRecordPage implements ActionListener {
 		// handle 'submit' button click
 		if (e.getSource() == submitButton)
 		{	
-			boolean bId = validateBatchId(batchIsValidFormat);
+			boolean bId = validateBatchId(batchIdInput.getText());
 			boolean mNum = validateMachineNum(machineNumberInput.getSelectedIndex());
 			boolean bCount = validateBubbleCount(bubbleIsValidFormat);
+			
+			System.out.println("submit button before checks");
 			
 			// check if form fields are valid then do stuff...
 			if (bId == true && mNum == true && bCount == true) {
@@ -152,7 +161,6 @@ public class CreateRecordPage implements ActionListener {
 				// sendData(dataObj);				
 				showSubmitMessage();
 				clearForm();
-				System.out.println("here");
 	
 				ArrayList<Integer> batches = new ArrayList<Integer>();
 				ArrayList<Integer> machines = new ArrayList<Integer>();
@@ -173,14 +181,15 @@ public class CreateRecordPage implements ActionListener {
 		
 		// handle 'clear' button click
 		else if (e.getSource() == clearButton) {
+			System.out.println("CLEAR PRESSED");
 			clearForm();
 			System.out.println("USER HAS CLEARED FORM");
 		}
 	}
 
 	// checks if 'batch ID' is empty and in correct number range
-	public boolean validateBatchId(boolean batch) {
-		if (batch == false || batchIdInput.getText().equals("")) {
+	public boolean validateBatchId(String batch) {
+		if (batch == "" || batchIdInput.getText().equals("")) {
 			batchIdAlertLabel.setText("Enter a number between 1 - 999999");
 			return false;
 		}
@@ -190,7 +199,7 @@ public class CreateRecordPage implements ActionListener {
 		}
 	}	
 		
-	// checks if 'machine number' is on default selectiond
+	// checks if 'machine number' is on default selection
 	public boolean validateMachineNum(int machine) {
 		if (machine == 0) {
 			machineNumberAlertLabel.setText("Please select an option");

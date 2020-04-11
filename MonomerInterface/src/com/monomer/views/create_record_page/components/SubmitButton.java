@@ -18,8 +18,12 @@ public class SubmitButton {
 	
 	void submitButtonListener(ActionListener listenerForSubmitButton) {
 		
+		System.out.println("submit button listener func");
+		
 		submitButton.addActionListener(listenerForSubmitButton);
 		
 	}
+	
+	// validation listener?
 
 }

@@ -4,9 +4,13 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-public class BubbleCountAlertLabel {
+public class BubbleCountAlertLabel extends JLabel {
 	
-	JLabel bubbleCountAlertLabel;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JLabel bubbleCountAlertLabel = new JLabel();
 	
 	public JLabel setBubbleCountAlertLabel() {
 
@@ -15,5 +19,9 @@ public class BubbleCountAlertLabel {
 		bubbleCountAlertLabel.setFont (bubbleCountAlertLabel.getFont ().deriveFont (11.0f));
 		
 		return bubbleCountAlertLabel;		
+	}
+	
+	public void clearField() {
+		this.bubbleCountAlertLabel.setText(" ");
 	}
 }
