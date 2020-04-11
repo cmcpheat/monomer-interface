@@ -5,7 +5,7 @@ import java.awt.Insets;
 
 public class CreateRecordAlertLayout {
 	
-	GridBagConstraints alertLayout;
+	GridBagConstraints alertLayout = new GridBagConstraints();
 	
 	public GridBagConstraints setAlertLayout() {
 		
@@ -17,13 +17,4 @@ public class CreateRecordAlertLayout {
 		
 		return alertLayout;
 	}
-
-	// batch id validation label
-	c2.gridy = 1;
-	
-	// machine num validation label
-	c2.gridy = 3;
-	
-	// bubble validation label
-	c2.gridy = 5;
 }

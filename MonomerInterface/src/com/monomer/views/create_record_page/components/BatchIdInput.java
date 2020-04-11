@@ -1,7 +1,5 @@
 package com.monomer.views.create_record_page.components;
 
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 

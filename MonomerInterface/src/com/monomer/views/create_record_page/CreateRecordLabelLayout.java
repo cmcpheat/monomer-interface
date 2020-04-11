@@ -5,7 +5,7 @@ import java.awt.Insets;
 
 public class CreateRecordLabelLayout {
 	
-	GridBagConstraints labelLayout;
+	GridBagConstraints labelLayout = new GridBagConstraints();
 	
 	public GridBagConstraints setLabelLayout() {
 		

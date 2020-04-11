@@ -5,7 +5,7 @@ import java.awt.Insets;
 
 public class CreateRecordInputLayout {
 	
-	GridBagConstraints inputLayout;
+	GridBagConstraints inputLayout = new GridBagConstraints();
 	
 	public GridBagConstraints setInputLayout() {
 		

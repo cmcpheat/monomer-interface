@@ -1,17 +1,10 @@
 package com.monomer.views.create_record_page;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -72,7 +65,7 @@ public class CreateRecordPage implements ActionListener {
 		labelLayout.gridy = 0;
 		formPanel.add(batchIdLabel, labelLayout);
 			
-		// add batch ID validation label to form
+		// add batch ID alert label to form
 		JLabel batchIdAlertLabel = new BatchIdAlertLabel().setBatchIdAlertLabel();
 		alertLayout.gridy = 1;
 		formPanel.add(batchIdAlertLabel, alertLayout);
@@ -80,9 +73,9 @@ public class CreateRecordPage implements ActionListener {
 		// add 'machine number' label to form
 		JLabel machineNumberLabel = new MachineNumberLabel().setMachineNumberLabel();
 		labelLayout.gridy = 2;
-		formPanel.add(machineNumberLabel, alertLayout);
+		formPanel.add(machineNumberLabel, labelLayout);
 		
-		// add machine number validation label to form
+		// add machine number alert label to form
 		JLabel machineNumberAlertLabel = new MachineNumberAlertLabel().setMachineNumberAlertLabel();
 		alertLayout.gridy = 3;
 		formPanel.add(machineNumberAlertLabel, alertLayout);
@@ -92,7 +85,7 @@ public class CreateRecordPage implements ActionListener {
 		labelLayout.gridy = 4;		
 		formPanel.add(bubbleCountLabel, labelLayout);
 		
-		// add bubble count validation label to form
+		// add bubble count alert label to form
 		JLabel bubbleCountAlertLabel = new BubbleCountAlertLabel().setBubbleCountAlertLabel();
 		alertLayout.gridy = 5;
 		formPanel.add(bubbleCountAlertLabel, alertLayout);
@@ -105,12 +98,14 @@ public class CreateRecordPage implements ActionListener {
 		// add 'machine number' drop-down to form
 		JComboBox<String> machineNumberInput = new MachineNumberInput().setMachineNumberInput();
 		inputLayout.gridy = 2;
+		inputLayout.ipady = 30;
 		formPanel.add(machineNumberInput, inputLayout);
 		
 		// add 'bubble count' text input to form
 		JTextField bubbleCountTextInput = new BubbleCountInput().setBubbleCountInput();
+		inputLayout.ipady = 20;
 		inputLayout.gridy = 4;
-		formPanel.add(bubbleText, inputLayout);
+		formPanel.add(bubbleCountTextInput, inputLayout);
 		
 		// add 'clear' button to form
 		JButton clearButton = new ClearButton().setClearButton();
@@ -120,12 +115,20 @@ public class CreateRecordPage implements ActionListener {
 		// add 'submit' button to form
 		JButton submitButton = new SubmitButton().setSubmitButton();
 		buttonLayout.gridx = 1;
-		formPanel.add(submitBtn, buttonLayout);
+		formPanel.add(submitButton, buttonLayout);
 		
 		// add 'data submitted' message label to form
 		JLabel dataSubmittedLabel = new DataSubmittedLabel().setDataSubmittedLabel();
 		labelLayout.gridy = 7;
-		formPanel.add(submitMessageLabel, labelLayout);
+		formPanel.add(dataSubmittedLabel, labelLayout);
+		
+		// data submitted label layout
+//		c2.fill = GridBagConstraints.CENTER;
+//		c2.ipady = 20;      // make this component tall
+//		c2.gridwidth = 3;
+//		c2.gridx = 0;
+//		c2.gridy = 7;
+//		c2.insets = new Insets(0,20,20,20);
 		
 		return createRecordPage;			
 	}
