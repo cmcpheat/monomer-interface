@@ -4,12 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-public class MachineNumberAlertLabel extends JLabel {
+public class MachineNumberAlertLabel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	JLabel machineNumberAlertLabel;
 	
 	public JLabel setMachineNumberAlertLabel() {

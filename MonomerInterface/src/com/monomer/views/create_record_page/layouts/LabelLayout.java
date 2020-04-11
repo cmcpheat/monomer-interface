@@ -10,7 +10,7 @@ public class LabelLayout {
 	public GridBagConstraints setLabelLayout() {
 		
 		labelLayout.fill = GridBagConstraints.HORIZONTAL;
-		labelLayout.ipady = 40;      //make this component tall
+		labelLayout.ipady = 40; 
 		labelLayout.weightx = 0.5;
 		labelLayout.gridx = 0;
 		labelLayout.insets = new Insets(20,20,0,20);	

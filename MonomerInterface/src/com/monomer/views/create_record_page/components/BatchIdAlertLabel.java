@@ -4,12 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-public class BatchIdAlertLabel extends JLabel {
+public class BatchIdAlertLabel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	JLabel batchIdAlertLabel;
 	
 	public JLabel setBatchIdAlertLabel() {

@@ -1,8 +1,11 @@
 package com.monomer.views.create_record_page.components;
 
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -34,8 +37,6 @@ public class CreateRecordPage implements ActionListener {
 	private JButton clearButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
-	private boolean batchIsValidFormat = false;
-	private boolean bubbleIsValidFormat = false;
 	private int batchId;
 	private int machineNumber;
 	private int bubbleCount;
@@ -117,16 +118,12 @@ public class CreateRecordPage implements ActionListener {
 		
 		// add 'data submitted' message label to form
 		dataSubmittedLabel = new DataSubmittedLabel().setDataSubmittedLabel();
+		labelLayout.fill = GridBagConstraints.CENTER;
+		labelLayout.gridwidth = 3;
+		labelLayout.gridx = 0;
 		labelLayout.gridy = 7;
+		labelLayout.insets = new Insets(0,20,20,20);
 		formPanel.add(dataSubmittedLabel, labelLayout);
-		
-		// data submitted label layout
-//		c2.fill = GridBagConstraints.CENTER;
-//		c2.ipady = 20;      // make this component tall
-//		c2.gridwidth = 3;
-//		c2.gridx = 0;
-//		c2.gridy = 7;
-//		c2.insets = new Insets(0,20,20,20);
 		
 		return createRecordPage;			
 	}
@@ -136,22 +133,27 @@ public class CreateRecordPage implements ActionListener {
 		// handle 'submit' button click
 		if (e.getSource() == submitButton)
 		{	
-			boolean bId = validateBatchId(batchIdInput.getText());
-			boolean mNum = validateMachineNum(machineNumberInput.getSelectedIndex());
-			boolean bCount = validateBubbleCount(bubbleIsValidFormat);
+			final LocalDateTime currentDateTime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			
-			System.out.println("submit button before checks");
+			String batchId = batchIdInput.getText();
+			String machineNumber = (String) machineNumberInput.getSelectedItem();
+			String bubbleCount = bubbleCountInput.getText();
+			String dateTime = currentDateTime.format(formatter);
+			
+			boolean batchValid = validateBatchId(batchId);
+			boolean machineValid = validateMachineNum(machineNumberInput.getSelectedIndex());
+			boolean bubbleValid = validateBubbleCount(bubbleCount);
 			
 			// check if form fields are valid then do stuff...
-			if (bId == true && mNum == true && bCount == true) {
+			if (batchValid == true && machineValid == true && bubbleValid == true) {
 				
 				DataRecordModel data = new DataRecordModel();
 				
-				data.setBatchId(batchIdInput.getText());
-				data.setMachineNumber((String) machineNumberInput.getSelectedItem());
-				data.setBubbleCount(bubbleCountInput.getText());
-				String currentDateTime = data.getCurrentDateTimeStamp();
-				data.setDateTime(currentDateTime);
+				data.setBatchId(batchId);
+				data.setMachineNumber(machineNumber);
+				data.setBubbleCount(bubbleCount);
+				data.setDateTime(dateTime);
 				
 				System.out.println("batch test: " + data.getBatchId());
 				System.out.println("machine test: " + data.getMachineNumber());
@@ -167,41 +169,49 @@ public class CreateRecordPage implements ActionListener {
 				ArrayList<Integer> bubbles = new ArrayList<Integer>();
 				ArrayList<String> dates = new ArrayList<String>();
 				
-				batches.add(batchId);
-				machines.add(machineNumber);
-				bubbles.add(bubbleCount);
+				batches.add(Integer.parseInt(batchId));
+				machines.add(Integer.parseInt(machineNumber));
+				bubbles.add(Integer.parseInt(bubbleCount));
 				dates.add(dateTime);
 				
-//				System.out.println("batch: " + batches.get(0));
-//				System.out.println("machine: " + machines.get(0));
-//				System.out.println("bubble: " + bubbles.get(0));
-//				System.out.println("date: " + dates.get(0));
+				System.out.println("batch: " + batches.get(0));
+				System.out.println("machine: " + machines.get(0));
+				System.out.println("bubble: " + bubbles.get(0));
+				System.out.println("date: " + dates.get(0));
 			}
 		}
 		
 		// handle 'clear' button click
 		else if (e.getSource() == clearButton) {
-			System.out.println("CLEAR PRESSED");
 			clearForm();
-			System.out.println("USER HAS CLEARED FORM");
 		}
 	}
 
-	// checks if 'batch ID' is empty and in correct number range
+	// checks if 'batch ID' is integer and in correct number range
 	public boolean validateBatchId(String batch) {
-		if (batch == "" || batchIdInput.getText().equals("")) {
-			batchIdAlertLabel.setText("Enter a number between 1 - 999999");
-			return false;
-		}
-		else {
+		try 
+		{ 
+			Integer.parseInt(batch);
+			int i = Integer.parseInt(batch);
+			if (i < 1 || i > 999999) {
+				batchIdAlertLabel.setText("Enter a number between 1-999999");
+				return false;
+			}
+			else {
 			batchIdAlertLabel.setText(" ");
 			return true;
+			}
+		}  
+		catch (NumberFormatException ex)  
+		{ 
+			batchIdAlertLabel.setText("Enter a number between 1-999999");
+			return false;
 		}
 	}	
 		
 	// checks if 'machine number' is on default selection
-	public boolean validateMachineNum(int machine) {
-		if (machine == 0) {
+	public boolean validateMachineNum(int index) {
+		if (index == 0) {
 			machineNumberAlertLabel.setText("Please select an option");
 			return false;
 		}
@@ -211,16 +221,27 @@ public class CreateRecordPage implements ActionListener {
 		}
 	}
 	
-	// checks if 'bubble count' is empty and in correct number range
-	public boolean validateBubbleCount(boolean bubble) {
-		if (bubble == false || bubbleCountInput.getText().equals("")) {
-			bubbleCountAlertLabel.setText("Enter a number between 1 - 600");
+	// checks if 'bubble count' is integer and in correct number range
+	public boolean validateBubbleCount(String bubble) {
+		
+		try 
+		{
+			Integer.parseInt(bubble);
+			int i = Integer.parseInt(bubble);
+			if (i < 0 || i > 600) {
+				bubbleCountAlertLabel.setText("Enter a number between 0-600");
+				return false;
+			}
+			else {
+				bubbleCountAlertLabel.setText(" ");
+				return true;
+			}
+		}  
+		catch (NumberFormatException e1)  
+		{
+			bubbleCountAlertLabel.setText("Enter a number between 0-600");
 			return false;
-		}
-		else {
-			bubbleCountAlertLabel.setText(" ");
-			return true;
-		}
+       	} 
 	}
 	
 	// shows data submitted message, disappears after 5 seconds
@@ -241,6 +262,7 @@ public class CreateRecordPage implements ActionListener {
 		}
 	}
 	
+	// deletes all fields on form
 	public void clearForm() {
 		batchIdInput.setText("");
 		batchIdAlertLabel.setText(" ");

@@ -5,12 +5,8 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 
-public class MachineNumberInput extends JComboBox<String> {
+public class MachineNumberInput {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	JComboBox<String> machineNumberInput;
 	
 	public JComboBox<String> setMachineNumberInput() {

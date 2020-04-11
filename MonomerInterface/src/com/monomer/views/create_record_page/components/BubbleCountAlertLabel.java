@@ -4,12 +4,8 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-public class BubbleCountAlertLabel extends JLabel {
+public class BubbleCountAlertLabel {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JLabel bubbleCountAlertLabel = new JLabel();
 	
 	public JLabel setBubbleCountAlertLabel() {
