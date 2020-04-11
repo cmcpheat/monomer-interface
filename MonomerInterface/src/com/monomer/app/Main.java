@@ -1,5 +1,8 @@
 package com.monomer.app;
 
+import com.monomer.views.gui.GuiConstructor;
+import com.monomer.views.gui.Theme;
+
 public class Main {
 	
 	// run the application
