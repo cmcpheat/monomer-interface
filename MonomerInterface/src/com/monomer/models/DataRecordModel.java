@@ -3,7 +3,7 @@ package com.monomer.models;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class DataObject {
+public class DataRecordModel {
 	
 	private int batchId;
 	private int machineNumber;

@@ -3,7 +3,7 @@ package com.monomer.models;
 import java.util.ArrayList;
 
 //class which stores and retrieves the batch IDs
-public class BatchIdArray {
+public class BatchIdModel {
 	
 	private static ArrayList<Integer> batchIds = new ArrayList<Integer>();
 	private static int batchId;

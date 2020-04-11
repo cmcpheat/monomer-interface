@@ -3,7 +3,7 @@ package com.monomer.models;
 import java.util.ArrayList;
 
 //class which stores and retrieves the bubble counts
-public class BubbleCountArray {
+public class BubbleCountModel {
 
 	private static ArrayList<Integer> bubbleCounts = new ArrayList<Integer>();
 	private static int bubbleCount;

@@ -3,7 +3,7 @@ package com.monomer.models;
 import java.util.ArrayList;
 
 //class which stores and retrieves the machine numbers
-public class MachineNumberArray {
+public class MachineNumberModel {
 	
 	private static ArrayList<Integer> machineNumbers = new ArrayList<Integer>();
 	private static int machineNumber;
