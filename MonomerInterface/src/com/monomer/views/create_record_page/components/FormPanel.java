@@ -6,7 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class CreateRecordFormPanel {
+public class FormPanel {
 	
 	JPanel formPanel;
 	

@@ -1,9 +1,9 @@
-package com.monomer.views.live_data_page;
+package com.monomer.views.live_data_page.layouts;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class LiveDataPanelLayout extends GridBagConstraints {
+public class PanelLayout extends GridBagConstraints {
 
 	private static final long serialVersionUID = 1L;
 	GridBagConstraints c = new GridBagConstraints();

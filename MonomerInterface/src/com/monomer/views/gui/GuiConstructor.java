@@ -1,7 +1,7 @@
 package com.monomer.views.gui;
 
-import com.monomer.views.create_record_page.CreateRecordPage;
-import com.monomer.views.live_data_page.LiveDataPage;
+import com.monomer.views.create_record_page.components.CreateRecordPage;
+import com.monomer.views.live_data_page.components.LiveDataPage;
 
 import java.awt.Dimension;
 

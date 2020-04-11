@@ -1,4 +1,4 @@
-package com.monomer.views.live_data_page;
+package com.monomer.views.live_data_page.components;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class LiveDataMachineThreeButton implements ActionListener {
+public class MachineThreeButton implements ActionListener {
 	
 	private JButton machineThreeBtn;
 	private boolean machineThreeActive = false;

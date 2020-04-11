@@ -1,4 +1,4 @@
-package com.monomer.views.live_data_page;
+package com.monomer.views.live_data_page.components;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-public class LiveDataMachineOneButton implements ActionListener {
+public class MachineOneButton implements ActionListener {
 	
 	private JButton machineOneBtn;
 	private boolean machineOneActive = false;

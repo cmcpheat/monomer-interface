@@ -1,11 +1,11 @@
-package com.monomer.views.live_data_page;
+package com.monomer.views.live_data_page.components;
 
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class LiveDataChartPanel extends JPanel {
+public class ChartPanel extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel chartPanel;

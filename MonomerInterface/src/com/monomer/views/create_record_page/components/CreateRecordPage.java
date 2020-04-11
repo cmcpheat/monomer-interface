@@ -1,4 +1,4 @@
-package com.monomer.views.create_record_page;
+package com.monomer.views.create_record_page.components;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -13,19 +13,10 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import com.monomer.models.DataRecordModel;
-import com.monomer.views.create_record_page.components.BatchIdAlertLabel;
-import com.monomer.views.create_record_page.components.BatchIdInput;
-import com.monomer.views.create_record_page.components.BatchIdLabel;
-import com.monomer.views.create_record_page.components.BubbleCountAlertLabel;
-import com.monomer.views.create_record_page.components.BubbleCountInput;
-import com.monomer.views.create_record_page.components.BubbleCountLabel;
-import com.monomer.views.create_record_page.components.ClearButton;
-import com.monomer.views.create_record_page.components.CreateRecordFormPanel;
-import com.monomer.views.create_record_page.components.DataSubmittedLabel;
-import com.monomer.views.create_record_page.components.MachineNumberAlertLabel;
-import com.monomer.views.create_record_page.components.MachineNumberInput;
-import com.monomer.views.create_record_page.components.MachineNumberLabel;
-import com.monomer.views.create_record_page.components.SubmitButton;
+import com.monomer.views.create_record_page.layouts.AlertLayout;
+import com.monomer.views.create_record_page.layouts.ButtonLayout;
+import com.monomer.views.create_record_page.layouts.InputLayout;
+import com.monomer.views.create_record_page.layouts.LabelLayout;
 
 public class CreateRecordPage implements ActionListener {
 	
@@ -51,13 +42,13 @@ public class CreateRecordPage implements ActionListener {
 		JPanel createRecordPage = new JPanel(); 
 		
 		// set layout for components
-		GridBagConstraints labelLayout = new CreateRecordLabelLayout().setLabelLayout(); // done
-		GridBagConstraints buttonLayout = new CreateRecordButtonLayout().setButtonLayout(); // done
-		GridBagConstraints inputLayout = new CreateRecordInputLayout().setInputLayout(); // done
-		GridBagConstraints alertLayout = new CreateRecordAlertLayout().setAlertLayout(); // done
+		GridBagConstraints labelLayout = new LabelLayout().setLabelLayout(); // done
+		GridBagConstraints buttonLayout = new ButtonLayout().setButtonLayout(); // done
+		GridBagConstraints inputLayout = new InputLayout().setInputLayout(); // done
+		GridBagConstraints alertLayout = new AlertLayout().setAlertLayout(); // done
 		
 		// add form panel to page
-		JPanel formPanel = new CreateRecordFormPanel().setCreateRecordFormPanel();
+		JPanel formPanel = new FormPanel().setCreateRecordFormPanel();
 		createRecordPage.add(formPanel);
 		
 		// add 'batch ID' label to form

@@ -1,9 +1,9 @@
-package com.monomer.views.create_record_page;
+package com.monomer.views.create_record_page.layouts;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class CreateRecordButtonLayout {
+public class ButtonLayout {
 	
 	GridBagConstraints buttonLayout = new GridBagConstraints();
 	
