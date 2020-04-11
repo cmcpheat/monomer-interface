@@ -1,4 +1,4 @@
-package com.monomer.data;
+package com.monomer.models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,9 +11,9 @@ public class DataObject {
 	private String dateTime;
 	private String currentDateTime;
 	
-	public DataObject() {
-		
-	}
+//	public DataObject() {
+//		
+//	}
 	
 	public void setBatchId(String bId) {
 		this.batchId = Integer.parseInt(bId);

@@ -1,17 +1,10 @@
-package com.monomer.gui.pages.live_data;
+package com.monomer.views.live_data_page;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
-import com.monomer.gui.components.live_data.LiveDataChartPanel;
-import com.monomer.gui.components.live_data.LiveDataMachineOneButton;
-import com.monomer.gui.components.live_data.LiveDataMachineThreeButton;
-import com.monomer.gui.components.live_data.LiveDataMachineTwoButton;
-import com.monomer.gui.styles.live_data.LiveDataButtonLayout;
-import com.monomer.gui.styles.live_data.LiveDataPanelLayout;
 
 public class LiveDataPage {
 

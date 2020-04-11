@@ -1,7 +1,7 @@
 package com.monomer.app;
 
-import com.monomer.gui.pages.create_record.CreateRecordPage;
-import com.monomer.gui.pages.live_data.LiveDataPage;
+import com.monomer.views.create_record_page.CreateRecordPage;
+import com.monomer.views.live_data_page.LiveDataPage;
 
 import java.awt.Dimension;
 
@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 //import javax.swing.ImageIcon;
 
-public class GUI {
+public class GuiConstructor {
 	
 	private JFrame frame;
 
 	// GUI constructor 
-	public GUI() {
+	public GuiConstructor() {
 		
 		// frame setup
 		frame = new JFrame();

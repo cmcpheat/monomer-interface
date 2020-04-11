@@ -1,4 +1,4 @@
-package com.monomer.gui.pages.create_record;
+package com.monomer.views.create_record_page;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import com.monomer.data.DataObject;
+import com.monomer.models.DataObject;
 
 public class CreateRecordPage implements ActionListener {
 	

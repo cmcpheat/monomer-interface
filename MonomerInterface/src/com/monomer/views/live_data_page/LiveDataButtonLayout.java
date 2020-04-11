@@ -1,4 +1,4 @@
-package com.monomer.gui.styles.live_data;
+package com.monomer.views.live_data_page;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

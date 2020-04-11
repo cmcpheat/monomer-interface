@@ -1,4 +1,4 @@
-package com.monomer.gui.styles.create_record;
+package com.monomer.views.create_record_page;
 
 public class CreateRecordButtonLayout {
 

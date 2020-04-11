@@ -1,4 +1,4 @@
-package com.monomer.data;
+package com.monomer.models;
 
 import java.util.ArrayList;
 

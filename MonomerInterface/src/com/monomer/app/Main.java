@@ -10,7 +10,7 @@ public class Main {
 		// set theme to 'nimbus' and run GUI
 		Theme theme = new Theme();
 		theme.setTheme();
-		new GUI();
+		new GuiConstructor();
 	}
 
 }
