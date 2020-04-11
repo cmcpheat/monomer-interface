@@ -1,20 +1,13 @@
 package com.monomer.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
-//class which stores and retrieves the machine numbers
 public class MachineNumberModel {
 	
-	private static ArrayList<Integer> machineNumbers = new ArrayList<Integer>();
-	private static int machineNumber;
+	public final List<Integer> machines = new ArrayList<>();
 	
-	public static void setMachineNumber(int machine) {
-		machineNumbers.add(machine);
+	public void addMachineNumber (int machineNumber ) {
+		machines.add( machineNumber );
 	}
-	
-	public static int getMachineNumber(int index) {
-		machineNumber = machineNumbers.get(index);
-		return machineNumber;
-	}
-
 }

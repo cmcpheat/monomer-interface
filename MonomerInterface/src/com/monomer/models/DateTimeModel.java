@@ -1,20 +1,14 @@
 package com.monomer.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
-// class which stores and retrieves the date/times
 public class DateTimeModel {
 	
-	private static ArrayList<Integer> dateTimes = new ArrayList<Integer>();
-	private static int dateTime;
+	public final List<String> dates = new ArrayList<>();
 	
-	public static void setBatchId(int dt) {
-		dateTimes.add(dt);
-	}
-	
-	public static int getBatchId(int index) {
-		dateTime = dateTimes.get(index);
-		return dateTime;
+	public void addDateTime( String date ) {
+		dates.add( date );
 	}
 
 }

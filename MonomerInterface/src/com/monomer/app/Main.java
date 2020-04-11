@@ -1,7 +1,7 @@
 package com.monomer.app;
 
-import com.monomer.views.gui.GuiConstructor;
-import com.monomer.views.gui.Theme;
+import com.monomer.views.GuiConstructor;
+import com.monomer.views.Theme;
 
 public class Main {
 	
@@ -15,5 +15,4 @@ public class Main {
 		theme.setTheme();
 		new GuiConstructor();
 	}
-
-}
+}	
