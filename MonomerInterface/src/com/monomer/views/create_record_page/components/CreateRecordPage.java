@@ -20,15 +20,15 @@ import com.monomer.views.create_record_page.layouts.LabelLayout;
 
 public class CreateRecordPage implements ActionListener {
 	
-	private JButton submitBtn;
-	private JButton clearBtn;
-	private JLabel batchValidationLabel;
-	private JLabel machineValidationLabel;
-	private JLabel bubbleValidationLabel;
-	private JLabel submitMessageLabel;
-	private JTextField batchText;
-	private JComboBox<String> machineText;
-	private JTextField bubbleText;
+	private JTextField batchIdInput;
+	private JLabel batchIdAlertLabel;
+	private JComboBox<String> machineNumberInput;
+	private JLabel machineNumberAlertLabel;
+	private JTextField bubbleCountInput;
+	private JLabel bubbleCountAlertLabel;
+	private JButton clearButton;
+	private JButton submitButton;
+	private JLabel dataSubmittedLabel;
 	private boolean batchIsValidFormat = false;
 	private boolean bubbleIsValidFormat = false;
 	private int batchId;
@@ -127,10 +127,10 @@ public class CreateRecordPage implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		// handle 'submit' button click
-		if (e.getSource() == submitBtn)
+		if (e.getSource() == submitButton)
 		{	
 			boolean bId = validateBatchId(batchIsValidFormat);
-			boolean mNum = validateMachineNum(machineText.getSelectedIndex());
+			boolean mNum = validateMachineNum(machineNumberInput.getSelectedIndex());
 			boolean bCount = validateBubbleCount(bubbleIsValidFormat);
 			
 			// check if form fields are valid then do stuff...
@@ -138,9 +138,9 @@ public class CreateRecordPage implements ActionListener {
 				
 				DataRecordModel data = new DataRecordModel();
 				
-				data.setBatchId(batchText.getText());
-				data.setMachineNumber((String) machineText.getSelectedItem());
-				data.setBubbleCount(bubbleText.getText());
+				data.setBatchId(batchIdInput.getText());
+				data.setMachineNumber((String) machineNumberInput.getSelectedItem());
+				data.setBubbleCount(bubbleCountInput.getText());
 				String currentDateTime = data.getCurrentDateTimeStamp();
 				data.setDateTime(currentDateTime);
 				
@@ -172,7 +172,7 @@ public class CreateRecordPage implements ActionListener {
 		}
 		
 		// handle 'clear' button click
-		else if (e.getSource() == clearBtn) {
+		else if (e.getSource() == clearButton) {
 			clearForm();
 			System.out.println("USER HAS CLEARED FORM");
 		}
@@ -180,65 +180,65 @@ public class CreateRecordPage implements ActionListener {
 
 	// checks if 'batch ID' is empty and in correct number range
 	public boolean validateBatchId(boolean batch) {
-		if (batch == false || batchText.getText().equals("")) {
-			batchValidationLabel.setText("Enter a number between 1 - 999999");
+		if (batch == false || batchIdInput.getText().equals("")) {
+			batchIdAlertLabel.setText("Enter a number between 1 - 999999");
 			return false;
 		}
 		else {
-			batchValidationLabel.setText(" ");
+			batchIdAlertLabel.setText(" ");
 			return true;
 		}
 	}	
 		
-	// checks if 'machine number' is on default selection
+	// checks if 'machine number' is on default selectiond
 	public boolean validateMachineNum(int machine) {
 		if (machine == 0) {
-			machineValidationLabel.setText("Please select an option");
+			machineNumberAlertLabel.setText("Please select an option");
 			return false;
 		}
 		else {
-			machineValidationLabel.setText(" ");
+			machineNumberAlertLabel.setText(" ");
 			return true;
 		}
 	}
 	
 	// checks if 'bubble count' is empty and in correct number range
 	public boolean validateBubbleCount(boolean bubble) {
-		if (bubble == false || bubbleText.getText().equals("")) {
-			bubbleValidationLabel.setText("Enter a number between 1 - 600");
+		if (bubble == false || bubbleCountInput.getText().equals("")) {
+			bubbleCountAlertLabel.setText("Enter a number between 1 - 600");
 			return false;
 		}
 		else {
-			bubbleValidationLabel.setText(" ");
+			bubbleCountAlertLabel.setText(" ");
 			return true;
 		}
 	}
 	
 	// shows data submitted message, disappears after 5 seconds
 	public void showSubmitMessage () {
-		submitMessageLabel.setText("The data has been submitted successfully.");
+		dataSubmittedLabel.setText("The data has been submitted successfully.");
 		try {
 			int delay = 5000;
 			Timer timer = new Timer(delay, new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					submitMessageLabel.setText(" "); 
+					dataSubmittedLabel.setText(" "); 
 				}	
 			});
 			timer.setRepeats(false);
 			timer.start();
 		}
 		catch (Exception e1) {
-			submitMessageLabel.setText("There has been an error.");
+			dataSubmittedLabel.setText("There has been an error. Please try again");
 		}
 	}
 	
 	public void clearForm() {
-		batchText.setText("");
-		batchValidationLabel.setText(" ");
-		machineText.setSelectedIndex(0);
-		machineValidationLabel.setText(" ");
-		bubbleText.setText("");
-		bubbleValidationLabel.setText(" ");
+		batchIdInput.setText("");
+		batchIdAlertLabel.setText(" ");
+		machineNumberInput.setSelectedIndex(0);
+		machineNumberAlertLabel.setText(" ");
+		bubbleCountInput.setText("");
+		bubbleCountAlertLabel.setText(" ");
 	}
 }
 
