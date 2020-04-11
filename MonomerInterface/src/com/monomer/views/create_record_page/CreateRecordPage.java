@@ -20,24 +20,26 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 import com.monomer.models.DataRecordModel;
+import com.monomer.views.create_record_page.components.BatchIdAlertLabel;
+import com.monomer.views.create_record_page.components.BatchIdInput;
 import com.monomer.views.create_record_page.components.BatchIdLabel;
-import com.monomer.views.create_record_page.components.BatchIdValidationLabel;
+import com.monomer.views.create_record_page.components.BubbleCountAlertLabel;
+import com.monomer.views.create_record_page.components.BubbleCountInput;
 import com.monomer.views.create_record_page.components.BubbleCountLabel;
+import com.monomer.views.create_record_page.components.ClearButton;
 import com.monomer.views.create_record_page.components.CreateRecordFormPanel;
+import com.monomer.views.create_record_page.components.DataSubmittedLabel;
+import com.monomer.views.create_record_page.components.MachineNumberAlertLabel;
+import com.monomer.views.create_record_page.components.MachineNumberInput;
 import com.monomer.views.create_record_page.components.MachineNumberLabel;
-import com.monomer.views.create_record_page.components.MachineNumberValidationLabel;
+import com.monomer.views.create_record_page.components.SubmitButton;
 
 public class CreateRecordPage implements ActionListener {
 	
-	private JPanel createRecordPage;
-	private JPanel formPanel;
 	private JButton submitBtn;
 	private JButton clearBtn;
-	private JLabel batchLabel;
 	private JLabel batchValidationLabel;
-	private JLabel machineLabel;
 	private JLabel machineValidationLabel;
-	private JLabel bubbleLabel;
 	private JLabel bubbleValidationLabel;
 	private JLabel submitMessageLabel;
 	private JTextField batchText;
@@ -52,225 +54,80 @@ public class CreateRecordPage implements ActionListener {
 	
 	public JPanel createCreateRecordPage() {
 		
+		// create a record page
 		JPanel createRecordPage = new JPanel(); 
 		
-		GridBagConstraints btnLayout CreateRecordButtonLayout().setCreateRecordButtonLayout();
-		GridBagConstraints inputLayout CreateRecordInputLayout().setCreateRecordInputLayout();
-		GridBagConstraints labelLayout CreateRecordLabelLayout().setCreateRecordLabelLayout();
-		GridBagConstraints alertLayout CreateRecordAlertLayout().setCreateRecordAlertLayout();
+		// set layout for components
+		GridBagConstraints labelLayout = new CreateRecordLabelLayout().setLabelLayout(); // done
+		GridBagConstraints buttonLayout = new CreateRecordButtonLayout().setButtonLayout(); // done
+		GridBagConstraints inputLayout = new CreateRecordInputLayout().setInputLayout(); // done
+		GridBagConstraints alertLayout = new CreateRecordAlertLayout().setAlertLayout(); // done
 		
-		// Create a Record page
-		// Grid set up for create record form
-		GridBagConstraints c2 = new GridBagConstraints();
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		
-		// add form panel
+		// add form panel to page
 		JPanel formPanel = new CreateRecordFormPanel().setCreateRecordFormPanel();
-		// createRecordPage.add(formPanel);
-		
-		// add 'batch ID' label
-		JLabel batchIdLabel = new BatchIdLabel().setBatchIdLabel();
-			
-		// add batch ID validation label
-		JLabel batchIdValidationLabel = new BatchIdValidationLabel().setBatchIdValidationLabel();
-		
-		// add 'machine number' label
-		JLabel machineNumberLabel = new MachineNumberLabel().setMachineNumberLabel();
-		
-		// add machine number validation label
-		JLabel machineNumberValidationLabel = new MachineNumberValidationLabel().setMachineNumberValidationLabel();
-		
-		// add 'bubble count' label
-		JLabel bubbleCountLabel = new BubbleCountLabel().setBubbleCountLabel();
-		
-		// add bubble count validation label
-		
-		// add 'batch ID' text input
-		
-		// add 'machine number' drop-down
-		
-		// add 'bubble count' text input
-		
-		// add 'clear' button
-		
-		// add 'submit' button
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		// batch ID label	
-		formPanel.add(batchLabel, c2);
-		
-		// batch ID validation label // hidden by default
-		formPanel.add(batchValidationLabel, c2);
-		
-		// machine no. label
-		formPanel.add(machineLabel, c2);
-		
-		// machine no. validation label // hidden by default
-		formPanel.add(machineValidationLabel, c2);
-		 
-		// bubble count label
-		formPanel.add(bubbleLabel, c2);
-		
-		// bubble count validation label // hidden by default
-		bubbleValidationLabel = new JLabel(" ", JLabel.CENTER);
-		bubbleValidationLabel.setForeground(Color.red);
-		bubbleValidationLabel.setFont (bubbleValidationLabel.getFont ().deriveFont (11.0f));
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 1;
-		c2.gridx = 1;
-		c2.gridy = 5;
-		c2.insets = new Insets(0,20,0,20);	
-		formPanel.add(bubbleValidationLabel, c2);
-	
-		// batch ID text input
-		batchText = new JTextField("", 20);
-		// validates number between 000001 - 999999 and sets boolean to true/false
-		batchText.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				String str = batchText.getText();
-				 try 
-				 { 
-		            Integer.parseInt(str);
-		            int ii = Integer.parseInt(str);
-		            if (ii < 1 || ii > 999999) {
-		            	batchIsValidFormat = false;
-					}
-		            else {
-		            	batchIsValidFormat = true;
-		            	batchValidationLabel.setText(" ");
-		            }
-		        }  
-		        catch (NumberFormatException e1)  
-		        { 
-		        	batchIsValidFormat = false;
-		        } 
-			}
-		});
-		batchText.setBorder(BorderFactory.createCompoundBorder(
-		batchText.getBorder(), 
-        BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-		batchText.setFont (batchText.getFont ().deriveFont (12.0f));
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 20;
-		c2.weightx = 0.5;
-		c2.gridx = 1;
-		c2.gridy = 0;
-		c2.insets = new Insets(20,20,5,20);		
-		formPanel.add(batchText, c2);
-		
-		// machine no. drop down
-		machineText = new JComboBox<String>();     
-		machineText.setBorder(BorderFactory.createCompoundBorder(
-		machineText.getBorder(), 
-        BorderFactory.createEmptyBorder(10, 10, 10, 0)));
-		machineText.setFont (machineText.getFont ().deriveFont (12.0f));
-		machineText.setBackground(Color.white);
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 30;
-		c2.weightx = 0.5;
-		c2.gridx = 1;
-		c2.gridy = 2;
-		c2.insets = new Insets(10,20,5,20);
-		formPanel.add(machineText, c2);
-	    machineText.addItem("Please select...");
-	    machineText.addItem("1");c2.insets = new Insets(10,20,10,20);	
-		machineText.addItem("2");
-		machineText.addItem("3");
-		 
-		// bubble count text input
-		bubbleText = new JTextField("");
-		// validates number between 0-600 and sets boolean to true/false
-		bubbleText.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				String str = bubbleText.getText();
-				 try 
-				 { 
-		            Integer.parseInt(str);
-		            int i = Integer.parseInt(str);
-		            if (i < 0 || i > 600) {
-		            	bubbleIsValidFormat = false;
-					}
-		            else {
-		            	bubbleIsValidFormat = true;
-		            	bubbleValidationLabel.setText(" ");
-		            }
-		        }  
-		        catch (NumberFormatException e1)  
-		        { 
-		        	bubbleIsValidFormat = false;
-		        } 
-			}
-		});
-		bubbleText.setBorder(BorderFactory.createCompoundBorder(
-		bubbleText.getBorder(), 
-        BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-		bubbleText.setFont (bubbleText.getFont ().deriveFont (12.0f));
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 20;
-		c2.weightx = 1.5;
-		c2.gridx = 1;
-		c2.gridy = 4;
-		c2.insets = new Insets(20,20,5,20);	
-		formPanel.add(bubbleText, c2);
- 
-		// clear button
-		clearBtn = new JButton("Clear");
-		clearBtn.addActionListener(this);
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 20;      // make this component tall
-		c2.weightx = 0.5;
-		c2.gridwidth = 1;
-		c2.gridx = 0;
-		c2.gridy = 6;
-		c2.insets = new Insets(20,20,20,20);
-		formPanel.add(clearBtn, c2);
-		
-		// submit button
-		submitBtn = new JButton("Submit");
-		submitBtn.addActionListener(this);
-		c2.fill = GridBagConstraints.HORIZONTAL;
-		c2.ipady = 20;      // make this component tall
-		c2.weightx = 0.5;
-		c2.gridwidth = 1;
-		c2.gridx = 1;
-		c2.gridy = 6;
-		c2.insets = new Insets(20,20,20,20);
-		formPanel.add(submitBtn, c2);
-		
-		// submitted message label (bottom of form)
-		submitMessageLabel = new JLabel(" ");
-		submitMessageLabel.setForeground(Color.red);
-		submitMessageLabel.setFont (bubbleValidationLabel.getFont ().deriveFont (12.0f));
-		c2.fill = GridBagConstraints.CENTER;
-		c2.ipady = 20;      // make this component tall
-		c2.gridwidth = 3;
-		c2.gridx = 0;
-		c2.gridy = 7;
-		c2.insets = new Insets(0,20,20,20);
-		formPanel.add(submitMessageLabel, c2);
-		
-		// add form to Create a Record tab
 		createRecordPage.add(formPanel);
 		
-		return createRecordPage;	
+		// add 'batch ID' label to form
+		JLabel batchIdLabel = new BatchIdLabel().setBatchIdLabel();
+		labelLayout.gridy = 0;
+		formPanel.add(batchIdLabel, labelLayout);
+			
+		// add batch ID validation label to form
+		JLabel batchIdAlertLabel = new BatchIdAlertLabel().setBatchIdAlertLabel();
+		alertLayout.gridy = 1;
+		formPanel.add(batchIdAlertLabel, alertLayout);
 		
+		// add 'machine number' label to form
+		JLabel machineNumberLabel = new MachineNumberLabel().setMachineNumberLabel();
+		labelLayout.gridy = 2;
+		formPanel.add(machineNumberLabel, alertLayout);
+		
+		// add machine number validation label to form
+		JLabel machineNumberAlertLabel = new MachineNumberAlertLabel().setMachineNumberAlertLabel();
+		alertLayout.gridy = 3;
+		formPanel.add(machineNumberAlertLabel, alertLayout);
+		
+		// add 'bubble count' label to form
+		JLabel bubbleCountLabel = new BubbleCountLabel().setBubbleCountLabel();
+		labelLayout.gridy = 4;		
+		formPanel.add(bubbleCountLabel, labelLayout);
+		
+		// add bubble count validation label to form
+		JLabel bubbleCountAlertLabel = new BubbleCountAlertLabel().setBubbleCountAlertLabel();
+		alertLayout.gridy = 5;
+		formPanel.add(bubbleCountAlertLabel, alertLayout);
+		
+		// add 'batch ID' text input to form
+		JTextField batchIdInput = new BatchIdInput().setBatchIdInput();
+		inputLayout.gridy = 0;
+		formPanel.add(batchIdInput, inputLayout);
+		
+		// add 'machine number' drop-down to form
+		JComboBox<String> machineNumberInput = new MachineNumberInput().setMachineNumberInput();
+		inputLayout.gridy = 2;
+		formPanel.add(machineNumberInput, inputLayout);
+		
+		// add 'bubble count' text input to form
+		JTextField bubbleCountTextInput = new BubbleCountInput().setBubbleCountInput();
+		inputLayout.gridy = 4;
+		formPanel.add(bubbleText, inputLayout);
+		
+		// add 'clear' button to form
+		JButton clearButton = new ClearButton().setClearButton();
+		buttonLayout.gridx = 0;
+		formPanel.add(clearButton, buttonLayout);
+		
+		// add 'submit' button to form
+		JButton submitButton = new SubmitButton().setSubmitButton();
+		buttonLayout.gridx = 1;
+		formPanel.add(submitBtn, buttonLayout);
+		
+		// add 'data submitted' message label to form
+		JLabel dataSubmittedLabel = new DataSubmittedLabel().setDataSubmittedLabel();
+		labelLayout.gridy = 7;
+		formPanel.add(submitMessageLabel, labelLayout);
+		
+		return createRecordPage;			
 	}
 	
 	public void actionPerformed(ActionEvent e) {

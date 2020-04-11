@@ -15,5 +15,4 @@ public class BatchIdLabel {
 		
 		return batchIdLabel;
 	}
-
 }
