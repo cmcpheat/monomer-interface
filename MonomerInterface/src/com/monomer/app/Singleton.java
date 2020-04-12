@@ -1,22 +1,34 @@
-package com.monomer.views;
+package com.monomer.app;
 
-import com.monomer.controllers.CreateRecordViewController;
-import com.monomer.controllers.LiveDataViewController;
+// TODO Singleton not finished and not in use. 
 
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-//import javax.swing.ImageIcon;
 
-public class GuiConstructor {
-	
-	private JFrame frame;
+import com.monomer.controllers.CreateRecordViewController;
+import com.monomer.controllers.LiveDataViewController;
 
-	// GUI constructor 
-	public GuiConstructor() {
-		
+public class Singleton {
+
+   private static Singleton singleton = new Singleton( );
+   private JFrame frame = new JFrame();
+
+   /* A private Constructor prevents any other
+    * class from instantiating.
+    */
+   private Singleton() { }
+
+   /* Static 'instance' method */
+   public static Singleton getInstance( ) {
+      return singleton;
+   }
+
+   /* Other methods protected by singleton-ness */
+   protected JFrame guiConstructor( ) {
+	   
 		// frame setup
 		frame = new JFrame();
 		frame.setResizable(false); // prevents resizing
@@ -43,10 +55,9 @@ public class GuiConstructor {
 		// show GUI
 		frame.pack();
 		frame.setVisible(true);
-		frame.setLocationRelativeTo(null); // centres the window		
-	}
-
-	
-}	
-	
-
+		frame.setLocationRelativeTo(null); // centres the window	
+		
+		return frame;
+	      
+   }
+}

@@ -24,7 +24,7 @@ import com.monomer.views.create_record.components.BatchIdLabel;
 import com.monomer.views.create_record.components.BubbleCountAlertLabel;
 import com.monomer.views.create_record.components.BubbleCountInput;
 import com.monomer.views.create_record.components.BubbleCountLabel;
-import com.monomer.views.create_record.components.ClearButton;
+import com.monomer.views.create_record.components.CancelButton;
 import com.monomer.views.create_record.components.DataSubmittedLabel;
 import com.monomer.views.create_record.components.FormPanel;
 import com.monomer.views.create_record.components.MachineNumberAlertLabel;
@@ -49,7 +49,7 @@ public class CreateRecordViewController implements ActionListener {
 	private JLabel bubbleCountLabel;
 	private JTextField bubbleCountInput;
 	private JLabel bubbleCountAlertLabel;
-	private JButton clearButton;
+	private JButton cancelButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
 	BatchIdModel batchIdList = new BatchIdModel();
@@ -120,10 +120,10 @@ public class CreateRecordViewController implements ActionListener {
 		formPanel.add(bubbleCountInput, inputLayout);
 		
 		// add 'clear' button to form
-		clearButton = new ClearButton().setClearButton();
-		clearButton.addActionListener(this);
+		cancelButton = new CancelButton().setClearButton();
+		cancelButton.addActionListener(this);
 		buttonLayout.gridx = 0;
-		formPanel.add(clearButton, buttonLayout);
+		formPanel.add(cancelButton, buttonLayout);
 		
 		// add 'submit' button to form
 		submitButton = new SubmitButton().setSubmitButton();
@@ -195,7 +195,7 @@ public class CreateRecordViewController implements ActionListener {
 		}
 		
 		// handle 'clear' button click
-		else if (e.getSource() == clearButton) {
+		else if (e.getSource() == cancelButton) {
 			clearForm();
 		}
 	}
