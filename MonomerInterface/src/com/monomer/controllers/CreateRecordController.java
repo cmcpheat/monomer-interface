@@ -1,4 +1,4 @@
-package com.monomer.views.create_record;
+package com.monomer.controllers;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import com.monomer.controllers.DataController;
 import com.monomer.json.JSONObject;
 import com.monomer.views.create_record.components.BatchIdAlertLabel;
 import com.monomer.views.create_record.components.BatchIdInput;
@@ -33,7 +32,7 @@ import com.monomer.views.create_record.layouts.ButtonLayout;
 import com.monomer.views.create_record.layouts.InputLayout;
 import com.monomer.views.create_record.layouts.LabelLayout;
 
-public class CreateRecordPage implements ActionListener {
+public class CreateRecordController implements ActionListener {
 	
 	private JPanel createRecordPage;
 	private JPanel formPanel;

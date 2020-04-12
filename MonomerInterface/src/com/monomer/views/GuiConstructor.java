@@ -1,6 +1,6 @@
 package com.monomer.views;
 
-import com.monomer.views.create_record.CreateRecordPage;
+import com.monomer.controllers.CreateRecordController;
 import com.monomer.views.live_data.LiveDataPage;
 
 import java.awt.Dimension;
@@ -33,7 +33,7 @@ public class GuiConstructor {
 		
 		// create pages
 		JPanel liveDataPage = new LiveDataPage().addLiveDataPage();
-		JPanel createRecordPage = new CreateRecordPage().addCreateRecordPage();
+		JPanel createRecordPage = new CreateRecordController().addCreateRecordPage();
 		
 		// add pages to tabs
 		tabs.add("Live Data", liveDataPage);
