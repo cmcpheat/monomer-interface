@@ -11,7 +11,8 @@ public class DataSubmittedLabel {
 	public JLabel setDataSubmittedLabel() {
 		
 		dataSubmittedLabel = new JLabel(" ");
-		dataSubmittedLabel.setForeground(Color.red);
+		Color DARK_RED = new Color(204, 0, 0);
+		dataSubmittedLabel.setForeground(DARK_RED);
 		dataSubmittedLabel.setFont (dataSubmittedLabel.getFont ().deriveFont (12.0f));
 		
 		return dataSubmittedLabel;

@@ -5,9 +5,8 @@ import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-public class ChartPanel extends JPanel {
+public class ChartPanel {
 	
-	private static final long serialVersionUID = 1L;
 	private JPanel chartPanel;
 	
 	public JPanel createLiveDataChartPanel() {

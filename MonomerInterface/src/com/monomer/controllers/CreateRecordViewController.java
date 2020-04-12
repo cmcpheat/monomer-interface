@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,7 +14,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-import com.monomer.json.JSONObject;
+import com.monomer.models.BatchIdModel;
+import com.monomer.models.BubbleCountModel;
+import com.monomer.models.DateTimeModel;
+import com.monomer.models.MachineNumberModel;
 import com.monomer.views.create_record.components.BatchIdAlertLabel;
 import com.monomer.views.create_record.components.BatchIdInput;
 import com.monomer.views.create_record.components.BatchIdLabel;
@@ -32,7 +36,7 @@ import com.monomer.views.create_record.layouts.ButtonLayout;
 import com.monomer.views.create_record.layouts.InputLayout;
 import com.monomer.views.create_record.layouts.LabelLayout;
 
-public class CreateRecordController implements ActionListener {
+public class CreateRecordViewController implements ActionListener {
 	
 	private JPanel createRecordPage;
 	private JPanel formPanel;
@@ -48,10 +52,14 @@ public class CreateRecordController implements ActionListener {
 	private JButton clearButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
+	BatchIdModel batchIdList = new BatchIdModel();
+	BubbleCountModel bubbleCountList = new BubbleCountModel();
+	MachineNumberModel machineNumberList = new MachineNumberModel();
+	DateTimeModel dateTimeList = new DateTimeModel();
 	
 	public JPanel addCreateRecordPage() {
 		
-		// create a record page
+		// add the 'create a record' page
 		createRecordPage = new JPanel(); 
 		
 		// set layout for components
@@ -135,6 +143,8 @@ public class CreateRecordController implements ActionListener {
 		return createRecordPage;			
 	}
 	
+	// controller functions
+	
 	public void actionPerformed(ActionEvent e) {
 		
 		// handle 'submit' button click
@@ -155,17 +165,32 @@ public class CreateRecordController implements ActionListener {
 			// check if form fields are valid then do stuff...
 			if (batchValid == true && machineValid == true && bubbleValid == true) {
 				
-				JSONObject json = new JSONObject();
+				int BATCH_ID = Integer.parseInt(batchId);
+				int MACHINE_NUMBER = Integer.parseInt(machineNumber);
+				int BUBBLE_COUNT = Integer.parseInt(bubbleCount);
+			
+				try
+				{
+					// add data to array lists
+					batchIdList.setBatchId(BATCH_ID);
+					machineNumberList.setMachineNumber(MACHINE_NUMBER);
+					bubbleCountList.setBubbleCount(BUBBLE_COUNT);
+					dateTimeList.setDateTime(dateTime);
+					
+					showSubmitMessage(BATCH_ID);
+				}
+				catch (Exception exc)
+				{
+					// error shown if exception caught 
+					dataSubmittedLabel.setText("There has been an error. Please try again.");
+				}
 				
-				json.put("batch_id", Integer.parseInt(batchId));
-				json.put("machine_number", Integer.parseInt(machineNumber));
-				json.put("bubble_count", Integer.parseInt(bubbleCount));
-				json.put("date", dateTime);
-				
-				DataController dataController = new DataController();
-				dataController.sendJSONData(json);			
-				showSubmitMessage();
 				clearForm();
+				
+				batchIdList.printAllBatchIds();
+				machineNumberList.printAllMachineNumbers();
+				bubbleCountList.printAllBubbleCounts();
+				dateTimeList.printAllDateTimes();
 			}
 		}
 		
@@ -233,8 +258,8 @@ public class CreateRecordController implements ActionListener {
 	}
 	
 	// shows data submitted message, disappears after 5 seconds
-	public void showSubmitMessage () {
-		dataSubmittedLabel.setText("The data has been submitted successfully.");
+	public void showSubmitMessage (int b) {
+		dataSubmittedLabel.setText("Batch #" + b + " data has been submitted successfully.");
 		try {
 			int delay = 5000;
 			Timer timer = new Timer(delay, new ActionListener() {

@@ -14,7 +14,7 @@ public class PanelLayout extends GridBagConstraints {
 		c.ipady = 520;      // make this component tall
 		c.insets = new Insets(0,20,15,20);  // padding
 		c.weightx = 0.0;
-		c.gridwidth = 3;
+		c.gridwidth = 4;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.anchor = GridBagConstraints.PAGE_END;

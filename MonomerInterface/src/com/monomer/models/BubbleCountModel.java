@@ -1,13 +1,26 @@
 package com.monomer.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class BubbleCountModel {
 	
-	public final List<Integer> bubbles = new ArrayList<>();
+	ArrayList<Integer> BUBBLE_COUNT_LIST = new ArrayList<Integer>();
 	
-	public void addBubbleCount( int bubbleCount ) {
-		bubbles.add( bubbleCount );
+	public BubbleCountModel() {
+		
 	}
+	
+	public void setBubbleCount(int bc)
+	{		
+		BUBBLE_COUNT_LIST.add(bc);
+	}
+	
+	public int getBubbleCount(int index) {
+		return BUBBLE_COUNT_LIST.get(index);
+	}
+	
+	public void printAllBubbleCounts() {
+		System.out.println("BC List: " + BUBBLE_COUNT_LIST);
+	}
+
 }

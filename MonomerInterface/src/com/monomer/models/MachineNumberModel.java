@@ -1,13 +1,26 @@
 package com.monomer.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MachineNumberModel {
 	
-	public final List<Integer> machines = new ArrayList<>();
+	ArrayList<Integer> MACHINE_NUM_LIST = new ArrayList<Integer>();
 	
-	public void addMachineNumber (int machineNumber ) {
-		machines.add( machineNumber );
+	public MachineNumberModel () {
+		
 	}
+	
+	public void setMachineNumber(int mn)
+	{		
+		MACHINE_NUM_LIST.add(mn);
+	}
+	
+	public int getMachineNumber(int index) {
+		return MACHINE_NUM_LIST.get(index);
+	}
+	
+	public void printAllMachineNumbers() {
+		System.out.println("MN List: " + MACHINE_NUM_LIST);
+	}
+
 }
