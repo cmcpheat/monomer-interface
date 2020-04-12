@@ -164,9 +164,7 @@ public class CreateRecordPage implements ActionListener {
 				json.put("date", dateTime);
 				
 				DataController dataController = new DataController();
-				dataController.sendJSONData(json);
-
-//				// sendData(dataObj);				
+				dataController.sendJSONData(json);			
 				showSubmitMessage();
 				clearForm();
 			}

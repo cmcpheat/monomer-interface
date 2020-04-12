@@ -7,7 +7,7 @@ import com.monomer.models.DateTimeModel;
 import com.monomer.models.MachineNumberModel;
 
 public class DataController {
-		
+	
 	public void sendJSONData(JSONObject json) {
 		processBatchId(json.getInt("batch_id"));
 		processMachineNumber(json.getInt("machine_number"));
@@ -16,23 +16,27 @@ public class DataController {
 	}
 
 	public void processBatchId(int bi) {
-		final BatchIdModel batches = new BatchIdModel();
-		batches.addBatchId(bi);
+		final BatchIdModel batchIdList = new BatchIdModel();
+		batchIdList.addBatchId(bi);
+		System.out.println("batches: " + batchIdList.batchIds.toString());
 	}
 	
 	public void processMachineNumber(int mn) {
-		final MachineNumberModel machines = new MachineNumberModel();
-		machines.addMachineNumber(mn);
+		final MachineNumberModel machineNumList = new MachineNumberModel();
+		machineNumList.addMachineNumber(mn);
+		System.out.println("machines: " + machineNumList.machines.toString());
 	}
 	
 	public void processBubbleCount(int bc) {
-		final BubbleCountModel bubbles = new BubbleCountModel();
-		bubbles.addBubbleCount(bc);
+		final BubbleCountModel bubbleCountList = new BubbleCountModel();
+		bubbleCountList.addBubbleCount(bc);
+		System.out.println("bubbles: " + bubbleCountList.bubbles.toString());
 	}
 	
 	public void processDateTime(String dt) {
-		final DateTimeModel dates = new DateTimeModel();
-		dates.addDateTime(dt);
+		final DateTimeModel dateTimeList = new DateTimeModel();
+		dateTimeList.addDateTime(dt);
+		System.out.println("dates: " + dateTimeList.dates.toString());
 	}
 
 }
