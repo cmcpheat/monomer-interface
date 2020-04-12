@@ -11,7 +11,7 @@ public class MachineOneButton implements ActionListener {
 	private JButton machineOneBtn;
 	private boolean machineOneActive = false;
 	
-	public JButton createLiveDataMachineOneButton() {
+	public JButton setLiveDataMachineOneButton() {
 		
 		machineOneBtn = new JButton("Machine 1");
 		machineOneBtn.addActionListener(this);

@@ -9,7 +9,7 @@ public class ChartPanel {
 	
 	private JPanel chartPanel;
 	
-	public JPanel createLiveDataChartPanel() {
+	public JPanel setLiveDataChartPanel() {
 		
 		chartPanel = new JPanel();
 		chartPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));

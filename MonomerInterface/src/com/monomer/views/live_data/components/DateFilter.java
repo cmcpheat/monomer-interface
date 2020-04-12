@@ -6,7 +6,7 @@ public class DateFilter {
 	
 	private JComboBox<String> dateFilter;
 	
-	public JComboBox<String> createDateFilter() {
+	public JComboBox<String> setDateFilter() {
 		
 		dateFilter = new JComboBox<String>();
 		dateFilter.addItem("Last Hour");

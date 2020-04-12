@@ -12,7 +12,7 @@ public class MachineThreeButton implements ActionListener {
 	private JButton machineThreeBtn;
 	private boolean machineThreeActive = false;
 
-	public JButton createLiveDataMachineThreeButton() {
+	public JButton setLiveDataMachineThreeButton() {
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;

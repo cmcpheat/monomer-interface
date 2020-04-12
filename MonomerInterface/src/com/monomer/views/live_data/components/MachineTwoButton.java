@@ -12,7 +12,7 @@ public class MachineTwoButton implements ActionListener {
 	private JButton machineTwoBtn;
 	private boolean machineTwoActive = false;
 	
-	public JButton createLiveDataMachineTwoButton() {
+	public JButton setLiveDataMachineTwoButton() {
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
