@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -38,6 +40,7 @@ public class LiveDataViewController implements ActionListener {
 	private boolean machineOneActive = false;
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
+	private String dataSelected = "";
 	
 	public JPanel addLiveDataPage() {
 		
@@ -67,6 +70,7 @@ public class LiveDataViewController implements ActionListener {
 		
 		// add date filter drop-down
 		dateFilter = new DateFilter().setDateFilter();
+		dateFilter.addActionListener(this);
 		buttonLayout.gridx = 0;
 		liveDataPage.add(dateFilter, buttonLayout);
  
@@ -129,7 +133,101 @@ public class LiveDataViewController implements ActionListener {
 				machineThreeButton.setBackground(new JButton().getBackground());
 				machineThreeActive = false;
 			}
-		}	
+		}
+		
+		// handle date filter selection
+		if (e.getSource() == dateFilter)
+		{
+			if (dateFilter.getSelectedItem() == "Last Hour") {
+				dataSelected = "hour";
+				System.out.println("last hour test");
 				
+				// now need to get all data that has date/time within last hour
+				LocalDateTime now = getDateTimeNow();
+				LocalDateTime then = getEarliestDate(1);
+				System.out.println("time now: " + now);
+				System.out.println("1 hr ago: " + then);
+				
+				// get data in this time frame
+				
+						
+			}	
+			else if (dateFilter.getSelectedItem() == "Last 24 Hours") {
+				dataSelected = "24 hours";
+				System.out.println("last 24 hours test");
+				
+				// now need to get all data that has date/time within last 24 hours
+				LocalDateTime now = getDateTimeNow();
+				LocalDateTime then = getEarliestDate(24);
+				System.out.println("time now: " + now);
+				System.out.println("24hr ago: " + then);
+				
+				// get data in this time frame
+				
+							
+			}
+			else if (dateFilter.getSelectedItem() == "Last 7 Days") {
+				dataSelected = "7 days";
+				System.out.println("last 7 days test");
+				
+				// now need to get all data that has date/time within last 7 days
+				LocalDateTime now = getDateTimeNow();
+				LocalDateTime then = getEarliestDate(7);
+				System.out.println("time now: " + now);
+				System.out.println("7 dy ago: " + then);
+				
+				// get data in this time frame
+				
+				
+			}
+			else if (dateFilter.getSelectedItem() == "Last 30 Days") {
+				dataSelected = "30 days";
+				System.out.println("last 30 days test");
+								
+				LocalDateTime now = getDateTimeNow();
+				LocalDateTime then = getEarliestDate(30);
+				System.out.println("time now: " + now);
+				System.out.println("30 d ago: " + then);
+				
+				// get data in this time frame
+			}
+		}
+	}
+	
+	// add data to table
+	public void addDataToTable(String datas) {
+		
+	}
+	
+	public LocalDateTime getDateTimeNow() {
+		final LocalDateTime now = LocalDateTime.now();
+		return now;
+	}
+	
+	// get the earliest date in the range selected by user
+	static LocalDateTime getEarliestDate(int range) {
+			
+		LocalDateTime result = null;
+
+		switch (range) {
+			// get last hour
+			case 1:
+				result = LocalDateTime.now().minusHours(1);
+				return result;
+			// get last 24 hours
+			case 24:
+				result = LocalDateTime.now().minusHours(24);
+				return result;
+			// get last 7 days
+			case 7:
+				result = LocalDateTime.now().minusDays(7);
+				return result;
+			// get last 30 days
+			case 30:
+				result = LocalDateTime.now().minusDays(30);
+				return result;
+			}
+		return result;
 	}	
+		
 }

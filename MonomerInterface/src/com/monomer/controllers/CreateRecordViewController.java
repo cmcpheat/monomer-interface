@@ -150,21 +150,20 @@ public class CreateRecordViewController implements ActionListener {
 		// handle 'submit' button click
 		if (e.getSource() == submitButton)
 		{	
-			final LocalDateTime currentDateTime = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			
 			String batchId = batchIdInput.getText();
 			String machineNumber = (String) machineNumberInput.getSelectedItem();
 			String bubbleCount = bubbleCountInput.getText();
-			String dateTime = currentDateTime.format(formatter);
+			LocalDateTime dateTime = LocalDateTime.now();
 			
+			// validate the strings
+			// booleans are updated to be true (for valid) and false (for invalid)
 			boolean batchValid = validateBatchId(batchId);
 			boolean machineValid = validateMachineNum(machineNumberInput.getSelectedIndex());
 			boolean bubbleValid = validateBubbleCount(bubbleCount);
 			
 			// check if form fields are valid then do stuff...
 			if (batchValid == true && machineValid == true && bubbleValid == true) {
-				
+				// parse strings to integers
 				int BATCH_ID = Integer.parseInt(batchId);
 				int MACHINE_NUMBER = Integer.parseInt(machineNumber);
 				int BUBBLE_COUNT = Integer.parseInt(bubbleCount);
@@ -177,6 +176,7 @@ public class CreateRecordViewController implements ActionListener {
 					bubbleCountList.setBubbleCount(BUBBLE_COUNT);
 					dateTimeList.setDateTime(dateTime);
 					
+					// show confirmation to user
 					showSubmitMessage(BATCH_ID);
 				}
 				catch (Exception exc)
@@ -185,6 +185,7 @@ public class CreateRecordViewController implements ActionListener {
 					dataSubmittedLabel.setText("There has been an error. Please try again.");
 				}
 				
+				// delete all fields
 				clearForm();
 				
 				batchIdList.printAllBatchIds();
