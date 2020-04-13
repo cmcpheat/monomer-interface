@@ -250,7 +250,7 @@ public class CreateRecordViewController implements ActionListener {
 				return true;
 			}
 		}  
-		catch (NumberFormatException e1)  
+		catch (NumberFormatException exc)  
 		{
 			bubbleCountAlertLabel.setText("Enter a number between 0-600");
 			return false;
@@ -270,7 +270,7 @@ public class CreateRecordViewController implements ActionListener {
 			timer.setRepeats(false);
 			timer.start();
 		}
-		catch (Exception e1) {
+		catch (Exception exc2) {
 			dataSubmittedLabel.setText("There has been an error. Please try again");
 		}
 	}
