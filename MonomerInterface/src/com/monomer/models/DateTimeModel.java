@@ -46,7 +46,7 @@ public class DateTimeModel {
 	}
 	
 	public void save(String s) throws IOException  {
-		Writer wr = new FileWriter("C:/Users/chris/Desktop/Test2/date_times.txt", true);
+		Writer wr = new FileWriter("./res/date_times.txt", true);
 		wr.write(s);
 		wr.write("\n");
 		wr.close();
@@ -54,7 +54,7 @@ public class DateTimeModel {
 	
 	public ArrayList<String> read() {
 	
-		try (FileReader f = new FileReader("C:/Users/chris/Desktop/Test2/date_times.txt"))
+		try (FileReader f = new FileReader("./res/date_times.txt"))
 		{
 			StringBuffer sb = new StringBuffer();
 			while (f.ready()) {

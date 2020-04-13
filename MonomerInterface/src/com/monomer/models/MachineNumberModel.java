@@ -29,7 +29,7 @@ public class MachineNumberModel {
 	}
 	
 	public void save(String s) throws IOException  {
-		Writer wr = new FileWriter("C:/Users/chris/Desktop/Test2/machine_numbers.txt", true);
+		Writer wr = new FileWriter("./res/machine_numbers.txt", true);
 		wr.write(s);
 		wr.write("\n");
 		wr.close();
@@ -37,7 +37,7 @@ public class MachineNumberModel {
 	
 	public ArrayList<String> read() {
 	
-		try (FileReader f = new FileReader("C:/Users/chris/Desktop/Test2/machine_numbers.txt"))
+		try (FileReader f = new FileReader("./res/machine_numbers.txt"))
 		{
 			StringBuffer sb = new StringBuffer();
 			while (f.ready()) {

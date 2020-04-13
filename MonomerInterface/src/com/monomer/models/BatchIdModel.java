@@ -32,7 +32,7 @@ public class BatchIdModel {
 	
 	public void save(String s) throws IOException  {
 		try {
-			Writer wr = new FileWriter("./batch_id_test.txt", true);
+			Writer wr = new FileWriter("./res/batch_ids.txt", true);
 			wr.write(s);
 			wr.write("\n");
 			wr.close();
@@ -44,7 +44,7 @@ public class BatchIdModel {
 	
 	public ArrayList<String> read() {
 	
-		try (FileReader f = new FileReader("./batch_id_test.txt"))
+		try (FileReader f = new FileReader("./res/batch_ids.txt"))
 		{
 			StringBuffer sb = new StringBuffer();
 			while (f.ready()) {

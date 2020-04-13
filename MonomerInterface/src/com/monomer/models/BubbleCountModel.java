@@ -29,7 +29,7 @@ public class BubbleCountModel {
 	}
 
 	public void save(String s) throws IOException  {
-		Writer wr = new FileWriter("C:/Users/chris/Desktop/Test2/bubble_counts.txt", true);
+		Writer wr = new FileWriter("./res/bubble_counts.txt", true);
 		wr.write(s);
 		wr.write("\n");
 		wr.close();
@@ -37,7 +37,7 @@ public class BubbleCountModel {
 	
 	public ArrayList<String> read() {
 	
-		try (FileReader f = new FileReader("C:/Users/chris/Desktop/Test2/bubble_counts.txt"))
+		try (FileReader f = new FileReader("./res/bubble_counts.txt"))
 		{
 			StringBuffer sb = new StringBuffer();
 			while (f.ready()) {
