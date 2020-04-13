@@ -52,10 +52,12 @@ public class CreateRecordViewController implements ActionListener {
 	private JButton cancelButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
-	BatchIdModel batchIdList = new BatchIdModel();
-	BubbleCountModel bubbleCountList = new BubbleCountModel();
-	MachineNumberModel machineNumberList = new MachineNumberModel();
-	DateTimeModel dateTimeList = new DateTimeModel();
+	private BatchIdModel batchIdList = new BatchIdModel();
+	private BubbleCountModel bubbleCountList = new BubbleCountModel();
+	private MachineNumberModel machineNumberList = new MachineNumberModel();
+	private DateTimeModel dateTimeList = new DateTimeModel();
+	
+	// add all components to view
 	
 	public JPanel addCreateRecordPage() {
 		
@@ -145,36 +147,41 @@ public class CreateRecordViewController implements ActionListener {
 	
 	// controller functions
 	
+	// handle button clicks
 	public void actionPerformed(ActionEvent e) {
 		
 		// handle 'submit' button click
 		if (e.getSource() == submitButton)
 		{	
-			String batchId = batchIdInput.getText();
-			String machineNumber = (String) machineNumberInput.getSelectedItem();
-			String bubbleCount = bubbleCountInput.getText();
-			LocalDateTime dateTime = LocalDateTime.now();
+			
+			LocalDateTime datetime = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			
+			String BATCH_ID = batchIdInput.getText();
+			String MACHINE_NUM = (String) machineNumberInput.getSelectedItem();
+			String BUBBLE_COUNT = bubbleCountInput.getText();
+			String DATE_TIME = datetime.format(formatter);
 			
 			// validate the strings
 			// booleans are updated to be true (for valid) and false (for invalid)
-			boolean batchValid = validateBatchId(batchId);
+			boolean batchValid = validateBatchId(BATCH_ID);
 			boolean machineValid = validateMachineNum(machineNumberInput.getSelectedIndex());
-			boolean bubbleValid = validateBubbleCount(bubbleCount);
+			boolean bubbleValid = validateBubbleCount(BUBBLE_COUNT);
 			
 			// check if form fields are valid then do stuff...
 			if (batchValid == true && machineValid == true && bubbleValid == true) {
 				// parse strings to integers
-				int BATCH_ID = Integer.parseInt(batchId);
-				int MACHINE_NUMBER = Integer.parseInt(machineNumber);
-				int BUBBLE_COUNT = Integer.parseInt(bubbleCount);
+//				int BATCH_ID = Integer.parseInt(batchId);
+//				int MACHINE_NUMBER = Integer.parseInt(machineNumber);
+//				int BUBBLE_COUNT = Integer.parseInt(bubbleCount);
 			
 				try
 				{
 					// add data to array lists
 					batchIdList.setBatchId(BATCH_ID);
-					machineNumberList.setMachineNumber(MACHINE_NUMBER);
+					machineNumberList.setMachineNumber(MACHINE_NUM);
 					bubbleCountList.setBubbleCount(BUBBLE_COUNT);
-					dateTimeList.setDateTime(dateTime);
+					dateTimeList.setDateTime(DATE_TIME);
 					
 					// show confirmation to user
 					showSubmitMessage(BATCH_ID);
@@ -259,8 +266,8 @@ public class CreateRecordViewController implements ActionListener {
 	}
 	
 	// shows data submitted message, disappears after 5 seconds
-	public void showSubmitMessage (int b) {
-		dataSubmittedLabel.setText("Batch #" + b + " data has been submitted successfully.");
+	public void showSubmitMessage (String s) {
+		dataSubmittedLabel.setText("Batch #" + s + " data has been submitted successfully.");
 		try {
 			int delay = 5000;
 			Timer timer = new Timer(delay, new ActionListener() {
@@ -271,7 +278,7 @@ public class CreateRecordViewController implements ActionListener {
 			timer.setRepeats(false);
 			timer.start();
 		}
-		catch (Exception exc2) {
+		catch (Exception ex) {
 			dataSubmittedLabel.setText("There has been an error. Please try again");
 		}
 	}

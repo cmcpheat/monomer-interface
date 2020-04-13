@@ -5,7 +5,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -40,7 +39,8 @@ public class LiveDataViewController implements ActionListener {
 	private boolean machineOneActive = false;
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
-	private String dataSelected = "";
+	
+	// add all components to view
 	
 	public JPanel addLiveDataPage() {
 		
@@ -93,6 +93,8 @@ public class LiveDataViewController implements ActionListener {
 		return liveDataPage;
 	}
 	
+	// controller functions
+	
 	// handle button clicks
 	public void actionPerformed(ActionEvent e) {
 		
@@ -139,7 +141,6 @@ public class LiveDataViewController implements ActionListener {
 		if (e.getSource() == dateFilter)
 		{
 			if (dateFilter.getSelectedItem() == "Last Hour") {
-				dataSelected = "hour";
 				System.out.println("last hour test");
 				
 				// now need to get all data that has date/time within last hour
@@ -153,7 +154,6 @@ public class LiveDataViewController implements ActionListener {
 						
 			}	
 			else if (dateFilter.getSelectedItem() == "Last 24 Hours") {
-				dataSelected = "24 hours";
 				System.out.println("last 24 hours test");
 				
 				// now need to get all data that has date/time within last 24 hours
@@ -167,7 +167,6 @@ public class LiveDataViewController implements ActionListener {
 							
 			}
 			else if (dateFilter.getSelectedItem() == "Last 7 Days") {
-				dataSelected = "7 days";
 				System.out.println("last 7 days test");
 				
 				// now need to get all data that has date/time within last 7 days
@@ -181,7 +180,6 @@ public class LiveDataViewController implements ActionListener {
 				
 			}
 			else if (dateFilter.getSelectedItem() == "Last 30 Days") {
-				dataSelected = "30 days";
 				System.out.println("last 30 days test");
 								
 				LocalDateTime now = getDateTimeNow();

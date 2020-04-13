@@ -1,6 +1,6 @@
 package com.monomer.views;
 
-import com.monomer.app.Singleton;
+// import com.monomer.app.Singleton;
 import com.monomer.controllers.CreateRecordViewController;
 import com.monomer.controllers.LiveDataViewController;
 
@@ -18,7 +18,7 @@ public class GUI {
 	// GUI constructor 
 	public GUI() {
 		
-			Singleton tmp = Singleton.getInstance();
+			// Singleton tmp = Singleton.getInstance();
 			
 			// frame setup
 			frame = new JFrame();
