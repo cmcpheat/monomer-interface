@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
+import com.monomer.models.BatchIdModel;
 import com.monomer.views.live_data.components.ChartPanel;
 import com.monomer.views.live_data.components.DataTable;
 import com.monomer.views.live_data.components.DateFilter;
@@ -39,6 +40,7 @@ public class LiveDataViewController implements ActionListener {
 	private boolean machineOneActive = false;
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
+	private BatchIdModel batchIdList;
 	
 	// add all components to view
 	
@@ -150,6 +152,7 @@ public class LiveDataViewController implements ActionListener {
 				System.out.println("1 hr ago: " + then);
 				
 				// get data in this time frame
+				// batchIdList.
 				
 						
 			}	

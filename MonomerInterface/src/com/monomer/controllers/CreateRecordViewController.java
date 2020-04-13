@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -154,6 +155,9 @@ public class CreateRecordViewController implements ActionListener {
 		if (e.getSource() == submitButton)
 		{	
 			
+			ArrayList<String> testing = batchIdList.getWholeList();
+			System.out.println(testing);
+			
 			LocalDateTime datetime = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 			
@@ -196,16 +200,21 @@ public class CreateRecordViewController implements ActionListener {
 				// delete all fields
 				clearForm();
 				
-				batchIdList.printAllBatchIds();
-				machineNumberList.printAllMachineNumbers();
-				bubbleCountList.printAllBubbleCounts();
-				dateTimeList.printAllDateTimes();
+				ArrayList<String> testList = batchIdList.getWholeList();
+				System.out.println(testList);
+//				
+//				batchIdList.printAllBatchIds();
+//				machineNumberList.printAllMachineNumbers();
+//				bubbleCountList.printAllBubbleCounts();
+//				dateTimeList.printAllDateTimes();
 			}
 		}
 		
 		// handle 'clear' button click
 		else if (e.getSource() == cancelButton) {
 			clearForm();
+			ArrayList<String> list = batchIdList.getWholeList();
+			System.out.println(list);
 		}
 	}
 
