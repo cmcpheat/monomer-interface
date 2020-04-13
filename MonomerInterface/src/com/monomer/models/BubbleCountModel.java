@@ -55,7 +55,7 @@ public class BubbleCountModel {
 			}
 		}
 		catch (IOException exc) {
-			System.out.println("FILE NOT FOUND");
+			System.out.println("Bubble count database error. File not found.");
 		}
 		System.out.println("bubbles:  " + BUBBLE_COUNT_LIST);
 		

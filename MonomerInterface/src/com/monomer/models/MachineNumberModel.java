@@ -55,7 +55,7 @@ public class MachineNumberModel {
 			}
 		}
 		catch (IOException exc) {
-			System.out.println("FILE NOT FOUND");
+			System.out.println("Machine number database error. File not found.");
 		}
 		System.out.println("machines: " + MACHINE_NUM_LIST);
 		

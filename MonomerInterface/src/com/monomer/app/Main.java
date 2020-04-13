@@ -12,7 +12,7 @@ import com.monomer.views.Theme;
 public class Main {
 	
 	// run the application
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
+	public static void main(String[] args) throws IOException {
 		
 		System.out.println("Starting app... \n");
 		
@@ -34,7 +34,7 @@ public class Main {
 		
 		// load previous Date & Times from file
 		DateTimeModel dt = new DateTimeModel();
-		dt.read();
+		// dt.read();
 		
 		new GUI();	
 	}

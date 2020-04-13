@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -16,6 +17,7 @@ import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
 import com.monomer.models.BatchIdModel;
+import com.monomer.models.DateTimeModel;
 import com.monomer.views.live_data.components.ChartPanel;
 import com.monomer.views.live_data.components.DataTable;
 import com.monomer.views.live_data.components.DateFilter;
@@ -41,6 +43,8 @@ public class LiveDataViewController implements ActionListener {
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
 	private BatchIdModel batchIdList;
+	private DateTimeModel dateTimeList = new DateTimeModel();
+	private ArrayList<Integer> INDEX_LIST;
 	
 	// add all components to view
 	
@@ -106,6 +110,8 @@ public class LiveDataViewController implements ActionListener {
 			if (machineOneActive == false) {
 				machineOneButton.setBackground(Color.gray);
 				machineOneActive = true;
+				
+				
 			}	
 			else if (machineOneActive == true) {
 				machineOneButton.setBackground(new JButton().getBackground());
@@ -146,13 +152,21 @@ public class LiveDataViewController implements ActionListener {
 				System.out.println("last hour test");
 				
 				// now need to get all data that has date/time within last hour
-				LocalDateTime now = getDateTimeNow();
+				LocalDateTime now = getDateTimeNow().plusHours(1);
 				LocalDateTime then = getEarliestDate(1);
 				System.out.println("time now: " + now);
 				System.out.println("1 hr ago: " + then);
 				
+				
 				// get data in this time frame
-				// batchIdList.
+				ArrayList<LocalDateTime> DT_LIST = dateTimeList.getWholeList();
+				INDEX_LIST = DateTimeModel.searchForDateRange(DT_LIST, now, then);
+				
+				System.out.println("list of indexes: " + INDEX_LIST);
+				
+				
+				//searchForDateRange(dae, now, then)
+				
 				
 						
 			}	
@@ -160,12 +174,13 @@ public class LiveDataViewController implements ActionListener {
 				System.out.println("last 24 hours test");
 				
 				// now need to get all data that has date/time within last 24 hours
-				LocalDateTime now = getDateTimeNow();
+				LocalDateTime now = getDateTimeNow().plusHours(1);
 				LocalDateTime then = getEarliestDate(24);
 				System.out.println("time now: " + now);
 				System.out.println("24hr ago: " + then);
 				
 				// get data in this time frame
+				
 				
 							
 			}
@@ -173,7 +188,7 @@ public class LiveDataViewController implements ActionListener {
 				System.out.println("last 7 days test");
 				
 				// now need to get all data that has date/time within last 7 days
-				LocalDateTime now = getDateTimeNow();
+				LocalDateTime now = getDateTimeNow().plusHours(1);
 				LocalDateTime then = getEarliestDate(7);
 				System.out.println("time now: " + now);
 				System.out.println("7 dy ago: " + then);
@@ -185,7 +200,7 @@ public class LiveDataViewController implements ActionListener {
 			else if (dateFilter.getSelectedItem() == "Last 30 Days") {
 				System.out.println("last 30 days test");
 								
-				LocalDateTime now = getDateTimeNow();
+				LocalDateTime now = getDateTimeNow().plusHours(1);
 				LocalDateTime then = getEarliestDate(30);
 				System.out.println("time now: " + now);
 				System.out.println("30 d ago: " + then);

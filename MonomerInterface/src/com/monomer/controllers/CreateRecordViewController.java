@@ -155,16 +155,14 @@ public class CreateRecordViewController implements ActionListener {
 		if (e.getSource() == submitButton)
 		{	
 			
-			ArrayList<String> testing = batchIdList.getWholeList();
-			System.out.println(testing);
-			
 			LocalDateTime datetime = LocalDateTime.now();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 			
 			String BATCH_ID = batchIdInput.getText();
 			String MACHINE_NUM = (String) machineNumberInput.getSelectedItem();
 			String BUBBLE_COUNT = bubbleCountInput.getText();
-			String DATE_TIME = datetime.format(formatter);
+			LocalDateTime DATE_TIME = LocalDateTime.now().plusHours(1);
+			// String DATE_TIME = datetime.format(formatter);
 			
 			// validate the strings
 			// booleans are updated to be true (for valid) and false (for invalid)
@@ -192,7 +190,7 @@ public class CreateRecordViewController implements ActionListener {
 				}
 				catch (Exception exc)
 				{
-					// error shown if exception caught 
+					// error shown if exception is caught 
 					dataSubmittedLabel.setText("There has been an error. Please try again.");
 					exc.printStackTrace(System.out);
 				}
@@ -200,9 +198,6 @@ public class CreateRecordViewController implements ActionListener {
 				// delete all fields
 				clearForm();
 				
-				ArrayList<String> testList = batchIdList.getWholeList();
-				System.out.println(testList);
-//				
 //				batchIdList.printAllBatchIds();
 //				machineNumberList.printAllMachineNumbers();
 //				bubbleCountList.printAllBubbleCounts();
@@ -213,8 +208,7 @@ public class CreateRecordViewController implements ActionListener {
 		// handle 'clear' button click
 		else if (e.getSource() == cancelButton) {
 			clearForm();
-			ArrayList<String> list = batchIdList.getWholeList();
-			System.out.println(list);
+
 		}
 	}
 

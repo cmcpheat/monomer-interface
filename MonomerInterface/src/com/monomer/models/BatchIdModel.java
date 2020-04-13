@@ -18,10 +18,10 @@ public class BatchIdModel {
 	// TODO - change this to read all from file and add, same as read()
 	public void setBatchId(String bi) throws IOException 
 	{	
-		read();
 		BATCH_ID_LIST.add(bi);
 		save(bi);
-		System.out.println("the whole list: " + BATCH_ID_LIST);
+		// System.out.println("batches2:  " + BATCH_ID_LIST);
+		// System.out.println("the whole list: " + BATCH_ID_LIST);
 	}
 	
 	public String getBatchId(int index) {
@@ -29,14 +29,11 @@ public class BatchIdModel {
 	}
 
 	public void printAllBatchIds() {
-		System.out.println("BI List: " + BATCH_ID_LIST);
-		for (int i = 0; i < BATCH_ID_LIST.size(); i++) {
-			System.out.println("Index " + i + ": " + BATCH_ID_LIST.get(i));
-		}
+		// System.out.println("BI List: " + BATCH_ID_LIST);
+		
 	}
 	
 	public ArrayList<String> getWholeList() {
-		System.out.println(BATCH_ID_LIST.size());
 		return BATCH_ID_LIST;
 		
 	}
@@ -74,7 +71,7 @@ public class BatchIdModel {
 			}
 		}
 		catch (IOException exc) {
-			System.out.println("Error. File not found.");
+			System.out.println("Batch ID database error. File not found.");
 		}
 		System.out.println("batches:  " + BATCH_ID_LIST);
 		
