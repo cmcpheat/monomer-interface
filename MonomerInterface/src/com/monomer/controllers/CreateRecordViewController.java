@@ -190,6 +190,7 @@ public class CreateRecordViewController implements ActionListener {
 				{
 					// error shown if exception caught 
 					dataSubmittedLabel.setText("There has been an error. Please try again.");
+					exc.printStackTrace(System.out);
 				}
 				
 				// delete all fields
@@ -279,7 +280,8 @@ public class CreateRecordViewController implements ActionListener {
 			timer.start();
 		}
 		catch (Exception ex) {
-			dataSubmittedLabel.setText("There has been an error. Please try again");
+			dataSubmittedLabel.setText(" ");
+			ex.printStackTrace(System.out);
 		}
 	}
 	

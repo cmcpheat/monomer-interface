@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class BatchIdModel {
 	
-	int z= 1;
-	
 	ArrayList<String> BATCH_ID_LIST = new ArrayList<String>();
 	
 	public BatchIdModel () {
@@ -33,15 +31,20 @@ public class BatchIdModel {
 	}
 	
 	public void save(String s) throws IOException  {
-		Writer wr = new FileWriter("/C:/Users/chris/Desktop/Test/batch_ids.txt", true);
-		wr.write(s);
-		wr.write("\n");
-		wr.close();
+		try {
+			Writer wr = new FileWriter("./batch_id_test.txt", true);
+			wr.write(s);
+			wr.write("\n");
+			wr.close();
+		}
+		catch (IOException exc) {
+			System.out.println("Error occurred here");
+		}
 	}
 	
 	public ArrayList<String> read() {
 	
-		try (FileReader f = new FileReader("/C:/Users/chris/Desktop/Test/batch_ids.txt"))
+		try (FileReader f = new FileReader("./batch_id_test.txt"))
 		{
 			StringBuffer sb = new StringBuffer();
 			while (f.ready()) {
