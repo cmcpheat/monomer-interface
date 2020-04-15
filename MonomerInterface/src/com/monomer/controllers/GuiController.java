@@ -350,21 +350,34 @@ public class GuiController {
 					ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "1");
 					System.out.println(INDEXES);
 					
-					ArrayList<String> BATCH_VALUES = linear.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
-					ArrayList<String> MACHINE_VALUES = linear.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
-					ArrayList<String> BUBBLE_VALUES = linear.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
-					ArrayList<String> DATE_VALUES = linear.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
+					ArrayList<String> M1_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
+					ArrayList<String> M1_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
+					ArrayList<String> M1_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
+					ArrayList<String> M1_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
 					
-					System.out.println(BATCH_VALUES);
-					System.out.println(MACHINE_VALUES);
-					System.out.println(BUBBLE_VALUES);
-					System.out.println(DATE_VALUES);
+					System.out.println(M1_BATCH);
+					System.out.println(M1_MACHINE);
+					System.out.println(M1_BUBBLE);
+					System.out.println(M1_DATE);
 					
 					// TODO getting the values but need to add to table line by line
 					
 					model.setRowCount(0);
 					
-					model.insertRow(0, new Object[] { BATCH_VALUES, MACHINE_VALUES, BUBBLE_VALUES, DATE_VALUES });
+					for (int i = 0; i < M1_BATCH.size(); i++) {
+						
+						String BA = M1_BATCH.get(i);
+						String MN = M1_MACHINE.get(i);
+						String BC = M1_BUBBLE.get(i);
+						String DT = M1_DATE.get(i);
+						
+						model.insertRow(0, new Object[] { BA, MN, BC, DT });
+						
+						
+						
+					}
+					
+					// model.insertRow(0, new Object[] { BATCH_VALUES, MACHINE_VALUES, BUBBLE_VALUES, DATE_VALUES });
 					
 				}	
 				else if (machineOneActive == true) {
