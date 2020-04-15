@@ -163,6 +163,7 @@ public class GuiController {
 	    table.getColumnModel().getColumn(2).setPreferredWidth(120);
 	    table.getColumnModel().getColumn(3).setPreferredWidth(200);
 	    table.setFont(new Font("", Font.PLAIN, 12));
+	    table.setBackground(Color.white);
 	    header = table.getTableHeader();
 		header.setFont(new Font("", Font.BOLD, 12));
 		
@@ -341,6 +342,10 @@ public class GuiController {
 				if (machineOneActive == false) {
 					machineOneButton.setBackground(Color.gray);
 					machineOneActive = true;
+					
+					// only show machine 1 data
+					
+					
 					
 					
 				}	

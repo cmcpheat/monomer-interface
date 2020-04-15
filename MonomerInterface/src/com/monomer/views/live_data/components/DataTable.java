@@ -1,6 +1,5 @@
 package com.monomer.views.live_data.components;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class DataTable {
