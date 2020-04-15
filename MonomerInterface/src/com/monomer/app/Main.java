@@ -2,7 +2,7 @@ package com.monomer.app;
 
 import java.io.IOException;
 
-import com.monomer.views.GUI;
+import com.monomer.controllers.GuiController;
 import com.monomer.views.Theme;
 
 public class Main {
@@ -33,6 +33,6 @@ public class Main {
 //		DateTimeModel dt = new DateTimeModel();
 //		dt.read();
 		
-		new GUI();	
+		new GuiController();	
 	}
 }	

@@ -1,9 +1,5 @@
-package com.monomer.views;
+package com.monomer.controllers;
 
-import com.monomer.controllers.BatchIdController;
-import com.monomer.controllers.BubbleCountController;
-import com.monomer.controllers.DateTimeController;
-import com.monomer.controllers.MachineNumberController;
 // import com.monomer.app.Singleton;
 // import com.monomer.controllers.GuiFunctionController;
 import com.monomer.views.create_record.components.BatchIdAlertLabel;
@@ -56,7 +52,7 @@ import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-public class GUI {
+public class GuiController {
 	
 	private JFrame frame;
 	private JPanel createRecordPage;
@@ -97,7 +93,7 @@ public class GUI {
 	
 
 	// GUI constructor 
-	public GUI() {
+	public GuiController() {
 		
 		// Singleton tmp = Singleton.getInstance();
 		
