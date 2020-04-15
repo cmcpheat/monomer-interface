@@ -9,27 +9,28 @@ import java.util.ArrayList;
 
 public class DateTimeModel {
 	
-	ArrayList<LocalDateTime> DATE_TIME_LIST = new ArrayList<LocalDateTime>();
+	ArrayList<String> DATE_TIME_LIST = new ArrayList<String>();
 	static ArrayList<Integer> LIST_OF_INDEXES = new ArrayList<Integer>();
+	// ArrayList<String> DATE_TIME_STRINGS = new ArrayList<String>();
 	
 	
 	public DateTimeModel () {
 		
 	}
 	
-	public void setDateTime(LocalDateTime dt) throws IOException
+	public void setDateTime(String dt) throws IOException
 	{		
 		DATE_TIME_LIST.add(dt);
-		// save(dt);
+		save(dt);
 	}
 	
 	// takes in index number at returns date/time string at that position
-	public LocalDateTime getDateTime(int index) {
+	public String getDateTime(int index) {
 		return DATE_TIME_LIST.get(index);
 	}
 	
 	// get whole list
-	public ArrayList<LocalDateTime> getWholeList() {
+	public ArrayList<String> getWholeList() {
 		return DATE_TIME_LIST;
 	}
 	
@@ -60,37 +61,40 @@ public class DateTimeModel {
 		System.out.println("DT List: " + DATE_TIME_LIST);
 	}
 	
-//	public void save(String s) throws IOException  {
-//		Writer wr = new FileWriter("./res/date_times.txt", true);
-//		wr.write(s);
-//		wr.write("\n");
-//		wr.close();
-//	}
-//	
-//	public ArrayList<String> read() {
-//	
-//		try (FileReader f = new FileReader("./res/date_times.txt"))
-//		{
-//			StringBuffer sb = new StringBuffer();
-//			while (f.ready()) {
-//				char c = (char) f.read();
-//				if (c == '\n') {
-//					DATE_TIME_LIST.add(sb.toString());
-//					sb = new StringBuffer();
-//				}
-//				else {
-//					sb.append(c);
-//				}
-//			}
-//			if (sb.length() > 0) {
-//				DATE_TIME_LIST.add(sb.toString());
-//			}
-//		}
-//		catch (IOException exc) {
-//			System.out.println("Date/time database error. File not found.");
-//		}
-//		System.out.println("dates:    " + DATE_TIME_LIST);
-//		
-//		return DATE_TIME_LIST;
-//	}	
+	// save data to text file 
+	public void save(String dt) throws IOException  {
+		
+		Writer wr = new FileWriter("./res/date_times.txt", true);
+		wr.write(dt);
+		wr.write("\n");
+		wr.close();
+	}
+	
+	// read data from file into array list
+	public ArrayList<String> read() {
+	
+		try (FileReader f = new FileReader("./res/date_times.txt"))
+		{
+			StringBuffer sb = new StringBuffer();
+			while (f.ready()) {
+				char c = (char) f.read();
+				if (c == '\n') {
+					DATE_TIME_LIST.add(sb.toString());
+					sb = new StringBuffer();
+				}
+				else {
+					sb.append(c);
+				}
+			}
+			if (sb.length() > 0) {
+				DATE_TIME_LIST.add(sb.toString());
+			}
+		}
+		catch (IOException exc) {
+			System.out.println("Date/time database error. File not found.");
+		}
+		System.out.println("dates:    " + DATE_TIME_LIST);
+		
+		return DATE_TIME_LIST;
+	}	
 }

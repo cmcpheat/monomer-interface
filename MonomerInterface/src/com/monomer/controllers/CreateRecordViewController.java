@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -53,10 +53,17 @@ public class CreateRecordViewController implements ActionListener {
 	private JButton cancelButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
-	private BatchIdModel batchIdList = new BatchIdModel();
-	private BubbleCountModel bubbleCountList = new BubbleCountModel();
-	private MachineNumberModel machineNumberList = new MachineNumberModel();
-	private DateTimeModel dateTimeList = new DateTimeModel();
+	private BatchIdModel batchIdModel;
+	private BubbleCountModel bubbleCountModel;
+	private MachineNumberModel machineNumberModel;
+	private DateTimeModel dateTimeModel;
+	
+	public CreateRecordViewController() {
+		batchIdModel = new BatchIdModel();
+		bubbleCountModel = new BubbleCountModel();
+		machineNumberModel = new MachineNumberModel();
+		dateTimeModel = new DateTimeModel();
+	}
 	
 	// add all components to view
 	
@@ -155,14 +162,13 @@ public class CreateRecordViewController implements ActionListener {
 		if (e.getSource() == submitButton)
 		{	
 			
-			LocalDateTime datetime = LocalDateTime.now();
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			LocalDateTime datetime = LocalDateTime.now().plusHours(1);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			
 			String BATCH_ID = batchIdInput.getText();
 			String MACHINE_NUM = (String) machineNumberInput.getSelectedItem();
 			String BUBBLE_COUNT = bubbleCountInput.getText();
-			LocalDateTime DATE_TIME = LocalDateTime.now().plusHours(1);
-			// String DATE_TIME = datetime.format(formatter);
+			String DATE_TIME = datetime.format(formatter);
 			
 			// validate the strings
 			// booleans are updated to be true (for valid) and false (for invalid)
@@ -172,6 +178,9 @@ public class CreateRecordViewController implements ActionListener {
 			
 			// check if form fields are valid then do stuff...
 			if (batchValid == true && machineValid == true && bubbleValid == true) {
+				
+				
+				
 				// parse strings to integers
 //				int BATCH_ID = Integer.parseInt(batchId);
 //				int MACHINE_NUMBER = Integer.parseInt(machineNumber);
@@ -180,10 +189,10 @@ public class CreateRecordViewController implements ActionListener {
 				try
 				{
 					// add data to array lists
-					batchIdList.setBatchId(BATCH_ID);
-					machineNumberList.setMachineNumber(MACHINE_NUM);
-					bubbleCountList.setBubbleCount(BUBBLE_COUNT);
-					dateTimeList.setDateTime(DATE_TIME);
+					batchIdModel.setBatchId(BATCH_ID);
+					machineNumberModel.setMachineNumber(MACHINE_NUM);
+					bubbleCountModel.setBubbleCount(BUBBLE_COUNT);
+					dateTimeModel.setDateTime(DATE_TIME);
 					
 					// show confirmation to user
 					showSubmitMessage(BATCH_ID);
@@ -198,7 +207,10 @@ public class CreateRecordViewController implements ActionListener {
 				// delete all fields
 				clearForm();
 				
-//				batchIdList.printAllBatchIds();
+				List<String> testList = batchIdModel.getList();
+				
+				System.out.println("test list: " + testList);
+				
 //				machineNumberList.printAllMachineNumbers();
 //				bubbleCountList.printAllBubbleCounts();
 //				dateTimeList.printAllDateTimes();

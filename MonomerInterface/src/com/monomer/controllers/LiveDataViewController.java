@@ -5,7 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
@@ -17,7 +17,6 @@ import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 
 import com.monomer.models.BatchIdModel;
-import com.monomer.models.DateTimeModel;
 import com.monomer.views.live_data.components.ChartPanel;
 import com.monomer.views.live_data.components.DataTable;
 import com.monomer.views.live_data.components.DateFilter;
@@ -43,8 +42,7 @@ public class LiveDataViewController implements ActionListener {
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
 	private BatchIdModel batchIdList;
-	private DateTimeModel dateTimeList = new DateTimeModel();
-	private ArrayList<Integer> INDEX_LIST;
+	// private DateTimeModel dateTimeList = new DateTimeModel();
 	
 	// add all components to view
 	
@@ -157,15 +155,15 @@ public class LiveDataViewController implements ActionListener {
 				System.out.println("time now: " + now);
 				System.out.println("1 hr ago: " + then);
 				
+				batchIdList = new BatchIdModel();
+				List<String> list = batchIdList.getList();
+				System.out.println(list);
+				
 				
 				// get data in this time frame
-				ArrayList<LocalDateTime> DT_LIST = dateTimeList.getWholeList();
-				INDEX_LIST = DateTimeModel.searchForDateRange(DT_LIST, now, then);
+
 				
-				System.out.println("list of indexes: " + INDEX_LIST);
-				
-				
-				//searchForDateRange(dae, now, then)
+				// System.out.println("list of indexes: " + INDEX_LIST);
 				
 				
 						
