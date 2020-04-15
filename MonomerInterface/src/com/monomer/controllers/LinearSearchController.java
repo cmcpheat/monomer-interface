@@ -29,7 +29,7 @@ public class LinearSearchController {
 	// linear search which takes in a list of index numbers and a list of elements
 	// returns the list of values in the elements at array at those index positions
 	
-	public static ArrayList<String> linearSearchForOtherArrays(ArrayList<Integer> indexes, ArrayList<String> elements) {
+	public static ArrayList<String> arrayLinearSearch(ArrayList<Integer> indexes, ArrayList<String> elements) {
 		
 		VALUE_RESULT = new ArrayList<String>();
 		

@@ -40,6 +40,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -345,8 +346,25 @@ public class GuiController {
 					
 					// only show machine 1 data
 					
+					LinearSearchController linear = new LinearSearchController();
+					ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "1");
+					System.out.println(INDEXES);
 					
+					ArrayList<String> BATCH_VALUES = linear.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
+					ArrayList<String> MACHINE_VALUES = linear.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
+					ArrayList<String> BUBBLE_VALUES = linear.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
+					ArrayList<String> DATE_VALUES = linear.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
 					
+					System.out.println(BATCH_VALUES);
+					System.out.println(MACHINE_VALUES);
+					System.out.println(BUBBLE_VALUES);
+					System.out.println(DATE_VALUES);
+					
+					// TODO getting the values but need to add to table line by line
+					
+					model.setRowCount(0);
+					
+					model.insertRow(0, new Object[] { BATCH_VALUES, MACHINE_VALUES, BUBBLE_VALUES, DATE_VALUES });
 					
 				}	
 				else if (machineOneActive == true) {
