@@ -21,17 +21,10 @@ public class BatchIdModel {
 	{	
 		BATCH_ID_LIST.add(bi);
 		save(bi);
-		// System.out.println("batches2:  " + BATCH_ID_LIST);
-		System.out.println("the new list: " + BATCH_ID_LIST);
 	}
 	
 	public String getBatchId(int index) {
 		return BATCH_ID_LIST.get(index);
-	}
-
-	public void printAllBatchIds() {
-		// System.out.println("BI List: " + BATCH_ID_LIST);
-		
 	}
 	
 	public List<String> getList() {

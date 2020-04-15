@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MachineNumberModel {
 	
@@ -24,8 +25,9 @@ public class MachineNumberModel {
 		return MACHINE_NUM_LIST.get(index);
 	}
 	
-	public void printAllMachineNumbers() {
-		System.out.println("MN List: " + MACHINE_NUM_LIST);
+	public List<String> getList() {
+		return MACHINE_NUM_LIST;
+		
 	}
 	
 	public void save(String s) throws IOException  {

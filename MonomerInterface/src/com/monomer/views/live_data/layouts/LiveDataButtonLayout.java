@@ -3,8 +3,8 @@ package com.monomer.views.live_data.layouts;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class ButtonLayout extends GridBagConstraints {
-	
+public class LiveDataButtonLayout extends GridBagConstraints {
+
 	private static final long serialVersionUID = 1L;
 	GridBagConstraints c = new GridBagConstraints();
 	

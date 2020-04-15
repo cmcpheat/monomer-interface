@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BubbleCountModel {
 	
@@ -24,10 +25,10 @@ public class BubbleCountModel {
 		return BUBBLE_COUNT_LIST.get(index);
 	}
 	
-	public void printAllBubbleCounts() {
-		System.out.println("BC List: " + BUBBLE_COUNT_LIST);
+	public List<String> getList() {
+		return BUBBLE_COUNT_LIST;	
 	}
-
+	
 	public void save(String s) throws IOException  {
 		Writer wr = new FileWriter("./res/bubble_counts.txt", true);
 		wr.write(s);

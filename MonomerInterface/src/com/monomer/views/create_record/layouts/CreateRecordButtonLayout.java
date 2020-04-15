@@ -3,11 +3,11 @@ package com.monomer.views.create_record.layouts;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class ButtonLayout {
+public class CreateRecordButtonLayout {
 	
 	GridBagConstraints buttonLayout = new GridBagConstraints();
 	
-	public GridBagConstraints setButtonLayout() {
+	public GridBagConstraints setCreateRecordButtonLayout() {
 		
 		buttonLayout.fill = GridBagConstraints.HORIZONTAL;
 		buttonLayout.ipady = 20;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DateTimeModel {
 	
@@ -29,8 +30,7 @@ public class DateTimeModel {
 		return DATE_TIME_LIST.get(index);
 	}
 	
-	// get whole list
-	public ArrayList<String> getWholeList() {
+	public List<String> getList() {
 		return DATE_TIME_LIST;
 	}
 	
