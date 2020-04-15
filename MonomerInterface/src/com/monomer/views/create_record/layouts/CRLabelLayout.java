@@ -3,7 +3,7 @@ package com.monomer.views.create_record.layouts;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class LabelLayout {
+public class CRLabelLayout {
 	
 	GridBagConstraints labelLayout = new GridBagConstraints();
 	

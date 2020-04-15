@@ -3,7 +3,7 @@ package com.monomer.views.live_data.layouts;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class PanelLayout extends GridBagConstraints {
+public class LDPanelLayout extends GridBagConstraints {
 
 	private static final long serialVersionUID = 1L;
 	GridBagConstraints c = new GridBagConstraints();
@@ -12,7 +12,8 @@ public class PanelLayout extends GridBagConstraints {
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 520;      // make this component tall
-		c.insets = new Insets(0,20,15,20);  // padding
+		c.ipady = 520;      // make this component tall
+		// c.insets = new Insets(20,20,15,20);  // padding
 		c.weightx = 0.0;
 		c.gridwidth = 4;
 		c.gridx = 0;

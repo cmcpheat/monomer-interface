@@ -12,8 +12,8 @@ public class ChartPanel {
 	public JPanel setLiveDataChartPanel() {
 		
 		chartPanel = new JPanel();
-		chartPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
-		chartPanel.setBackground(Color.white);
+//		chartPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+//		chartPanel.setBackground(Color.white);
 		
 		return chartPanel;
 	}

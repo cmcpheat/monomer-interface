@@ -15,22 +15,24 @@ import com.monomer.views.create_record.components.MachineNumberAlertLabel;
 import com.monomer.views.create_record.components.MachineNumberInput;
 import com.monomer.views.create_record.components.MachineNumberLabel;
 import com.monomer.views.create_record.components.SubmitButton;
-import com.monomer.views.create_record.layouts.AlertLayout;
-import com.monomer.views.create_record.layouts.CreateRecordButtonLayout;
-import com.monomer.views.create_record.layouts.InputLayout;
-import com.monomer.views.create_record.layouts.LabelLayout;
+import com.monomer.views.create_record.layouts.CRAlertLayout;
+import com.monomer.views.create_record.layouts.CRButtonLayout;
+import com.monomer.views.create_record.layouts.CRInputLayout;
+import com.monomer.views.create_record.layouts.CRLabelLayout;
 import com.monomer.views.live_data.components.ChartPanel;
+import com.monomer.views.live_data.components.DataTable;
 // import com.monomer.views.live_data.components.DataTable;
 import com.monomer.views.live_data.components.DateFilter;
 import com.monomer.views.live_data.components.MachineOneButton;
 import com.monomer.views.live_data.components.MachineThreeButton;
 import com.monomer.views.live_data.components.MachineTwoButton;
-import com.monomer.views.live_data.layouts.LiveDataButtonLayout;
-import com.monomer.views.live_data.layouts.PanelLayout;
+import com.monomer.views.live_data.layouts.LDButtonLayout;
+import com.monomer.views.live_data.layouts.LDPanelLayout;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -81,6 +83,7 @@ public class GuiController {
 	private JTable table;
 	private DefaultTableModel model;
 	private JTableHeader header;
+	private JScrollPane scroll;
 	private boolean machineOneActive = false;
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
@@ -121,8 +124,8 @@ public class GuiController {
 		liveDataPage = new JPanel(new GridBagLayout());
 		
 		// set styling for layout
-		buttonLayout = new LiveDataButtonLayout().setLiveDataButtonLayout();
-		panelLayout = new PanelLayout().setLiveDataPanelLayout();
+		buttonLayout = new LDButtonLayout().setLiveDataButtonLayout();
+		panelLayout = new LDPanelLayout().setLiveDataPanelLayout();
 		
 		// add 'machine 1' button
 		machineOneButton = new MachineOneButton().setLiveDataMachineOneButton();
@@ -152,34 +155,32 @@ public class GuiController {
 		chartPanel = new ChartPanel().setLiveDataChartPanel();
 		liveDataPage.add(chartPanel, panelLayout);
 		
-		// add table
-		model = new DefaultTableModel();
-		model.addColumn("Batch ID");
-        model.addColumn("Machine No.");
-        model.addColumn("Bubble Count");
-        model.addColumn("Date");
-        table = new JTable(model);
-        table.getColumnModel().getColumn(3).setPreferredWidth(150);  
-        
-        
+		// add table model
+		model = new DataTable().setDataTable();
+		table = new JTable(model);
+	    table.getColumnModel().getColumn(0).setPreferredWidth(120);
+	    table.getColumnModel().getColumn(1).setPreferredWidth(120);
+	    table.getColumnModel().getColumn(2).setPreferredWidth(120);
+	    table.getColumnModel().getColumn(3).setPreferredWidth(200);
+	    table.setFont(new Font("", Font.PLAIN, 12));
+	    header = table.getTableHeader();
+		header.setFont(new Font("", Font.BOLD, 12));
 		
-		header = table.getTableHeader();
-		// chartPanel.setLayout(new BorderLayout());
 		chartPanel.add(header, BorderLayout.NORTH);
 		chartPanel.add(table, BorderLayout.CENTER);
 		
-		JScrollPane sp=new JScrollPane(table); 
+		scroll = new JScrollPane(table); 
 		
-		chartPanel.add(sp, panelLayout);
+		chartPanel.add(scroll, panelLayout);
 		
 		// add the 'create a record' page
 		createRecordPage = new JPanel(); 
 		
 		// set layout for components
-		GridBagConstraints labelLayout = new LabelLayout().setLabelLayout(); // done
-		GridBagConstraints buttonLayout = new CreateRecordButtonLayout().setCreateRecordButtonLayout(); // done
-		GridBagConstraints inputLayout = new InputLayout().setInputLayout(); // done
-		GridBagConstraints alertLayout = new AlertLayout().setAlertLayout(); // done
+		GridBagConstraints labelLayout = new CRLabelLayout().setLabelLayout(); // done
+		GridBagConstraints buttonLayout = new CRButtonLayout().setCreateRecordButtonLayout(); // done
+		GridBagConstraints inputLayout = new CRInputLayout().setInputLayout(); // done
+		GridBagConstraints alertLayout = new CRAlertLayout().setAlertLayout(); // done
 		
 		// add form panel to page
 		formPanel = new FormPanel().setCreateRecordFormPanel();
@@ -337,10 +338,6 @@ public class GuiController {
 			// handle 'machine 1' button click
 			else if (e.getSource() == machineOneButton)
 			{
-				System.out.println("batch:   " + batchIdController.getBatchIdList());
-				System.out.println("machine: " + machineNumberController.getMachineNumberList());
-				System.out.println("bubble:  " + bubbleCountController.getBubbleCountList());
-				System.out.println("date:    " + dateTimeController.getDateTimeList());
 				if (machineOneActive == false) {
 					machineOneButton.setBackground(Color.gray);
 					machineOneActive = true;
