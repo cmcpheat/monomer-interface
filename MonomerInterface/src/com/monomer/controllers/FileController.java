@@ -36,6 +36,9 @@ public class FileController {
 		
 		String[] types = new String[4];
 		types[0] = "batch_ids";
+		types[1] = "machine_numbers";
+		types[2] = "bubble_counts";
+		types[3] = "machine_numbers";
 		
 		try (FileReader f = new FileReader("./res/batch_ids.txt"))
 			{
