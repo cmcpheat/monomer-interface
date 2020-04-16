@@ -37,47 +37,106 @@ public class FileController {
 		}
 	}
 	
-	public void readFromFile() {
+	public void readBatchesFromFile() {
 		
-		String[] types = new String[4];
-		types[0] = "batch_ids";
-		types[1] = "machine_numbers";
-		types[2] = "bubble_counts";
-		types[3] = "machine_numbers";
-		
-		String[] controllers = new String[4];
-		controllers[0] = "batchIdController.getBatchIdList()";
-		controllers[1] = "machineNumberController.getMachineNumberList()";
-		controllers[2] = "bubbleCountController.getBubbleCountList()";
-		controllers[3] = "machineNumberController.getMachineNumberList()";
-		
-		for (int i = 0; i < types.length; i++) {
+		try (FileReader f = new FileReader("./res/batch_ids.txt"))
+		{
 			
-			try (FileReader f = new FileReader("./res/" + types[i] + ".txt"))
-			{
-				StringBuffer sb = new StringBuffer();
-				while (f.ready()) {
-					char c = (char) f.read();
-					if (c == '\n') {
-						controllers[i].add
-						BATCH_ID_LIST.add(sb.toString());
-						sb = new StringBuffer();
-					}
-					else {
-						sb.append(c);
-					}
+			StringBuffer sb = new StringBuffer();
+			while (f.ready()) {
+				char c = (char) f.read();
+				if (c == '\n') {
+					batchIdController.getBatchIdList().add(sb.toString());
+					System.out.println(sb);
+					sb = new StringBuffer();
 				}
-				if (sb.length() > 0) {
-					BATCH_ID_LIST.add(sb.toString());
+				else {
+					sb.append(c);
 				}
 			}
-			catch (IOException exc) {
-				System.out.println("Batch ID database error. File not found.");
+			if (sb.length() > 0) {
+				batchIdController.getBatchIdList().add(sb.toString());
 			}
-			
 		}
+		catch (IOException exc) {
+			System.out.println("Batch ID datastore error. File not found.");
+		}	
+	}
+	
+	public void readMachinesFromFile() {
 		
+		try (FileReader f = new FileReader("./res/machine_numbers.txt"))
+		{
 			
+			StringBuffer sb = new StringBuffer();
+			while (f.ready()) {
+				char c = (char) f.read();
+				if (c == '\n') {
+					machineNumberController.getMachineNumberList().add(sb.toString());
+					System.out.println(machineNumberController);
+					sb = new StringBuffer();
+				}
+				else {
+					sb.append(c);
+				}
+			}
+			if (sb.length() > 0) {
+				machineNumberController.getMachineNumberList().add(sb.toString());
+			}
+		}
+		catch (IOException exc) {
+			System.out.println("Machine number datastore error. File not found.");
+		}	
+	}
+	
+	public void readBubblesFromFile() {
+		
+		try (FileReader f = new FileReader("./res/bubble_counts.txt"))
+		{
+			
+			StringBuffer sb = new StringBuffer();
+			while (f.ready()) {
+				char c = (char) f.read();
+				if (c == '\n') {
+					bubbleCountController.getBubbleCountList().add(sb.toString());
+					sb = new StringBuffer();
+				}
+				else {
+					sb.append(c);
+				}
+			}
+			if (sb.length() > 0) {
+				bubbleCountController.getBubbleCountList().add(sb.toString());
+			}
+		}
+		catch (IOException exc) {
+			System.out.println("Bubble count datastore error. File not found.");
+		}	
+	}
+	
+	public void readDatesFromFile() {
+		
+		try (FileReader f = new FileReader("./res/date_times.txt"))
+		{
+			
+			StringBuffer sb = new StringBuffer();
+			while (f.ready()) {
+				char c = (char) f.read();
+				if (c == '\n') {
+					dateTimeController.getDateTimeList().add(sb.toString());
+					sb = new StringBuffer();
+				}
+				else {
+					sb.append(c);
+				}
+			}
+			if (sb.length() > 0) {
+				dateTimeController.getDateTimeList().add(sb.toString());
+			}
+		}
+		catch (IOException exc) {
+			System.out.println("Date/time datastore error. File not found.");
+		}	
 	}
 
 }

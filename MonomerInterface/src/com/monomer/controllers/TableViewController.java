@@ -1,16 +1,10 @@
-package com.monomer.views.live_data.components;
+package com.monomer.controllers;
 
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
-import com.monomer.controllers.BatchIdController;
-import com.monomer.controllers.BubbleCountController;
-import com.monomer.controllers.DateTimeController;
-import com.monomer.controllers.MachineNumberController;
-import com.monomer.controllers.TableViewController;
-
-public class DataTable {
+public class TableViewController {
 	
 	private ArrayList<String> batchList = new ArrayList<String>();
 	private ArrayList<String> machineList = new ArrayList<String>();
@@ -21,32 +15,13 @@ public class DataTable {
 	private BubbleCountController bubbleCountController = new BubbleCountController();
 	private DateTimeController dateTimeController = new DateTimeController();
 	
-	private DefaultTableModel table;
-	private TableViewController tvc = new TableViewController();
-	
-	public DefaultTableModel setDataTable() {
-		
-		table = new DefaultTableModel() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-		    public boolean isCellEditable(int row, int column) {
-		       //all cells false - user cannot edit cells
-		       return false;
-		    }
-		};
-		table.addColumn("Batch ID");
-        table.addColumn("Machine No.");
-        table.addColumn("Bubble Count");
-        table.addColumn("Date");
-        
-        batchList = batchIdController.getBatchIdList();
+	public DefaultTableModel updateTable(DefaultTableModel table) {
+		batchList = batchIdController.getBatchIdList();
 		machineList = machineNumberController.getMachineNumberList();
 		bubbleList = bubbleCountController.getBubbleCountList();
 		dateList = dateTimeController.getDateTimeList();
 				
-		// table.setRowCount(0);
+		table.setRowCount(0);
 		
 		for (int i = 0; i < batchList.size(); i++) {
 			
@@ -57,8 +32,8 @@ public class DataTable {
 			
 			table.insertRow(0, new Object[] { BA, MN, BC, DT });
 		}
-
-        return table;
+		System.out.println("here");
+		
+		return table;
 	}
 }
-

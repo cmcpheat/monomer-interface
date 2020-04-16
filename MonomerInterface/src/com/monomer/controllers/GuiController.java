@@ -123,8 +123,10 @@ public class GuiController {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				int confirm = JOptionPane.showOptionDialog(
-						null, "Are you sure you want to close the application?", 
-						"Confirm Close", JOptionPane.YES_NO_OPTION, 
+						null, "Are you sure you want to exit?\n"
+								+ "Your information will be lost\n"
+								+ "when the app closes.", 
+						"Confirm Exit", JOptionPane.YES_NO_OPTION, 
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 						if (confirm == 0) {
 							
@@ -309,21 +311,7 @@ public class GuiController {
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null); // centres the window	
 	}
-	
-	public abstract class CustomWindowEvent implements WindowListener {
 		
-		public void windowClosing(WindowEvent e) {
-	        int confirm = JOptionPane.showOptionDialog(
-	             null, "Are You Sure to Close Application?", 
-	             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
-	             JOptionPane.QUESTION_MESSAGE, null, null, null);
-	        if (confirm == 0) {
-	           System.exit(0);
-	        }
-	    }
-		
-	}
-	
 	// handle button clicks etc
 	private class CustomEventHandler implements ActionListener {
 		
@@ -660,6 +648,31 @@ public class GuiController {
 					
 					// get data in this time frame
 		
+					// takes in date selection
+					// searches through the DATE_TIME_LIST for date selection
+					// returns the list of array index numbers that are in that range
+				  
+					int count = 0;
+					int col = 4;
+					int cells = table.getRowCount() * 4;
+					
+					String s = (String)target.getValueAt()
+					
+					while (count < max) {
+						
+						if (list.get(index).isBefore(now) && list.get(index).isAfter(then)) {
+							// System.out.println("DATE: " + list.get(index) + " is in range");
+							LIST_OF_INDEXES.add(index);
+						}
+						else if (list.get(index).isBefore(then)) {
+							// System.out.println("DATE: " + list.get(index) + " is out of range");
+						}
+						index++;
+					}
+					
+					
+					
+					
 				}	
 				else if (dateFilter.getSelectedItem() == "Last 24 Hours") {
 					//System.out.println("last 24 hours test");
