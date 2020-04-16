@@ -10,11 +10,16 @@ public class FileController {
 	
 	// class for saving data to file so it can be loaded upon reopening the application
 	
-	private ArrayList<String> batchListToSave;
-	private ArrayList<String> bubbleListToSave;
-	private ArrayList<String> machineListToSave;
-	private ArrayList<String> dateListToSave;
+	private ArrayList<String> batchListToRead;
+	private ArrayList<String> bubbleListToRead;
+	private ArrayList<String> machineListToRead;
+	private ArrayList<String> dateListToRead;
 	
+	private BatchIdController batchIdController = new BatchIdController();
+	private MachineNumberController machineNumberController = new MachineNumberController();
+	private BubbleCountController bubbleCountController = new BubbleCountController();
+	private DateTimeController dateTimeController = new DateTimeController();
+		
 	public void saveToFile(ArrayList<String> list, String type) {
 		
 		try {
@@ -40,7 +45,9 @@ public class FileController {
 		types[2] = "bubble_counts";
 		types[3] = "machine_numbers";
 		
-		try (FileReader f = new FileReader("./res/batch_ids.txt"))
+		for (int i = 0; i < types.length; i++) {
+			
+			try (FileReader f = new FileReader("./res/" + types[i] + ".txt"))
 			{
 				StringBuffer sb = new StringBuffer();
 				while (f.ready()) {
@@ -57,9 +64,13 @@ public class FileController {
 					BATCH_ID_LIST.add(sb.toString());
 				}
 			}
-		catch (IOException exc) {
-			System.out.println("Batch ID database error. File not found.");
-		}	
+			catch (IOException exc) {
+				System.out.println("Batch ID database error. File not found.");
+			}
+			
+		}
+		
+			
 	}
 
 }
