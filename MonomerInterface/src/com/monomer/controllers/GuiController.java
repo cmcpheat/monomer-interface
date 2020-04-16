@@ -38,6 +38,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -46,6 +49,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -95,15 +99,14 @@ public class GuiController {
 	private BubbleCountController bubbleCountController;
 	private MachineNumberController machineNumberController;
 	private DateTimeController dateTimeController;
-	private TheHandler handler;
-	
+	private CustomEventHandler customEventHandler;
 
 	// GUI constructor 
 	public GuiController() {
 		
-		// Singleton tmp = Singleton.getInstance();
+		// custom event handler for buttons etc.
+		customEventHandler = new CustomEventHandler();
 		
-		handler = new TheHandler();
 		batchIdController = new BatchIdController();
 		bubbleCountController = new BubbleCountController();
 		machineNumberController = new MachineNumberController();
@@ -114,9 +117,39 @@ public class GuiController {
 		frame.setResizable(false); // prevents resizing
 		Dimension frameSize = new Dimension(1000, 700);
 		frame.setPreferredSize(frameSize);
-//		ImageIcon icon = new ImageIcon("/icon2.png");
-//		frame.setIconImage(icon.getImage());
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // allows processes to end before quitting 
+
+		// custom window close handler
+		WindowListener exitListener = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(
+						null, "Are you sure you want to close the application?", 
+						"Confirm Close", JOptionPane.YES_NO_OPTION, 
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (confirm == 0) {
+							
+							ArrayList<String> batchSaveList = batchIdController.getBatchIdList();
+							ArrayList<String> bubbleSaveList = bubbleCountController.getBubbleCountList();	
+							ArrayList<String> machineSaveList = machineNumberController.getMachineNumberList();	
+							ArrayList<String> dateSaveList = dateTimeController.getDateTimeList();	
+							
+							FileController fc = new FileController();
+							fc.saveToFile(batchSaveList, "batch_ids");
+							fc.saveToFile(bubbleSaveList, "bubble_counts");
+							fc.saveToFile(machineSaveList, "machine_numbers");
+							fc.saveToFile(dateSaveList, "date_times");
+							
+							System.out.println(batchSaveList);
+							System.out.println(bubbleSaveList);
+							System.out.println(machineSaveList);
+							System.out.println(dateSaveList);
+							
+							System.exit(0);
+						}
+			}
+		};	
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // allows processes to end before quitting 
+		frame.addWindowListener(exitListener);
 		frame.setTitle("Monomer Data");
 		
 		// create tabs
@@ -132,28 +165,28 @@ public class GuiController {
 		
 		// add 'machine 1' button
 		machineOneButton = new MachineOneButton().setLiveDataMachineOneButton();
-		machineOneButton.addActionListener(handler);
+		machineOneButton.addActionListener(customEventHandler);
 		machineOneButton.setFocusPainted(false);
 		buttonLayout.gridx = 1;
 		liveDataPage.add(machineOneButton, buttonLayout);
 		
 		// add 'machine 2' button
 		machineTwoButton = new MachineTwoButton().setLiveDataMachineTwoButton();
-		machineTwoButton.addActionListener(handler);
+		machineTwoButton.addActionListener(customEventHandler);
 		machineTwoButton.setFocusPainted(false);
 		buttonLayout.gridx = 2;
 		liveDataPage.add(machineTwoButton, buttonLayout);
 		 
 		// add 'machine 3' button
 		machineThreeButton = new MachineThreeButton().setLiveDataMachineThreeButton();
-		machineThreeButton.addActionListener(handler);
+		machineThreeButton.addActionListener(customEventHandler);
 		machineThreeButton.setFocusPainted(false);
 		buttonLayout.gridx = 3;
 		liveDataPage.add(machineThreeButton, buttonLayout);
 		
 		// add date filter drop-down
 		dateFilter = new DateFilter().setDateFilter();
-		dateFilter.addActionListener(handler);
+		dateFilter.addActionListener(customEventHandler);
 		dateFilter.setFocusable(false);
 		buttonLayout.gridx = 0;
 		liveDataPage.add(dateFilter, buttonLayout);
@@ -245,14 +278,14 @@ public class GuiController {
 		
 		// add 'clear' button to form
 		cancelButton = new CancelButton().setClearButton();
-		cancelButton.addActionListener(handler);
+		cancelButton.addActionListener(customEventHandler);
 		cancelButton.setFocusPainted(false);
 		buttonLayout.gridx = 0;
 		formPanel.add(cancelButton, buttonLayout);
 		
 		// add 'submit' button to form
 		submitButton = new SubmitButton().setSubmitButton();
-		submitButton.addActionListener(handler);
+		submitButton.addActionListener(customEventHandler);
 		submitButton.setFocusPainted(false);
 		buttonLayout.gridx = 1;
 		formPanel.add(submitButton, buttonLayout);
@@ -277,8 +310,22 @@ public class GuiController {
 		frame.setLocationRelativeTo(null); // centres the window	
 	}
 	
+	public abstract class CustomWindowEvent implements WindowListener {
+		
+		public void windowClosing(WindowEvent e) {
+	        int confirm = JOptionPane.showOptionDialog(
+	             null, "Are You Sure to Close Application?", 
+	             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
+	             JOptionPane.QUESTION_MESSAGE, null, null, null);
+	        if (confirm == 0) {
+	           System.exit(0);
+	        }
+	    }
+		
+	}
+	
 	// handle button clicks etc
-	private class TheHandler implements ActionListener {
+	private class CustomEventHandler implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -315,10 +362,10 @@ public class GuiController {
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
 						
-						System.out.println("batch:   " + batchIdController.getBatchIdList());
-						System.out.println("machine: " + machineNumberController.getMachineNumberList());
-						System.out.println("bubble:  " + bubbleCountController.getBubbleCountList());
-						System.out.println("date:    " + dateTimeController.getDateTimeList());
+//						System.out.println("batch:   " + batchIdController.getBatchIdList());
+//						System.out.println("machine: " + machineNumberController.getMachineNumberList());
+//						System.out.println("bubble:  " + bubbleCountController.getBubbleCountList());
+//						System.out.println("date:    " + dateTimeController.getDateTimeList());
 						
 						
 						model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM,BUBBLE_COUNT, DATE_TIME});
