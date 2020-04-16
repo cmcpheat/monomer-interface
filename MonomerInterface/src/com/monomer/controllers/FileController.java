@@ -45,6 +45,12 @@ public class FileController {
 		types[2] = "bubble_counts";
 		types[3] = "machine_numbers";
 		
+		String[] controllers = new String[4];
+		controllers[0] = "batchIdController.getBatchIdList()";
+		controllers[1] = "machineNumberController.getMachineNumberList()";
+		controllers[2] = "bubbleCountController.getBubbleCountList()";
+		controllers[3] = "machineNumberController.getMachineNumberList()";
+		
 		for (int i = 0; i < types.length; i++) {
 			
 			try (FileReader f = new FileReader("./res/" + types[i] + ".txt"))
@@ -53,6 +59,7 @@ public class FileController {
 				while (f.ready()) {
 					char c = (char) f.read();
 					if (c == '\n') {
+						controllers[i].add
 						BATCH_ID_LIST.add(sb.toString());
 						sb = new StringBuffer();
 					}
