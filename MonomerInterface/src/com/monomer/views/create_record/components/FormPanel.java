@@ -10,7 +10,7 @@ public class FormPanel {
 	
 	JPanel formPanel;
 	
-	public JPanel setCreateRecordFormPanel() {
+	public JPanel setFormPanel() {
 
 		formPanel = new JPanel(new GridBagLayout());
 		formPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));

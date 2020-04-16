@@ -1,7 +1,6 @@
 package com.monomer.views.live_data.layouts;
 
 import java.awt.GridBagConstraints;
-import java.awt.Insets;
 
 public class LDPanelLayout extends GridBagConstraints {
 

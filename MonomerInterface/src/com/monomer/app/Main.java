@@ -2,6 +2,8 @@ package com.monomer.app;
 
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import com.monomer.controllers.GuiController;
 import com.monomer.views.Theme;
 
@@ -33,6 +35,10 @@ public class Main {
 //		DateTimeModel dt = new DateTimeModel();
 //		dt.read();
 		
-		new GuiController();	
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				new GuiController();	
+			}
+		});
 	}
 }	

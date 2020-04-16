@@ -14,7 +14,7 @@ public class DataTable {
 
 			@Override
 		    public boolean isCellEditable(int row, int column) {
-		       //all cells false
+		       //all cells false - user cannot edit cells
 		       return false;
 		    }
 		};
@@ -22,10 +22,7 @@ public class DataTable {
         model.addColumn("Machine No.");
         model.addColumn("Bubble Count");
         model.addColumn("Date");
-        
-        
-       
-		
+
         return model;
 	}
 }

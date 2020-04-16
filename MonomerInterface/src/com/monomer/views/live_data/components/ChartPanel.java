@@ -1,8 +1,5 @@
 package com.monomer.views.live_data.components;
 
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class ChartPanel {
@@ -12,6 +9,7 @@ public class ChartPanel {
 	public JPanel setLiveDataChartPanel() {
 		
 		chartPanel = new JPanel();
+				
 //		chartPanel.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 //		chartPanel.setBackground(Color.white);
 		

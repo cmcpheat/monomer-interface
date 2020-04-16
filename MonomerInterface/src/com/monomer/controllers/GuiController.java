@@ -47,6 +47,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -85,6 +86,7 @@ public class GuiController {
 	private DefaultTableModel model;
 	private JTableHeader header;
 	private JScrollPane scroll;
+	private JScrollBar bar;
 	private boolean machineOneActive = false;
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
@@ -131,24 +133,28 @@ public class GuiController {
 		// add 'machine 1' button
 		machineOneButton = new MachineOneButton().setLiveDataMachineOneButton();
 		machineOneButton.addActionListener(handler);
+		machineOneButton.setFocusPainted(false);
 		buttonLayout.gridx = 1;
 		liveDataPage.add(machineOneButton, buttonLayout);
 		
 		// add 'machine 2' button
 		machineTwoButton = new MachineTwoButton().setLiveDataMachineTwoButton();
 		machineTwoButton.addActionListener(handler);
+		machineTwoButton.setFocusPainted(false);
 		buttonLayout.gridx = 2;
 		liveDataPage.add(machineTwoButton, buttonLayout);
 		 
 		// add 'machine 3' button
 		machineThreeButton = new MachineThreeButton().setLiveDataMachineThreeButton();
 		machineThreeButton.addActionListener(handler);
+		machineThreeButton.setFocusPainted(false);
 		buttonLayout.gridx = 3;
 		liveDataPage.add(machineThreeButton, buttonLayout);
 		
 		// add date filter drop-down
 		dateFilter = new DateFilter().setDateFilter();
 		dateFilter.addActionListener(handler);
+		dateFilter.setFocusable(false);
 		buttonLayout.gridx = 0;
 		liveDataPage.add(dateFilter, buttonLayout);
  
@@ -167,11 +173,13 @@ public class GuiController {
 	    table.setBackground(Color.white);
 	    header = table.getTableHeader();
 		header.setFont(new Font("", Font.BOLD, 12));
-		
 		chartPanel.add(header, BorderLayout.NORTH);
 		chartPanel.add(table, BorderLayout.CENTER);
-		
-		scroll = new JScrollPane(table); 
+		scroll = new JScrollPane(table,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		bar = scroll.getVerticalScrollBar();
+		bar.setPreferredSize(new Dimension(40,0));
 		
 		chartPanel.add(scroll, panelLayout);
 		
@@ -185,7 +193,7 @@ public class GuiController {
 		GridBagConstraints alertLayout = new CRAlertLayout().setAlertLayout(); // done
 		
 		// add form panel to page
-		formPanel = new FormPanel().setCreateRecordFormPanel();
+		formPanel = new FormPanel().setFormPanel();
 		createRecordPage.add(formPanel);
 		
 		// add 'batch ID' label to form
@@ -238,12 +246,14 @@ public class GuiController {
 		// add 'clear' button to form
 		cancelButton = new CancelButton().setClearButton();
 		cancelButton.addActionListener(handler);
+		cancelButton.setFocusPainted(false);
 		buttonLayout.gridx = 0;
 		formPanel.add(cancelButton, buttonLayout);
 		
 		// add 'submit' button to form
 		submitButton = new SubmitButton().setSubmitButton();
 		submitButton.addActionListener(handler);
+		submitButton.setFocusPainted(false);
 		buttonLayout.gridx = 1;
 		formPanel.add(submitButton, buttonLayout);
 		
@@ -341,48 +351,83 @@ public class GuiController {
 			else if (e.getSource() == machineOneButton)
 			{
 				if (machineOneActive == false) {
-					machineOneButton.setBackground(Color.gray);
+					machineOneButton.setBackground(Color.white);
+										
+					// disable button while data is processed
+					machineOneButton.setEnabled(false);
+					machineTwoButton.setEnabled(false);
+					machineThreeButton.setEnabled(false);
+					
+					// only show machine 1 data - catch any errors
+					try {
+					
+						LinearSearchController linear = new LinearSearchController();
+						ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "1");
+						System.out.println(INDEXES);
+						
+						ArrayList<String> M1_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
+						ArrayList<String> M1_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
+						ArrayList<String> M1_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
+						ArrayList<String> M1_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
+						
+						System.out.println(M1_BATCH);
+						System.out.println(M1_MACHINE);
+						System.out.println(M1_BUBBLE);
+						System.out.println(M1_DATE);
+						
+						// TODO getting the values but need to add to table line by line
+						
+						model.setRowCount(0);
+						
+						for (int i = 0; i < M1_BATCH.size(); i++) {
+							
+							String BA = M1_BATCH.get(i);
+							String MN = M1_MACHINE.get(i);
+							String BC = M1_BUBBLE.get(i);
+							String DT = M1_DATE.get(i);
+							
+							model.insertRow(0, new Object[] { BA, MN, BC, DT });	
+						}
+						
+					} catch (Exception e1) {
+						machineOneButton.setEnabled(true);
+						machineTwoButton.setEnabled(true);
+						machineThreeButton.setEnabled(true);
+						e1.printStackTrace();
+					}
+					
+					// enable button 
 					machineOneActive = true;
+					machineOneButton.setEnabled(true);
+				}	
+				
+				else if (machineOneActive == true) {
+					machineOneButton.setBackground(new JButton().getBackground());
 					
-					// only show machine 1 data
+					// disable button while data is processed
+					machineOneButton.setEnabled(false);
 					
-					LinearSearchController linear = new LinearSearchController();
-					ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "1");
-					System.out.println(INDEXES);
-					
-					ArrayList<String> M1_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
-					ArrayList<String> M1_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
-					ArrayList<String> M1_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
-					ArrayList<String> M1_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
-					
-					System.out.println(M1_BATCH);
-					System.out.println(M1_MACHINE);
-					System.out.println(M1_BUBBLE);
-					System.out.println(M1_DATE);
-					
-					// TODO getting the values but need to add to table line by line
+					ArrayList<String> ALL_BATCH = batchIdController.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = machineNumberController.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bubbleCountController.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dateTimeController.getDateTimeList();
 					
 					model.setRowCount(0);
 					
-					for (int i = 0; i < M1_BATCH.size(); i++) {
+					for (int i = 0; i < ALL_BATCH.size(); i++) {
 						
-						String BA = M1_BATCH.get(i);
-						String MN = M1_MACHINE.get(i);
-						String BC = M1_BUBBLE.get(i);
-						String DT = M1_DATE.get(i);
+						String BA = ALL_BATCH.get(i);
+						String MN = ALL_MACHINE.get(i);
+						String BC = ALL_BUBBLE.get(i);
+						String DT = ALL_DATE.get(i);
 						
-						model.insertRow(0, new Object[] { BA, MN, BC, DT });
-						
-						
-						
+						model.insertRow(0, new Object[] { BA, MN, BC, DT });	
 					}
 					
-					// model.insertRow(0, new Object[] { BATCH_VALUES, MACHINE_VALUES, BUBBLE_VALUES, DATE_VALUES });
-					
-				}	
-				else if (machineOneActive == true) {
-					machineOneButton.setBackground(new JButton().getBackground());
 					machineOneActive = false;
+					machineOneButton.setEnabled(true);
+					machineTwoButton.setEnabled(true);
+					machineThreeButton.setEnabled(true);
 				}
 			}
 			
@@ -390,12 +435,83 @@ public class GuiController {
 			else if (e.getSource() == machineTwoButton)
 			{
 				if (machineTwoActive == false) {
-					machineTwoButton.setBackground(Color.gray);
+					machineTwoButton.setBackground(Color.white);
+										
+					// disable button while data is processed
+					machineTwoButton.setEnabled(false);
+					machineOneButton.setEnabled(false);
+					machineThreeButton.setEnabled(false);
+					
+					// only show machine 2 data - catch any errors
+					try {
+					
+						LinearSearchController linear = new LinearSearchController();
+						ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "2");
+						System.out.println(INDEXES);
+						
+						ArrayList<String> M2_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
+						ArrayList<String> M2_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
+						ArrayList<String> M2_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
+						ArrayList<String> M2_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
+						
+						System.out.println(M2_BATCH);
+						System.out.println(M2_MACHINE);
+						System.out.println(M2_BUBBLE);
+						System.out.println(M2_DATE);
+						
+						// TODO getting the values but need to add to table line by line
+						
+						model.setRowCount(0);
+						
+						for (int i = 0; i < M2_BATCH.size(); i++) {
+							
+							String BA = M2_BATCH.get(i);
+							String MN = M2_MACHINE.get(i);
+							String BC = M2_BUBBLE.get(i);
+							String DT = M2_DATE.get(i);
+							
+							model.insertRow(0, new Object[] { BA, MN, BC, DT });	
+						}
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						machineOneButton.setEnabled(true);
+						machineTwoButton.setEnabled(true);
+						machineThreeButton.setEnabled(true);
+					}
+					
+					// enable button 
 					machineTwoActive = true;
+					machineTwoButton.setEnabled(true);
+					
 				}	
 				else if (machineTwoActive == true) {
 					machineTwoButton.setBackground(new JButton().getBackground());
+					
+					// disable button while data is processed
+					machineTwoButton.setEnabled(false);
+					
+					ArrayList<String> ALL_BATCH = batchIdController.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = machineNumberController.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bubbleCountController.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dateTimeController.getDateTimeList();
+					
+					model.setRowCount(0);
+					
+					for (int i = 0; i < ALL_BATCH.size(); i++) {
+						
+						String BA = ALL_BATCH.get(i);
+						String MN = ALL_MACHINE.get(i);
+						String BC = ALL_BUBBLE.get(i);
+						String DT = ALL_DATE.get(i);
+						
+						model.insertRow(0, new Object[] { BA, MN, BC, DT });	
+					}
+					
 					machineTwoActive = false;
+					machineTwoButton.setEnabled(true);
+					machineThreeButton.setEnabled(true);
+					machineOneButton.setEnabled(true);
 				}
 			}
 			
@@ -403,12 +519,85 @@ public class GuiController {
 			else if (e.getSource() == machineThreeButton)
 			{
 				if (machineThreeActive == false) {
-					machineThreeButton.setBackground(Color.gray);
+					machineThreeButton.setBackground(Color.white);
+										
+					// disable button while data is processed
+					machineThreeButton.setEnabled(false);
+					machineTwoButton.setEnabled(false);
+					machineOneButton.setEnabled(false);
+					
+					// only show machine 3 data - catch any errors
+					try {
+					
+						LinearSearchController linear = new LinearSearchController();
+						ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "3");
+						System.out.println(INDEXES);
+						
+						ArrayList<String> M3_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
+						ArrayList<String> M3_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
+						ArrayList<String> M3_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
+						ArrayList<String> M3_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
+						
+						System.out.println(M3_BATCH);
+						System.out.println(M3_MACHINE);
+						System.out.println(M3_BUBBLE);
+						System.out.println(M3_DATE);
+						
+						// TODO getting the values but need to add to table line by line
+						
+						model.setRowCount(0);
+						
+						for (int i = 0; i < M3_BATCH.size(); i++) {
+							
+							String BA = M3_BATCH.get(i);
+							String MN = M3_MACHINE.get(i);
+							String BC = M3_BUBBLE.get(i);
+							String DT = M3_DATE.get(i);
+							
+							model.insertRow(0, new Object[] { BA, MN, BC, DT });	
+						}
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						machineOneButton.setEnabled(true);
+						machineTwoButton.setEnabled(true);
+						machineThreeButton.setEnabled(true);
+					}
+					
+					// enable button 
 					machineThreeActive = true;
+					machineThreeButton.setEnabled(true);
+					
+					// model.insertRow(0, new Object[] { BATCH_VALUES, MACHINE_VALUES, BUBBLE_VALUES, DATE_VALUES });
+					
 				}	
 				else if (machineThreeActive == true) {
 					machineThreeButton.setBackground(new JButton().getBackground());
+					
+					// disable button while data is processed
+					machineThreeButton.setEnabled(false);
+					
+					ArrayList<String> ALL_BATCH = batchIdController.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = machineNumberController.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bubbleCountController.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dateTimeController.getDateTimeList();
+					
+					model.setRowCount(0);
+					
+					for (int i = 0; i < ALL_BATCH.size(); i++) {
+						
+						String BA = ALL_BATCH.get(i);
+						String MN = ALL_MACHINE.get(i);
+						String BC = ALL_BUBBLE.get(i);
+						String DT = ALL_DATE.get(i);
+						
+						model.insertRow(0, new Object[] { BA, MN, BC, DT });	
+					}
+					
 					machineThreeActive = false;
+					machineThreeButton.setEnabled(true);
+					machineTwoButton.setEnabled(true);
+					machineOneButton.setEnabled(true);
 				}
 			}
 			
