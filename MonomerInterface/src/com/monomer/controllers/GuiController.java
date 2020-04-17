@@ -321,7 +321,7 @@ public class GuiController {
 			if (e.getSource() == submitButton)
 			{	
 				
-				LocalDateTime datetime = LocalDateTime.now().plusHours(1);
+				LocalDateTime datetime = LocalDateTime.now();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				
 				String BATCH_ID = batchIdInput.getText();
@@ -356,7 +356,30 @@ public class GuiController {
 //						System.out.println("date:    " + dateTimeController.getDateTimeList());
 						
 						
-						model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM,BUBBLE_COUNT, DATE_TIME});
+						//model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM,BUBBLE_COUNT, DATE_TIME});
+						
+						model.insertRow(0, new Object[] {"100", "1","95","2020-03-08 03:11:25"});
+						model.insertRow(0, new Object[] {"101", "1","0","2020-03-10 03:11:26"});
+						model.insertRow(0, new Object[] {"102", "2","0","2020-03-14 03:11:27"});
+						model.insertRow(0, new Object[] {"103", "1","0","2020-03-18 03:11:28"});
+						model.insertRow(0, new Object[] {"104", "2","0","2020-03-25 03:11:29"});
+						model.insertRow(0, new Object[] {"105", "1","0","2020-04-04 03:11:30"});
+						model.insertRow(0, new Object[] {"106", "2","25","2020-04-08 03:11:31"});
+						model.insertRow(0, new Object[] {"107", "3","1","2020-04-10 03:11:32"});
+						model.insertRow(0, new Object[] {"108", "3","256","2020-04-15 03:11:33"});
+						model.insertRow(0, new Object[] {"109", "1","24","2020-04-16 03:11:34"});
+						model.insertRow(0, new Object[] {"110", "2","0","2020-04-16 18:11:35"});
+						model.insertRow(0, new Object[] {"111", "3","0","2020-04-17 03:11:36"});
+						model.insertRow(0, new Object[] {"112", "2","0","2020-04-17 06:11:37"});
+						model.insertRow(0, new Object[] {"113", "1","12","2020-04-17 09:11:38"});
+						model.insertRow(0, new Object[] {"114", "1","0","2020-04-17 12:11:39"});
+						model.insertRow(0, new Object[] {"115", "2","440","2020-04-17 13:11:40"});
+						model.insertRow(0, new Object[] {"116", "3","2","2020-04-17 14:11:41"});
+						model.insertRow(0, new Object[] {"117", "3","2","2020-04-17 14:18:42"});
+						model.insertRow(0, new Object[] {"118", "1","0","2020-04-17 14:25:43"});
+
+
+
 					}
 					catch (Exception exc)
 					{
@@ -645,31 +668,31 @@ public class GuiController {
 					// now need to get all data that has date/time within last hour
 					LocalDateTime now = getDateTimeNow().plusHours(1);
 					LocalDateTime then = getEarliestDate(1);
-					
-					// get data in this time frame
-		
-					// takes in date selection
-					// searches through the DATE_TIME_LIST for date selection
-					// returns the list of array index numbers that are in that range
 				  
 					int count = 0;
-					int col = 4;
-					int cells = table.getRowCount() * 4;
+					int col = 3;
+					int rows = table.getRowCount();
 					
-					String s = (String)target.getValueAt()
-					
-					while (count < max) {
+					for (int i = 0; i < rows; i++) {
 						
-						if (list.get(index).isBefore(now) && list.get(index).isAfter(then)) {
-							// System.out.println("DATE: " + list.get(index) + " is in range");
-							LIST_OF_INDEXES.add(index);
+						String cellString = (String) table.getValueAt(i, 3);
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
+		
+						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
+						
+						System.out.println("last hour");
+						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
+							 System.out.println("DATE: " + cellDate + " is in range");
 						}
-						else if (list.get(index).isBefore(then)) {
-							// System.out.println("DATE: " + list.get(index) + " is out of range");
+						else if (cellDate.isBefore(then)) {
+							System.out.println("DATE: " + cellDate + " is out of range");
 						}
-						index++;
 					}
 					
+					String s = (String) table.getValueAt(0, 3);
+
+
 					
 					
 					
@@ -680,10 +703,27 @@ public class GuiController {
 					// now need to get all data that has date/time within last 24 hours
 					LocalDateTime now = getDateTimeNow().plusHours(1);
 					LocalDateTime then = getEarliestDate(24);
-					//System.out.println("time now: " + now);
-					//System.out.println("24hr ago: " + then);
+
+					int count = 0;
+					int col = 3;
+					int rows = table.getRowCount();
 					
-					// get data in this time frame
+					for (int i = 0; i < rows; i++) {
+						
+						String cellString = (String) table.getValueAt(i, 3);
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
+		
+						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
+						
+						System.out.println("last 24 hours");
+						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
+							 System.out.println("DATE: " + cellDate + " is in range");
+						}
+						else if (cellDate.isBefore(then)) {
+							System.out.println("DATE: " + cellDate + " is out of range");
+						}
+					}
 
 					
 				}
@@ -693,21 +733,56 @@ public class GuiController {
 					// now need to get all data that has date/time within last 7 days
 					LocalDateTime now = getDateTimeNow().plusHours(1);
 					LocalDateTime then = getEarliestDate(7);
-					//System.out.println("time now: " + now);
-					//System.out.println("7 dy ago: " + then);
 					
-					// get data in this time frame
+					int count = 0;
+					int col = 3;
+					int rows = table.getRowCount();
 					
+					for (int i = 0; i < rows; i++) {
+						
+						String cellString = (String) table.getValueAt(i, 3);
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
+		
+						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
+						
+						System.out.println("last 7 days");
+						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
+							 System.out.println("DATE: " + cellDate + " is in range");
+						}
+						else if (cellDate.isBefore(then)) {
+							System.out.println("DATE: " + cellDate + " is out of range");
+						}
+					}
+
 				}
 				else if (dateFilter.getSelectedItem() == "Last 30 Days") {
 					//System.out.println("last 30 days test");
 									
 					LocalDateTime now = getDateTimeNow().plusHours(1);
 					LocalDateTime then = getEarliestDate(30);
-					//System.out.println("time now: " + now);
-					//System.out.println("30 d ago: " + then);
 					
-					// get data in this time frame
+					int count = 0;
+					int col = 3;
+					int rows = table.getRowCount();
+					
+					for (int i = 0; i < rows; i++) {
+						
+						String cellString = (String) table.getValueAt(i, 3);
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
+		
+						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
+						
+						System.out.println("last 30 days");
+						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
+							 System.out.println("DATE: " + cellDate + " is in range");
+						}
+						else if (cellDate.isBefore(then)) {
+							System.out.println("DATE: " + cellDate + " is out of range");
+						}
+					}
+
 				}
 			}
 		}
