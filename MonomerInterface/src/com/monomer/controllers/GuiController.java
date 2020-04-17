@@ -342,13 +342,97 @@ public class GuiController {
 					{
 						// add data to array lists
 						
-						batchIdController.getBatchIdList().add(BATCH_ID);
-						machineNumberController.getMachineNumberList().add(MACHINE_NUM);
-						bubbleCountController.getBubbleCountList().add(BUBBLE_COUNT);
-						dateTimeController.getDateTimeList().add(DATE_TIME);
+//						batchIdController.getBatchIdList().add(BATCH_ID);
+//						machineNumberController.getMachineNumberList().add(MACHINE_NUM);
+//						bubbleCountController.getBubbleCountList().add(BUBBLE_COUNT);
+//						dateTimeController.getDateTimeList().add(DATE_TIME);
 						
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
+						
+						batchIdController.getBatchIdList().add("100");
+						batchIdController.getBatchIdList().add("101");
+						batchIdController.getBatchIdList().add("102");
+						batchIdController.getBatchIdList().add("103");
+						batchIdController.getBatchIdList().add("104");
+						batchIdController.getBatchIdList().add("105");
+						batchIdController.getBatchIdList().add("106");
+						batchIdController.getBatchIdList().add("107");
+						batchIdController.getBatchIdList().add("108");
+						batchIdController.getBatchIdList().add("109");
+						batchIdController.getBatchIdList().add("110");
+						batchIdController.getBatchIdList().add("111");
+						batchIdController.getBatchIdList().add("112");
+						batchIdController.getBatchIdList().add("113");
+						batchIdController.getBatchIdList().add("114");
+						batchIdController.getBatchIdList().add("115");
+						batchIdController.getBatchIdList().add("116");
+						batchIdController.getBatchIdList().add("117");
+						batchIdController.getBatchIdList().add("118");
+						
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("2");
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("2");
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("2");
+						machineNumberController.getMachineNumberList().add("3");
+						machineNumberController.getMachineNumberList().add("3");
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("2");
+						machineNumberController.getMachineNumberList().add("3");
+						machineNumberController.getMachineNumberList().add("2");
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("1");
+						machineNumberController.getMachineNumberList().add("2");
+						machineNumberController.getMachineNumberList().add("3");
+						machineNumberController.getMachineNumberList().add("3");
+						machineNumberController.getMachineNumberList().add("1");
+
+						bubbleCountController.getBubbleCountList().add("95");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("25");
+						bubbleCountController.getBubbleCountList().add("1");
+						bubbleCountController.getBubbleCountList().add("256");
+						bubbleCountController.getBubbleCountList().add("24");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("12");
+						bubbleCountController.getBubbleCountList().add("0");
+						bubbleCountController.getBubbleCountList().add("440");
+						bubbleCountController.getBubbleCountList().add("2");
+						bubbleCountController.getBubbleCountList().add("2");
+						bubbleCountController.getBubbleCountList().add("0");
+						
+						dateTimeController.getDateTimeList().add("2020-03-08 03:11:25");
+						dateTimeController.getDateTimeList().add("2020-03-10 03:11:26");
+						dateTimeController.getDateTimeList().add("2020-03-14 03:11:27");
+						dateTimeController.getDateTimeList().add("2020-03-18 03:11:28");
+						dateTimeController.getDateTimeList().add("2020-03-25 03:11:29");
+						dateTimeController.getDateTimeList().add("2020-04-04 03:11:30");
+						dateTimeController.getDateTimeList().add("2020-04-08 03:11:31");
+						dateTimeController.getDateTimeList().add("2020-04-10 03:11:32");
+						dateTimeController.getDateTimeList().add("2020-04-15 03:11:33");
+						dateTimeController.getDateTimeList().add("2020-04-16 03:11:34");
+						dateTimeController.getDateTimeList().add("2020-04-16 18:11:35");
+						dateTimeController.getDateTimeList().add("2020-04-17 03:11:36");
+						dateTimeController.getDateTimeList().add("2020-04-17 06:11:37");
+						dateTimeController.getDateTimeList().add("2020-04-17 09:11:38");
+						dateTimeController.getDateTimeList().add("2020-04-17 12:11:39");
+						dateTimeController.getDateTimeList().add("2020-04-17 13:11:40");
+						dateTimeController.getDateTimeList().add("2020-04-17 14:11:41");
+						dateTimeController.getDateTimeList().add("2020-04-17 14:18:42");
+						dateTimeController.getDateTimeList().add("2020-04-17 14:25:43");
+
+
+						
+
 						
 //						System.out.println("batch:   " + batchIdController.getBatchIdList());
 //						System.out.println("machine: " + machineNumberController.getMachineNumberList());
@@ -666,32 +750,13 @@ public class GuiController {
 					//System.out.println("last hour test");
 					
 					// now need to get all data that has date/time within last hour
-					LocalDateTime now = getDateTimeNow().plusHours(1);
-					LocalDateTime then = getEarliestDate(1);
-				  
-					int count = 0;
-					int col = 3;
-					int rows = table.getRowCount();
 					
-					for (int i = 0; i < rows; i++) {
-						
-						String cellString = (String) table.getValueAt(i, 3);
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
-		
-						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
-						
-						System.out.println("last hour");
-						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
-							 System.out.println("DATE: " + cellDate + " is in range");
-						}
-						else if (cellDate.isBefore(then)) {
-							System.out.println("DATE: " + cellDate + " is out of range");
-						}
-					}
-					
-					String s = (String) table.getValueAt(0, 3);
-
+					ArrayList<String> batchIdsToSearch = new ArrayList<String>(); 
+					batchIdsToSearch = batchIdController.getBatchIdList();
+					System.out.println(batchIdsToSearch);
+					ArrayList<Integer> batchIdIndexes = new ArrayList<Integer>();
+					batchIdIndexes = LinearSearchController.dateRangeSearch(batchIdsToSearch, "last hour");
+					System.out.println(batchIdIndexes);
 
 					
 					
