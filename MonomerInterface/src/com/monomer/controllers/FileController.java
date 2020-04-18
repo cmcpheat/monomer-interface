@@ -12,8 +12,14 @@ public class FileController {
 		
 	public void saveToFile(ArrayList<String> list, String type) {
 		
+		// TODO omit batch IDs that are already saved? 
+		
 		try {
 			for (int i = 0; i < list.size(); i++) {
+//				
+//				if (type == "batch_ids") {
+//					
+//				}
 				
 				Writer wr = new FileWriter("./res/" + type + ".txt", true);
 				wr.write(list.get(i));
@@ -22,11 +28,12 @@ public class FileController {
 			}
 		}
 		catch (IOException exc) {
-			System.out.println("Error occurred");
+			System.out.println("Error saving to file.");
 			exc.printStackTrace();
 		}
 	}
 	
+	// read data from files and save in arrays
 	public ArrayList<String> readFromFile(String type) {
 		
 		ArrayList<String> list = new ArrayList<String>();

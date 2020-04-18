@@ -1,11 +1,11 @@
 package com.monomer.controllers;
 
+// Class builds GUI and controls data transferred between models and views
+
 import com.monomer.models.BatchIdModel;
 import com.monomer.models.BubbleCountModel;
 import com.monomer.models.DateTimeModel;
 import com.monomer.models.MachineNumberModel;
-// import com.monomer.app.Singleton;
-// import com.monomer.controllers.GuiFunctionController;
 import com.monomer.views.create_record.components.BatchIdAlertLabel;
 import com.monomer.views.create_record.components.BatchIdInput;
 import com.monomer.views.create_record.components.BatchIdLabel;
@@ -25,7 +25,6 @@ import com.monomer.views.create_record.layouts.CRInputLayout;
 import com.monomer.views.create_record.layouts.CRLabelLayout;
 import com.monomer.views.live_data.components.ChartPanel;
 import com.monomer.views.live_data.components.DataTable;
-// import com.monomer.views.live_data.components.DataTable;
 import com.monomer.views.live_data.components.DateFilter;
 import com.monomer.views.live_data.components.MachineOneButton;
 import com.monomer.views.live_data.components.MachineThreeButton;
@@ -66,6 +65,7 @@ import javax.swing.table.JTableHeader;
 
 public class GuiController {
 	
+	// GUI elements
 	private JFrame frame;
 	private JPanel createRecordPage;
 	private JPanel formPanel;
@@ -81,7 +81,6 @@ public class GuiController {
 	private JButton cancelButton;
 	private JButton submitButton;
 	private JLabel dataSubmittedLabel;
-	
 	private JPanel liveDataPage;
 	private GridBagConstraints buttonLayout;
 	private GridBagConstraints panelLayout;
@@ -99,20 +98,13 @@ public class GuiController {
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
 	
+	// Models
 	private BatchIdModel bic;
 	private BubbleCountModel bcc;
 	private MachineNumberModel mnc;
 	private DateTimeModel dtc;
 	private SearchController lsc;
 	private CustomEventHandler customEventHandler;
-	
-	enum Date {
-		LASTHOUR, LAST24HOURS, LAST7DAYS, LAST30DAYS;
-	}
-	
-	enum Machine {
-		ONE, TWO, THREE;
-	}
 
 	// GUI constructor 
 	public GuiController() {
@@ -149,7 +141,7 @@ public class GuiController {
 							ArrayList<String> machineSaveList = mnc.getMachineNumberList();	
 							ArrayList<String> dateSaveList = dtc.getDateTimeList();	
 							
-							// TODO file controller stuff
+							// save models to file if user selects 'yes'
 							try {
 								FileController fc = new FileController();
 								fc.saveToFile(batchSaveList, "batch_ids");
@@ -163,6 +155,7 @@ public class GuiController {
 								System.out.println("Error saving data.");
 							}
 						}
+						// just quit if user selects 'no'
 						else if (confirm == 1) {
 							System.exit(0);
 						}
@@ -171,8 +164,8 @@ public class GuiController {
 						}
 			}
 		};	
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // allows processes to end before quitting 
-		frame.addWindowListener(exitListener);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // override default window close
+		frame.addWindowListener(exitListener); // custom window close event
 		frame.setTitle("Monomer Data");
 		
 		// create tabs
