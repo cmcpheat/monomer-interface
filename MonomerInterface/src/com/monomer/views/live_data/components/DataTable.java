@@ -8,7 +8,6 @@ import com.monomer.controllers.BatchIdController;
 import com.monomer.controllers.BubbleCountController;
 import com.monomer.controllers.DateTimeController;
 import com.monomer.controllers.MachineNumberController;
-import com.monomer.controllers.TableViewController;
 
 public class DataTable {
 	
@@ -22,7 +21,6 @@ public class DataTable {
 	private DateTimeController dateTimeController = new DateTimeController();
 	
 	private DefaultTableModel table;
-	private TableViewController tvc = new TableViewController();
 	
 	public DefaultTableModel setDataTable() {
 		

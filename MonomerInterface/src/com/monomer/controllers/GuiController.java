@@ -95,10 +95,11 @@ public class GuiController {
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
 	
-	private BatchIdController batchIdController;
-	private BubbleCountController bubbleCountController;
-	private MachineNumberController machineNumberController;
-	private DateTimeController dateTimeController;
+	private BatchIdController bic;
+	private BubbleCountController bcc;
+	private MachineNumberController mnc;
+	private DateTimeController dtc;
+	private LinearSearchController lsc;
 	private CustomEventHandler customEventHandler;
 
 	// GUI constructor 
@@ -106,11 +107,12 @@ public class GuiController {
 		
 		// custom event handler for buttons etc.
 		customEventHandler = new CustomEventHandler();
+		lsc = new LinearSearchController();
 		
-		batchIdController = new BatchIdController();
-		bubbleCountController = new BubbleCountController();
-		machineNumberController = new MachineNumberController();
-		dateTimeController = new DateTimeController();
+		bic = new BatchIdController();
+		bcc = new BubbleCountController();
+		mnc = new MachineNumberController();
+		dtc = new DateTimeController();
 		
 		// frame setup
 		frame = new JFrame();
@@ -123,30 +125,37 @@ public class GuiController {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				int confirm = JOptionPane.showOptionDialog(
-						null, "Are you sure you want to exit?\n"
-								+ "Your information will be lost\n"
-								+ "when the app closes.", 
-						"Confirm Exit", JOptionPane.YES_NO_OPTION, 
+						null, "Do you want to save your information?\n"
+								+ "Warning: your information will be\n"
+								+ "lost if you select no.", 
+						"Warning", JOptionPane.YES_NO_OPTION, 
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 						if (confirm == 0) {
 							
-							ArrayList<String> batchSaveList = batchIdController.getBatchIdList();
-							ArrayList<String> bubbleSaveList = bubbleCountController.getBubbleCountList();	
-							ArrayList<String> machineSaveList = machineNumberController.getMachineNumberList();	
-							ArrayList<String> dateSaveList = dateTimeController.getDateTimeList();	
+							ArrayList<String> batchSaveList = bic.getBatchIdList();
+							ArrayList<String> bubbleSaveList = bcc.getBubbleCountList();	
+							ArrayList<String> machineSaveList = mnc.getMachineNumberList();	
+							ArrayList<String> dateSaveList = dtc.getDateTimeList();	
 							
-							FileController fc = new FileController();
-							fc.saveToFile(batchSaveList, "batch_ids");
-							fc.saveToFile(bubbleSaveList, "bubble_counts");
-							fc.saveToFile(machineSaveList, "machine_numbers");
-							fc.saveToFile(dateSaveList, "date_times");
-							
-							System.out.println(batchSaveList);
-							System.out.println(bubbleSaveList);
-							System.out.println(machineSaveList);
-							System.out.println(dateSaveList);
-							
+							// TODO file controller stuff
+							try {
+								FileController fc = new FileController();
+								fc.saveToFile(batchSaveList, "batch_ids");
+								fc.saveToFile(bubbleSaveList, "bubble_counts");
+								fc.saveToFile(machineSaveList, "machine_numbers");
+								fc.saveToFile(dateSaveList, "date_times");
+								
+								System.exit(0);
+							}
+							catch (Exception ex) {
+								System.out.println("Error saving data.");
+							}
+						}
+						else if (confirm == 1) {
 							System.exit(0);
+						}
+						else {
+							System.out.println("Error occurred with dialog box.");
 						}
 			}
 		};	
@@ -214,10 +223,33 @@ public class GuiController {
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		bar = scroll.getVerticalScrollBar();
-		bar.setPreferredSize(new Dimension(40,0));
-		
+		bar.setPreferredSize(new Dimension(10,0));
 		chartPanel.add(scroll, panelLayout);
 		
+		// initialise table with data from files
+		FileController fc = new FileController();
+		try {
+		
+			ArrayList<String> batches = fc.readFromFile("batch_ids");
+			ArrayList<String> machines = fc.readFromFile("machine_numbers");
+			ArrayList<String> bubbles = fc.readFromFile("bubble_counts");
+			ArrayList<String> dates = fc.readFromFile("date_times");
+			
+			updateTable(batches, machines, bubbles, dates);
+			
+			// initialise array lists with data from files
+			for (int i = 0; i < batches.size(); i++) {
+				
+				bic.getBatchIdList().add(batches.get(i));
+				mnc.getMachineNumberList().add(machines.get(i));
+				bcc.getBubbleCountList().add(bubbles.get(i));
+				dtc.getDateTimeList().add(dates.get(i));
+			}
+		}
+		catch (Exception fe) {
+			System.out.println("Error loading data from files.");
+		}
+
 		// add the 'create a record' page
 		createRecordPage = new JPanel(); 
 		
@@ -342,128 +374,15 @@ public class GuiController {
 					{
 						// add data to array lists
 						
-//						batchIdController.getBatchIdList().add(BATCH_ID);
-//						machineNumberController.getMachineNumberList().add(MACHINE_NUM);
-//						bubbleCountController.getBubbleCountList().add(BUBBLE_COUNT);
-//						dateTimeController.getDateTimeList().add(DATE_TIME);
+						bic.getBatchIdList().add(BATCH_ID);
+						mnc.getMachineNumberList().add(MACHINE_NUM);
+						bcc.getBubbleCountList().add(BUBBLE_COUNT);
+						dtc.getDateTimeList().add(DATE_TIME);
 						
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
-						
-						batchIdController.getBatchIdList().add("100");
-						batchIdController.getBatchIdList().add("101");
-						batchIdController.getBatchIdList().add("102");
-						batchIdController.getBatchIdList().add("103");
-						batchIdController.getBatchIdList().add("104");
-						batchIdController.getBatchIdList().add("105");
-						batchIdController.getBatchIdList().add("106");
-						batchIdController.getBatchIdList().add("107");
-						batchIdController.getBatchIdList().add("108");
-						batchIdController.getBatchIdList().add("109");
-						batchIdController.getBatchIdList().add("110");
-						batchIdController.getBatchIdList().add("111");
-						batchIdController.getBatchIdList().add("112");
-						batchIdController.getBatchIdList().add("113");
-						batchIdController.getBatchIdList().add("114");
-						batchIdController.getBatchIdList().add("115");
-						batchIdController.getBatchIdList().add("116");
-						batchIdController.getBatchIdList().add("117");
-						batchIdController.getBatchIdList().add("118");
-						
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("2");
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("2");
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("2");
-						machineNumberController.getMachineNumberList().add("3");
-						machineNumberController.getMachineNumberList().add("3");
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("2");
-						machineNumberController.getMachineNumberList().add("3");
-						machineNumberController.getMachineNumberList().add("2");
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("1");
-						machineNumberController.getMachineNumberList().add("2");
-						machineNumberController.getMachineNumberList().add("3");
-						machineNumberController.getMachineNumberList().add("3");
-						machineNumberController.getMachineNumberList().add("1");
 
-						bubbleCountController.getBubbleCountList().add("95");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("25");
-						bubbleCountController.getBubbleCountList().add("1");
-						bubbleCountController.getBubbleCountList().add("256");
-						bubbleCountController.getBubbleCountList().add("24");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("12");
-						bubbleCountController.getBubbleCountList().add("0");
-						bubbleCountController.getBubbleCountList().add("440");
-						bubbleCountController.getBubbleCountList().add("2");
-						bubbleCountController.getBubbleCountList().add("2");
-						bubbleCountController.getBubbleCountList().add("0");
-						
-						dateTimeController.getDateTimeList().add("2020-03-08 03:11:25");
-						dateTimeController.getDateTimeList().add("2020-03-10 03:11:26");
-						dateTimeController.getDateTimeList().add("2020-03-14 03:11:27");
-						dateTimeController.getDateTimeList().add("2020-03-18 03:11:28");
-						dateTimeController.getDateTimeList().add("2020-03-25 03:11:29");
-						dateTimeController.getDateTimeList().add("2020-04-04 03:11:30");
-						dateTimeController.getDateTimeList().add("2020-04-08 03:11:31");
-						dateTimeController.getDateTimeList().add("2020-04-10 03:11:32");
-						dateTimeController.getDateTimeList().add("2020-04-15 03:11:33");
-						dateTimeController.getDateTimeList().add("2020-04-16 03:11:34");
-						dateTimeController.getDateTimeList().add("2020-04-16 18:11:35");
-						dateTimeController.getDateTimeList().add("2020-04-17 03:11:36");
-						dateTimeController.getDateTimeList().add("2020-04-17 06:11:37");
-						dateTimeController.getDateTimeList().add("2020-04-17 09:11:38");
-						dateTimeController.getDateTimeList().add("2020-04-17 12:11:39");
-						dateTimeController.getDateTimeList().add("2020-04-17 13:11:40");
-						dateTimeController.getDateTimeList().add("2020-04-17 14:11:41");
-						dateTimeController.getDateTimeList().add("2020-04-17 14:18:42");
-						dateTimeController.getDateTimeList().add("2020-04-17 14:25:43");
-
-
-						
-
-						
-//						System.out.println("batch:   " + batchIdController.getBatchIdList());
-//						System.out.println("machine: " + machineNumberController.getMachineNumberList());
-//						System.out.println("bubble:  " + bubbleCountController.getBubbleCountList());
-//						System.out.println("date:    " + dateTimeController.getDateTimeList());
-						
-						
-						//model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM,BUBBLE_COUNT, DATE_TIME});
-						
-						model.insertRow(0, new Object[] {"100", "1","95","2020-03-08 03:11:25"});
-						model.insertRow(0, new Object[] {"101", "1","0","2020-03-10 03:11:26"});
-						model.insertRow(0, new Object[] {"102", "2","0","2020-03-14 03:11:27"});
-						model.insertRow(0, new Object[] {"103", "1","0","2020-03-18 03:11:28"});
-						model.insertRow(0, new Object[] {"104", "2","0","2020-03-25 03:11:29"});
-						model.insertRow(0, new Object[] {"105", "1","0","2020-04-04 03:11:30"});
-						model.insertRow(0, new Object[] {"106", "2","25","2020-04-08 03:11:31"});
-						model.insertRow(0, new Object[] {"107", "3","1","2020-04-10 03:11:32"});
-						model.insertRow(0, new Object[] {"108", "3","256","2020-04-15 03:11:33"});
-						model.insertRow(0, new Object[] {"109", "1","24","2020-04-16 03:11:34"});
-						model.insertRow(0, new Object[] {"110", "2","0","2020-04-16 18:11:35"});
-						model.insertRow(0, new Object[] {"111", "3","0","2020-04-17 03:11:36"});
-						model.insertRow(0, new Object[] {"112", "2","0","2020-04-17 06:11:37"});
-						model.insertRow(0, new Object[] {"113", "1","12","2020-04-17 09:11:38"});
-						model.insertRow(0, new Object[] {"114", "1","0","2020-04-17 12:11:39"});
-						model.insertRow(0, new Object[] {"115", "2","440","2020-04-17 13:11:40"});
-						model.insertRow(0, new Object[] {"116", "3","2","2020-04-17 14:11:41"});
-						model.insertRow(0, new Object[] {"117", "3","2","2020-04-17 14:18:42"});
-						model.insertRow(0, new Object[] {"118", "1","0","2020-04-17 14:25:43"});
-
-
-
+						model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM,BUBBLE_COUNT, DATE_TIME});
 					}
 					catch (Exception exc)
 					{
@@ -471,22 +390,14 @@ public class GuiController {
 						dataSubmittedLabel.setText("There has been an error. Please try again.");
 						exc.printStackTrace(System.out);
 					}
-					
-					// delete all fields
+					// clear all fields after form submitted
 					clearForm();
-
-
 				}
 			}
 			
 			// handle 'clear' button click
 			else if (e.getSource() == cancelButton) {
-				System.out.println("batch:   " + batchIdController.getBatchIdList());
-				System.out.println("machine: " + machineNumberController.getMachineNumberList());
-				System.out.println("bubble:  " + bubbleCountController.getBubbleCountList());
-				System.out.println("date:    " + dateTimeController.getDateTimeList());
 				clearForm();
-
 			}
 			
 			// handle 'machine 1' button click
@@ -494,6 +405,8 @@ public class GuiController {
 			{
 				if (machineOneActive == false) {
 					machineOneButton.setBackground(Color.white);
+					
+					System.out.println(mnc.getMachineNumberList());
 										
 					// disable button while data is processed
 					machineOneButton.setEnabled(false);
@@ -503,33 +416,16 @@ public class GuiController {
 					// only show machine 1 data - catch any errors
 					try {
 					
-						LinearSearchController linear = new LinearSearchController();
-						ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "1");
-						System.out.println(INDEXES);
+						lsc= new LinearSearchController();
+						ArrayList<Integer> M1_INDEXES = new ArrayList<Integer>();
+						M1_INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 1);
+						System.out.println("indexes: " + M1_INDEXES);
+						ArrayList<String> M1_BATCH = lsc.arrayLinearSearch(M1_INDEXES, bic.getBatchIdList());
+						ArrayList<String> M1_MACHINE = lsc.arrayLinearSearch(M1_INDEXES, mnc.getMachineNumberList());
+						ArrayList<String> M1_BUBBLE = lsc.arrayLinearSearch(M1_INDEXES, bcc.getBubbleCountList());
+						ArrayList<String> M1_DATE = lsc.arrayLinearSearch(M1_INDEXES, dtc.getDateTimeList());
 						
-						ArrayList<String> M1_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
-						ArrayList<String> M1_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
-						ArrayList<String> M1_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
-						ArrayList<String> M1_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
-						
-						System.out.println(M1_BATCH);
-						System.out.println(M1_MACHINE);
-						System.out.println(M1_BUBBLE);
-						System.out.println(M1_DATE);
-						
-						// TODO getting the values but need to add to table line by line
-						
-						model.setRowCount(0);
-						
-						for (int i = 0; i < M1_BATCH.size(); i++) {
-							
-							String BA = M1_BATCH.get(i);
-							String MN = M1_MACHINE.get(i);
-							String BC = M1_BUBBLE.get(i);
-							String DT = M1_DATE.get(i);
-							
-							model.insertRow(0, new Object[] { BA, MN, BC, DT });	
-						}
+						updateTable(M1_BATCH, M1_MACHINE, M1_BUBBLE, M1_DATE);
 						
 					} catch (Exception e1) {
 						machineOneButton.setEnabled(true);
@@ -549,22 +445,12 @@ public class GuiController {
 					// disable button while data is processed
 					machineOneButton.setEnabled(false);
 					
-					ArrayList<String> ALL_BATCH = batchIdController.getBatchIdList();
-					ArrayList<String> ALL_MACHINE = machineNumberController.getMachineNumberList();
-					ArrayList<String> ALL_BUBBLE = bubbleCountController.getBubbleCountList();
-					ArrayList<String> ALL_DATE = dateTimeController.getDateTimeList();
+					ArrayList<String> ALL_BATCH = bic.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = mnc.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bcc.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dtc.getDateTimeList();
 					
-					model.setRowCount(0);
-					
-					for (int i = 0; i < ALL_BATCH.size(); i++) {
-						
-						String BA = ALL_BATCH.get(i);
-						String MN = ALL_MACHINE.get(i);
-						String BC = ALL_BUBBLE.get(i);
-						String DT = ALL_DATE.get(i);
-						
-						model.insertRow(0, new Object[] { BA, MN, BC, DT });	
-					}
+					updateTable(ALL_BATCH, ALL_MACHINE, ALL_BUBBLE, ALL_DATE);
 					
 					machineOneActive = false;
 					machineOneButton.setEnabled(true);
@@ -587,33 +473,15 @@ public class GuiController {
 					// only show machine 2 data - catch any errors
 					try {
 					
-						LinearSearchController linear = new LinearSearchController();
-						ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "2");
-						System.out.println(INDEXES);
+						lsc = new LinearSearchController();
+						ArrayList<Integer> INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 2);
+					
+						ArrayList<String> M2_BATCH = lsc.arrayLinearSearch(INDEXES, bic.getBatchIdList());
+						ArrayList<String> M2_MACHINE = lsc.arrayLinearSearch(INDEXES, mnc.getMachineNumberList());
+						ArrayList<String> M2_BUBBLE = lsc.arrayLinearSearch(INDEXES, bcc.getBubbleCountList());
+						ArrayList<String> M2_DATE = lsc.arrayLinearSearch(INDEXES, dtc.getDateTimeList());
 						
-						ArrayList<String> M2_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
-						ArrayList<String> M2_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
-						ArrayList<String> M2_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
-						ArrayList<String> M2_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
-						
-						System.out.println(M2_BATCH);
-						System.out.println(M2_MACHINE);
-						System.out.println(M2_BUBBLE);
-						System.out.println(M2_DATE);
-						
-						// TODO getting the values but need to add to table line by line
-						
-						model.setRowCount(0);
-						
-						for (int i = 0; i < M2_BATCH.size(); i++) {
-							
-							String BA = M2_BATCH.get(i);
-							String MN = M2_MACHINE.get(i);
-							String BC = M2_BUBBLE.get(i);
-							String DT = M2_DATE.get(i);
-							
-							model.insertRow(0, new Object[] { BA, MN, BC, DT });	
-						}
+						updateTable(M2_BATCH, M2_MACHINE, M2_BUBBLE, M2_DATE);
 						
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -633,22 +501,12 @@ public class GuiController {
 					// disable button while data is processed
 					machineTwoButton.setEnabled(false);
 					
-					ArrayList<String> ALL_BATCH = batchIdController.getBatchIdList();
-					ArrayList<String> ALL_MACHINE = machineNumberController.getMachineNumberList();
-					ArrayList<String> ALL_BUBBLE = bubbleCountController.getBubbleCountList();
-					ArrayList<String> ALL_DATE = dateTimeController.getDateTimeList();
+					ArrayList<String> ALL_BATCH = bic.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = mnc.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bcc.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dtc.getDateTimeList();
 					
-					model.setRowCount(0);
-					
-					for (int i = 0; i < ALL_BATCH.size(); i++) {
-						
-						String BA = ALL_BATCH.get(i);
-						String MN = ALL_MACHINE.get(i);
-						String BC = ALL_BUBBLE.get(i);
-						String DT = ALL_DATE.get(i);
-						
-						model.insertRow(0, new Object[] { BA, MN, BC, DT });	
-					}
+					updateTable(ALL_BATCH, ALL_MACHINE, ALL_BUBBLE, ALL_DATE);
 					
 					machineTwoActive = false;
 					machineTwoButton.setEnabled(true);
@@ -671,33 +529,15 @@ public class GuiController {
 					// only show machine 3 data - catch any errors
 					try {
 					
-						LinearSearchController linear = new LinearSearchController();
-						ArrayList<Integer> INDEXES = linear.linearSearchForIndexes(machineNumberController.getMachineNumberList(), "3");
-						System.out.println(INDEXES);
+						lsc = new LinearSearchController();
+						ArrayList<Integer> INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 3);
+											
+						ArrayList<String> M3_BATCH = lsc.arrayLinearSearch(INDEXES, bic.getBatchIdList());
+						ArrayList<String> M3_MACHINE = lsc.arrayLinearSearch(INDEXES, mnc.getMachineNumberList());
+						ArrayList<String> M3_BUBBLE = lsc.arrayLinearSearch(INDEXES, bcc.getBubbleCountList());
+						ArrayList<String> M3_DATE = lsc.arrayLinearSearch(INDEXES, dtc.getDateTimeList());
 						
-						ArrayList<String> M3_BATCH = LinearSearchController.arrayLinearSearch(INDEXES, batchIdController.getBatchIdList());
-						ArrayList<String> M3_MACHINE = LinearSearchController.arrayLinearSearch(INDEXES, machineNumberController.getMachineNumberList());
-						ArrayList<String> M3_BUBBLE = LinearSearchController.arrayLinearSearch(INDEXES, bubbleCountController.getBubbleCountList());
-						ArrayList<String> M3_DATE = LinearSearchController.arrayLinearSearch(INDEXES, dateTimeController.getDateTimeList());
-						
-						System.out.println(M3_BATCH);
-						System.out.println(M3_MACHINE);
-						System.out.println(M3_BUBBLE);
-						System.out.println(M3_DATE);
-						
-						// TODO getting the values but need to add to table line by line
-						
-						model.setRowCount(0);
-						
-						for (int i = 0; i < M3_BATCH.size(); i++) {
-							
-							String BA = M3_BATCH.get(i);
-							String MN = M3_MACHINE.get(i);
-							String BC = M3_BUBBLE.get(i);
-							String DT = M3_DATE.get(i);
-							
-							model.insertRow(0, new Object[] { BA, MN, BC, DT });	
-						}
+						updateTable(M3_BATCH, M3_MACHINE, M3_BUBBLE, M3_DATE);
 						
 					} catch (Exception e1) {
 						e1.printStackTrace();
@@ -719,22 +559,12 @@ public class GuiController {
 					// disable button while data is processed
 					machineThreeButton.setEnabled(false);
 					
-					ArrayList<String> ALL_BATCH = batchIdController.getBatchIdList();
-					ArrayList<String> ALL_MACHINE = machineNumberController.getMachineNumberList();
-					ArrayList<String> ALL_BUBBLE = bubbleCountController.getBubbleCountList();
-					ArrayList<String> ALL_DATE = dateTimeController.getDateTimeList();
+					ArrayList<String> ALL_BATCH = bic.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = mnc.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bcc.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dtc.getDateTimeList();
 					
-					model.setRowCount(0);
-					
-					for (int i = 0; i < ALL_BATCH.size(); i++) {
-						
-						String BA = ALL_BATCH.get(i);
-						String MN = ALL_MACHINE.get(i);
-						String BC = ALL_BUBBLE.get(i);
-						String DT = ALL_DATE.get(i);
-						
-						model.insertRow(0, new Object[] { BA, MN, BC, DT });	
-					}
+					updateTable(ALL_BATCH, ALL_MACHINE, ALL_BUBBLE, ALL_DATE);
 					
 					machineThreeActive = false;
 					machineThreeButton.setEnabled(true);
@@ -746,108 +576,68 @@ public class GuiController {
 			// handle date filter selection
 			else if (e.getSource() == dateFilter)
 			{
-				if (dateFilter.getSelectedItem() == "Last Hour") {
-					//System.out.println("last hour test");
+				if (dateFilter.getSelectedItem() == "All") {
 					
-					// now need to get all data that has date/time within last hour
+					ArrayList<String> ALL_BATCH = bic.getBatchIdList();
+					ArrayList<String> ALL_MACHINE = mnc.getMachineNumberList();
+					ArrayList<String> ALL_BUBBLE = bcc.getBubbleCountList();
+					ArrayList<String> ALL_DATE = dtc.getDateTimeList();
 					
-					ArrayList<String> batchIdsToSearch = new ArrayList<String>(); 
-					batchIdsToSearch = batchIdController.getBatchIdList();
-					System.out.println(batchIdsToSearch);
-					ArrayList<Integer> batchIdIndexes = new ArrayList<Integer>();
-					batchIdIndexes = LinearSearchController.dateRangeSearch(batchIdsToSearch, "last hour");
-					System.out.println(batchIdIndexes);
+					updateTable(ALL_BATCH, ALL_MACHINE, ALL_BUBBLE, ALL_DATE);		
+				}
+				
+				
+				else if (dateFilter.getSelectedItem() == "Last Hour") {
+		
+					// get all data within last hour and update table
+					ArrayList<Integer> dateTimeIndexes = new ArrayList<Integer>();
+					dateTimeIndexes = lsc.dateRangeSearch(dtc.getDateTimeList(), "last hour");
+					
+					ArrayList<String> batch = lsc.arrayLinearSearch(dateTimeIndexes, bic.getBatchIdList());
+					ArrayList<String> machine = lsc.arrayLinearSearch(dateTimeIndexes, mnc.getMachineNumberList());
+					ArrayList<String> bubble = lsc.arrayLinearSearch(dateTimeIndexes, bcc.getBubbleCountList());
+					ArrayList<String> date = lsc.arrayLinearSearch(dateTimeIndexes, dtc.getDateTimeList());
 
-					
-					
-					
+					updateTable(batch, machine, bubble, date);
 				}	
 				else if (dateFilter.getSelectedItem() == "Last 24 Hours") {
-					//System.out.println("last 24 hours test");
 					
-					// now need to get all data that has date/time within last 24 hours
-					LocalDateTime now = getDateTimeNow().plusHours(1);
-					LocalDateTime then = getEarliestDate(24);
-
-					int count = 0;
-					int col = 3;
-					int rows = table.getRowCount();
+					// get all data within last 24 hourS and update table
+					ArrayList<Integer> dateTimeIndexes = new ArrayList<Integer>();
+					dateTimeIndexes = lsc.dateRangeSearch(dtc.getDateTimeList(), "last 24 hours");
 					
-					for (int i = 0; i < rows; i++) {
-						
-						String cellString = (String) table.getValueAt(i, 3);
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
-		
-						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
-						
-						System.out.println("last 24 hours");
-						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
-							 System.out.println("DATE: " + cellDate + " is in range");
-						}
-						else if (cellDate.isBefore(then)) {
-							System.out.println("DATE: " + cellDate + " is out of range");
-						}
-					}
-
-					
+					ArrayList<String> batch = lsc.arrayLinearSearch(dateTimeIndexes, bic.getBatchIdList());
+					ArrayList<String> machine = lsc.arrayLinearSearch(dateTimeIndexes, mnc.getMachineNumberList());
+					ArrayList<String> bubble = lsc.arrayLinearSearch(dateTimeIndexes, bcc.getBubbleCountList());
+					ArrayList<String> date = lsc.arrayLinearSearch(dateTimeIndexes, dtc.getDateTimeList());
+	
+					updateTable(batch, machine, bubble, date);					
 				}
 				else if (dateFilter.getSelectedItem() == "Last 7 Days") {
-					//System.out.println("last 7 days test");
+				
+					// get all data within last 7 days and update table
+					ArrayList<Integer> dateTimeIndexes = new ArrayList<Integer>();
+					dateTimeIndexes = lsc.dateRangeSearch(dtc.getDateTimeList(), "last 7 days");
 					
-					// now need to get all data that has date/time within last 7 days
-					LocalDateTime now = getDateTimeNow().plusHours(1);
-					LocalDateTime then = getEarliestDate(7);
-					
-					int count = 0;
-					int col = 3;
-					int rows = table.getRowCount();
-					
-					for (int i = 0; i < rows; i++) {
-						
-						String cellString = (String) table.getValueAt(i, 3);
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
-		
-						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
-						
-						System.out.println("last 7 days");
-						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
-							 System.out.println("DATE: " + cellDate + " is in range");
-						}
-						else if (cellDate.isBefore(then)) {
-							System.out.println("DATE: " + cellDate + " is out of range");
-						}
-					}
+					ArrayList<String> batch = lsc.arrayLinearSearch(dateTimeIndexes, bic.getBatchIdList());
+					ArrayList<String> machine = lsc.arrayLinearSearch(dateTimeIndexes, mnc.getMachineNumberList());
+					ArrayList<String> bubble = lsc.arrayLinearSearch(dateTimeIndexes, bcc.getBubbleCountList());
+					ArrayList<String> date = lsc.arrayLinearSearch(dateTimeIndexes, dtc.getDateTimeList());
 
+					updateTable(batch, machine, bubble, date);
 				}
 				else if (dateFilter.getSelectedItem() == "Last 30 Days") {
-					//System.out.println("last 30 days test");
-									
-					LocalDateTime now = getDateTimeNow().plusHours(1);
-					LocalDateTime then = getEarliestDate(30);
 					
-					int count = 0;
-					int col = 3;
-					int rows = table.getRowCount();
+					// get all data within last 30 days and update table
+					ArrayList<Integer> dateTimeIndexes = new ArrayList<Integer>();
+					dateTimeIndexes = lsc.dateRangeSearch(dtc.getDateTimeList(), "last 30 days");
 					
-					for (int i = 0; i < rows; i++) {
-						
-						String cellString = (String) table.getValueAt(i, 3);
-						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-						LocalDateTime cellDate = LocalDateTime.parse(cellString, formatter);
-		
-						// System.out.println("cell " + i +"," + 3 + ": " + cellDate );
-						
-						System.out.println("last 30 days");
-						if (cellDate.isBefore(now) && cellDate.isAfter(then)) {
-							 System.out.println("DATE: " + cellDate + " is in range");
-						}
-						else if (cellDate.isBefore(then)) {
-							System.out.println("DATE: " + cellDate + " is out of range");
-						}
-					}
+					ArrayList<String> batch = lsc.arrayLinearSearch(dateTimeIndexes, bic.getBatchIdList());
+					ArrayList<String> machine = lsc.arrayLinearSearch(dateTimeIndexes, mnc.getMachineNumberList());
+					ArrayList<String> bubble = lsc.arrayLinearSearch(dateTimeIndexes, bcc.getBubbleCountList());
+					ArrayList<String> date = lsc.arrayLinearSearch(dateTimeIndexes, dtc.getDateTimeList());
 
+					updateTable(batch, machine, bubble, date);
 				}
 			}
 		}
@@ -976,5 +766,28 @@ public class GuiController {
 		return result;
 	}
 	
-}
+	// update the table with array lists
+	public void updateTable(ArrayList<String> batch, ArrayList<String> machine, 
+			ArrayList<String> bubble, ArrayList<String> date) {
+		try {
+			// update table or catch any errors
+			model.setRowCount(0);
+			
+			for (int i = 0; i < batch.size(); i++) {
+				
+				String BA = batch.get(i);
+				String MN = machine.get(i);
+				String BC = bubble.get(i);
+				String DT = date.get(i);
+				
+				model.insertRow(0, new Object[] { BA, MN, BC, DT });
+			}
+		}
+		catch (Exception exc) {
+			exc.printStackTrace(System.out);
+		}
+	}
+}	
+
+
 	
