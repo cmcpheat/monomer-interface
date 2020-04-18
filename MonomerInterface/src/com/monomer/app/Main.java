@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import javax.swing.SwingUtilities;
 
 import com.monomer.controllers.GuiController;
+import com.monomer.views.AlertDialog;
 import com.monomer.views.Theme;
 
 public class Main {
@@ -34,6 +35,7 @@ public class Main {
 			});
 		}
 		catch (IOException io) {
+			new AlertDialog(); // already running, notify user
 			System.err.println("Application failed to start. Check if an instance is already running.");
 			System.exit(-1);
 		}
