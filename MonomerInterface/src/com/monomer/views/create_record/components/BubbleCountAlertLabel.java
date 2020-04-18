@@ -11,7 +11,8 @@ public class BubbleCountAlertLabel {
 	public JLabel setBubbleCountAlertLabel() {
 
 		bubbleCountAlertLabel = new JLabel(" ", JLabel.CENTER);
-		bubbleCountAlertLabel.setForeground(Color.red);
+		Color DARK_RED = new Color(204, 0, 0);
+		bubbleCountAlertLabel.setForeground(DARK_RED);
 		bubbleCountAlertLabel.setFont (bubbleCountAlertLabel.getFont ().deriveFont (11.0f));
 		
 		return bubbleCountAlertLabel;		

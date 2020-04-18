@@ -1,5 +1,9 @@
 package com.monomer.controllers;
 
+import com.monomer.models.BatchIdModel;
+import com.monomer.models.BubbleCountModel;
+import com.monomer.models.DateTimeModel;
+import com.monomer.models.MachineNumberModel;
 // import com.monomer.app.Singleton;
 // import com.monomer.controllers.GuiFunctionController;
 import com.monomer.views.create_record.components.BatchIdAlertLabel;
@@ -95,24 +99,32 @@ public class GuiController {
 	private boolean machineTwoActive = false;
 	private boolean machineThreeActive = false;
 	
-	private BatchIdController bic;
-	private BubbleCountController bcc;
-	private MachineNumberController mnc;
-	private DateTimeController dtc;
-	private LinearSearchController lsc;
+	private BatchIdModel bic;
+	private BubbleCountModel bcc;
+	private MachineNumberModel mnc;
+	private DateTimeModel dtc;
+	private SearchController lsc;
 	private CustomEventHandler customEventHandler;
+	
+	enum Date {
+		LASTHOUR, LAST24HOURS, LAST7DAYS, LAST30DAYS;
+	}
+	
+	enum Machine {
+		ONE, TWO, THREE;
+	}
 
 	// GUI constructor 
 	public GuiController() {
 		
 		// custom event handler for buttons etc.
 		customEventHandler = new CustomEventHandler();
-		lsc = new LinearSearchController();
+		lsc = new SearchController();
 		
-		bic = new BatchIdController();
-		bcc = new BubbleCountController();
-		mnc = new MachineNumberController();
-		dtc = new DateTimeController();
+		bic = new BatchIdModel();
+		bcc = new BubbleCountModel();
+		mnc = new MachineNumberModel();
+		dtc = new DateTimeModel();
 		
 		// frame setup
 		frame = new JFrame();
@@ -414,7 +426,7 @@ public class GuiController {
 					// only show machine 1 data - catch any errors
 					try {
 					
-						lsc= new LinearSearchController();
+						lsc= new SearchController();
 						ArrayList<Integer> M1_INDEXES = new ArrayList<Integer>();
 						M1_INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 1);
 						ArrayList<String> M1_BATCH = lsc.arrayLinearSearch(M1_INDEXES, bic.getBatchIdList());
@@ -470,7 +482,7 @@ public class GuiController {
 					// only show machine 2 data - catch any errors
 					try {
 					
-						lsc = new LinearSearchController();
+						lsc = new SearchController();
 						ArrayList<Integer> INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 2);
 					
 						ArrayList<String> M2_BATCH = lsc.arrayLinearSearch(INDEXES, bic.getBatchIdList());
@@ -526,7 +538,7 @@ public class GuiController {
 					// only show machine 3 data - catch any errors
 					try {
 					
-						lsc = new LinearSearchController();
+						lsc = new SearchController();
 						ArrayList<Integer> INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 3);
 											
 						ArrayList<String> M3_BATCH = lsc.arrayLinearSearch(INDEXES, bic.getBatchIdList());
@@ -644,13 +656,23 @@ public class GuiController {
 		{ 
 			Integer.parseInt(batch);
 			int i = Integer.parseInt(batch);
-			if (i < 1 || i > 999999) {
-				batchIdAlertLabel.setText("Enter a number between 1-999999");
+//			if (i < 1 || i > 999999) {
+//				batchIdAlertLabel.setText("Enter a number between 1-999999");
+//				return false;
+//			}
+			System.out.println(bic.getBatchIdList());
+			
+			boolean used = lsc.batchIdBinarySearch(bic.getBatchIdList(), i);
+			
+			if (used == true)
+			{
+				batchIdAlertLabel.setText("Batch ID has already been entered");
 				return false;
 			}
 			else {
-			batchIdAlertLabel.setText(" ");
-			return true;
+				System.out.println("else");
+				batchIdAlertLabel.setText(" ");
+				return true;
 			}
 		}  
 		catch (NumberFormatException ex)  

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
-import com.monomer.controllers.BatchIdController;
-import com.monomer.controllers.BubbleCountController;
-import com.monomer.controllers.DateTimeController;
-import com.monomer.controllers.MachineNumberController;
+import com.monomer.models.BatchIdModel;
+import com.monomer.models.BubbleCountModel;
+import com.monomer.models.DateTimeModel;
+import com.monomer.models.MachineNumberModel;
 
 public class DataTable {
 	
@@ -15,10 +15,10 @@ public class DataTable {
 	private ArrayList<String> machineList = new ArrayList<String>();
 	private ArrayList<String> bubbleList = new ArrayList<String>();
 	private ArrayList<String> dateList = new ArrayList<String>();
-	private BatchIdController batchIdController = new BatchIdController();
-	private MachineNumberController machineNumberController = new MachineNumberController();
-	private BubbleCountController bubbleCountController = new BubbleCountController();
-	private DateTimeController dateTimeController = new DateTimeController();
+	private BatchIdModel batchIdController = new BatchIdModel();
+	private MachineNumberModel machineNumberController = new MachineNumberModel();
+	private BubbleCountModel bubbleCountController = new BubbleCountModel();
+	private DateTimeModel dateTimeController = new DateTimeModel();
 	
 	private DefaultTableModel table;
 	

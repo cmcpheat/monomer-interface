@@ -11,7 +11,8 @@ public class BatchIdAlertLabel {
 	public JLabel setBatchIdAlertLabel() {
 		
 		batchIdAlertLabel = new JLabel(" ", JLabel.CENTER);
-		batchIdAlertLabel.setForeground(Color.red);
+		Color DARK_RED = new Color(204, 0, 0);
+		batchIdAlertLabel.setForeground(DARK_RED);
 		batchIdAlertLabel.setFont (batchIdAlertLabel.getFont ().deriveFont (11.0f));
 	
 		return batchIdAlertLabel;

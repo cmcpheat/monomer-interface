@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class LinearSearchController {
+public class SearchController {
 	
 	private ArrayList<Integer> INDEX_RESULT;
 	private static ArrayList<String> VALUE_RESULT;
@@ -92,5 +92,39 @@ public class LinearSearchController {
 		}
 			
 		return listOfIndexesInRange;
+	}
+	
+	// takes in array of existing batch IDs and the batch ID the user has entered
+	// checks if batch ID already exists in array
+	// returns true if it exists, false if it does not 
+	
+	public boolean batchIdBinarySearch(ArrayList<String> array, int id) {
+		
+		int firstIndex = 0;
+	    int lastIndex = array.size() - 1;
+
+	    // termination condition (element isn't present)
+	    while(firstIndex <= lastIndex) {
+	    	
+	    	int middleIndex = (firstIndex + lastIndex) / 2;
+	    	
+	    	int index = Integer.parseInt(array.get(middleIndex));
+	        
+	        // if the middle element is our goal element, return its index
+	        if (index == id) {
+	            return true;
+	        }
+
+	        // if the middle element is smaller
+	        // point our index to the middle+1, taking the first half out of consideration
+	        else if (index < id)
+	            firstIndex = middleIndex + 1;
+
+	        // if the middle element is bigger
+	        // point our index to the middle-1, taking the second half out of consideration
+	        else if (index > id)
+	            lastIndex = middleIndex - 1;
+	    }
+		return false;
 	}
 }
