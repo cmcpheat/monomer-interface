@@ -6,7 +6,6 @@ import java.net.ServerSocket;
 import javax.swing.SwingUtilities;
 
 import com.monomer.controllers.GuiController;
-import com.monomer.views.AlertDialog;
 import com.monomer.views.Theme;
 
 public class Main {

@@ -1,4 +1,4 @@
-package com.monomer.views;
+package com.monomer.app;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
