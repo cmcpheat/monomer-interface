@@ -21,15 +21,10 @@ public class LinearSearchController {
 			
 			String s = array.get(index);
 			int i = Integer.parseInt(s);
-			System.out.println("the index "+index+": " + s);
-			System.out.println("the key   "+key);
 			if (i == key) {
-				System.out.println("HERE");
 				INDEX_RESULT.add(index);
-				System.out.println("INDEX RESULT: " + INDEX_RESULT);
 			}
 		}
-		// System.out.println(INDEX_RESULT);
 		return INDEX_RESULT;
 	}
 	
@@ -51,6 +46,10 @@ public class LinearSearchController {
 		}
 		return VALUE_RESULT;
 	}
+	
+	// takes an array of date/times, the chosen range (e.g. 1 hour, 24 hours ...) and 
+	// calculates if each element in array is within range...
+	// returns the list of index numbers
 	
 	public ArrayList<Integer> dateRangeSearch(ArrayList<String> array, String range) {
 		

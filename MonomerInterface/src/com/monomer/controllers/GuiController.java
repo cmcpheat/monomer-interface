@@ -405,8 +405,6 @@ public class GuiController {
 			{
 				if (machineOneActive == false) {
 					machineOneButton.setBackground(Color.white);
-					
-					System.out.println(mnc.getMachineNumberList());
 										
 					// disable button while data is processed
 					machineOneButton.setEnabled(false);
@@ -419,7 +417,6 @@ public class GuiController {
 						lsc= new LinearSearchController();
 						ArrayList<Integer> M1_INDEXES = new ArrayList<Integer>();
 						M1_INDEXES = lsc.linearSearchForIndexes(mnc.getMachineNumberList(), 1);
-						System.out.println("indexes: " + M1_INDEXES);
 						ArrayList<String> M1_BATCH = lsc.arrayLinearSearch(M1_INDEXES, bic.getBatchIdList());
 						ArrayList<String> M1_MACHINE = lsc.arrayLinearSearch(M1_INDEXES, mnc.getMachineNumberList());
 						ArrayList<String> M1_BUBBLE = lsc.arrayLinearSearch(M1_INDEXES, bcc.getBubbleCountList());
@@ -549,8 +546,6 @@ public class GuiController {
 					// enable button 
 					machineThreeActive = true;
 					machineThreeButton.setEnabled(true);
-					
-					// model.insertRow(0, new Object[] { BATCH_VALUES, MACHINE_VALUES, BUBBLE_VALUES, DATE_VALUES });
 					
 				}	
 				else if (machineThreeActive == true) {

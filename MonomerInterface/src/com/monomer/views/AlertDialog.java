@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 public class AlertDialog {
 	
+	// Alert dialog that shows when an instance of app is already running
     private static JDialog d;  
     public AlertDialog() {  
         JFrame f= new JFrame();  
