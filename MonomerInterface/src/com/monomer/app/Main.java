@@ -34,7 +34,7 @@ public class Main {
 			});
 		}
 		catch (IOException io) {
-			System.err.println("Application already running!");
+			System.err.println("Application failed to start. Check if an instance is already running.");
 			System.exit(-1);
 		}
 	}
