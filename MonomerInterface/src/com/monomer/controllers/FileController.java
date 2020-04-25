@@ -16,10 +16,6 @@ public class FileController {
 		
 		try {
 			for (int i = 0; i < list.size(); i++) {
-//				
-//				if (type == "batch_ids") {
-//					
-//				}
 				
 				Writer wr = new FileWriter("./res/" + type + ".txt", true);
 				wr.write(list.get(i));

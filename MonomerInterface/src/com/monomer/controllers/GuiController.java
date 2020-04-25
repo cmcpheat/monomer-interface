@@ -387,7 +387,7 @@ public class GuiController {
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
 
-						model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM,BUBBLE_COUNT, DATE_TIME});
+						model.insertRow(0, new Object[] {BATCH_ID, MACHINE_NUM, BUBBLE_COUNT, DATE_TIME});
 					}
 					catch (Exception exc)
 					{
@@ -576,7 +576,7 @@ public class GuiController {
 			// handle date filter selection
 			else if (e.getSource() == dateFilter)
 			{
-				if (dateFilter.getSelectedItem() == "All") {
+				if (dateFilter.getSelectedItem() == "View All...") {
 					
 					ArrayList<String> ALL_BATCH = bic.getBatchIdList();
 					ArrayList<String> ALL_MACHINE = mnc.getMachineNumberList();
@@ -649,21 +649,17 @@ public class GuiController {
 		{ 
 			Integer.parseInt(batch);
 			int i = Integer.parseInt(batch);
-//			if (i < 1 || i > 999999) {
-//				batchIdAlertLabel.setText("Enter a number between 1-999999");
-//				return false;
-//			}
-			System.out.println(bic.getBatchIdList());
-			
+			if (i < 1 || i > 999999) {
+				batchIdAlertLabel.setText("Enter a number between 1-999999");
+				return false;
+			}
 			boolean used = lsc.batchIdBinarySearch(bic.getBatchIdList(), i);
-			
 			if (used == true)
 			{
 				batchIdAlertLabel.setText("Batch ID has already been entered");
 				return false;
 			}
 			else {
-				System.out.println("else");
 				batchIdAlertLabel.setText(" ");
 				return true;
 			}
@@ -729,7 +725,7 @@ public class GuiController {
 		}
 	}
 	
-	// deletes all fields on form
+	// clears all fields on form
 	public void clearForm() {
 		batchIdInput.setText("");
 		batchIdAlertLabel.setText(" ");
