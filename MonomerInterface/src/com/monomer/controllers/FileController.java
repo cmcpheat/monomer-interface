@@ -10,18 +10,19 @@ public class FileController {
 	
 	// class for saving data to file so it can be loaded upon reopening the application
 		
-	public void saveToFile(ArrayList<String> list, String type) {
+	public void saveToFile(String toSave, String type) {
+			//ArrayList<String> list, String type) {
 		
 		// TODO omit batch IDs that are already saved? 
 		
 		try {
-			for (int i = 0; i < list.size(); i++) {
+			//for (int i = 0; i < list.size(); i++) {
 				
-				Writer wr = new FileWriter("./res/" + type + ".txt", true);
-				wr.write(list.get(i));
+				Writer wr = new FileWriter("./data/" + type + ".txt", true);
+				wr.write(toSave);
 				wr.write("\n");
 				wr.close();				
-			}
+			//}
 		}
 		catch (IOException exc) {
 			System.out.println("Error saving to file.");
@@ -34,7 +35,7 @@ public class FileController {
 		
 		ArrayList<String> list = new ArrayList<String>();
 		
-		try (FileReader f = new FileReader("./res/" + type + ".txt"))
+		try (FileReader f = new FileReader("./" + type + ".txt"))
 		{
 			
 			StringBuffer sb = new StringBuffer();

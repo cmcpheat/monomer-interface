@@ -105,9 +105,14 @@ public class GuiController {
 	private DateTimeModel dtc;
 	private SearchController lsc;
 	private CustomEventHandler customEventHandler;
+	
+	// Test or Production mode (enter "test" or "prod")
+	private String mode = "prod";
 
 	// GUI constructor 
 	public GuiController() {
+		
+		System.out.println("Running in " + mode + " mode.\n");
 		
 		// custom event handler for buttons etc.
 		customEventHandler = new CustomEventHandler();
@@ -129,39 +134,45 @@ public class GuiController {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				int confirm = JOptionPane.showOptionDialog(
-						null, "Do you want to save your information?\n"
-								+ "Warning: your information will be\n"
-								+ "lost if you select no.", 
+						null, "Are you sure you want to quit?", 
 						"Warning", JOptionPane.YES_NO_OPTION, 
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 						if (confirm == 0) {
-							
-							ArrayList<String> batchSaveList = bic.getBatchIdList();
-							ArrayList<String> bubbleSaveList = bcc.getBubbleCountList();	
-							ArrayList<String> machineSaveList = mnc.getMachineNumberList();	
-							ArrayList<String> dateSaveList = dtc.getDateTimeList();	
-							
-							// save models to file if user selects 'yes'
-							try {
-								FileController fc = new FileController();
-								fc.saveToFile(batchSaveList, "batch_ids");
-								fc.saveToFile(bubbleSaveList, "bubble_counts");
-								fc.saveToFile(machineSaveList, "machine_numbers");
-								fc.saveToFile(dateSaveList, "date_times");
-								
-								System.exit(0);
-							}
-							catch (Exception ex) {
-								System.out.println("Error saving data.");
-							}
-						}
-						// just quit if user selects 'no'
-						else if (confirm == 1) {
+							// user selects yes - quit
 							System.exit(0);
 						}
 						else {
-							System.out.println("Error occurred with dialog box.");
+							// do nothing - just close dialog
 						}
+
+						// TODO tidy this up
+						
+////							ArrayList<String> batchSaveList = bic.getBatchIdList();
+////							ArrayList<String> bubbleSaveList = bcc.getBubbleCountList();	
+////							ArrayList<String> machineSaveList = mnc.getMachineNumberList();	
+////							ArrayList<String> dateSaveList = dtc.getDateTimeList();	
+//							
+//							// save models to file if user selects 'yes'
+//							try {
+//								FileController fc = new FileController();
+////								fc.saveToFile(batchSaveList, "batch_ids");
+////								fc.saveToFile(bubbleSaveList, "bubble_counts");
+////								fc.saveToFile(machineSaveList, "machine_numbers");
+////								fc.saveToFile(dateSaveList, "date_times");
+//								
+//								System.exit(0);
+//							}
+//							catch (Exception ex) {
+//								System.out.println("Error saving data.");
+//							}
+//						}
+//						// just quit if user selects 'no'
+//						else if (confirm == 1) {
+//							break'
+//						}
+//						else {
+//							System.out.println("Error occurred with dialog box.");
+//						}
 			}
 		};	
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // override default window close
@@ -233,12 +244,23 @@ public class GuiController {
 		
 		// initialise table with data from files
 		FileController fc = new FileController();
+		ArrayList<String> batches = null;
+		ArrayList<String> machines = null;
+		ArrayList<String> bubbles = null;
+		ArrayList<String> dates = null;
 		try {
-		
-			ArrayList<String> batches = fc.readFromFile("batch_ids");
-			ArrayList<String> machines = fc.readFromFile("machine_numbers");
-			ArrayList<String> bubbles = fc.readFromFile("bubble_counts");
-			ArrayList<String> dates = fc.readFromFile("date_times");
+			if (mode == "prod") {
+				batches = fc.readFromFile("data/batch_ids");
+				machines = fc.readFromFile("data/machine_numbers");
+				bubbles = fc.readFromFile("data/bubble_counts");
+				dates = fc.readFromFile("data/date_times");
+			}
+			else if (mode == "test") {
+				batches = fc.readFromFile("test/batch_ids");
+				machines = fc.readFromFile("test/machine_numbers");
+				bubbles = fc.readFromFile("test/bubble_counts");
+				dates = fc.readFromFile("test/date_times");
+			}
 			
 			updateTable(batches, machines, bubbles, dates);
 			
@@ -383,6 +405,12 @@ public class GuiController {
 						mnc.getMachineNumberList().add(MACHINE_NUM);
 						bcc.getBubbleCountList().add(BUBBLE_COUNT);
 						dtc.getDateTimeList().add(DATE_TIME);
+						
+						FileController fc = new FileController();
+						fc.saveToFile(BATCH_ID, "batch_ids");
+						fc.saveToFile(MACHINE_NUM, "machine_numbers");
+						fc.saveToFile(BUBBLE_COUNT, "bubble_counts");
+						fc.saveToFile(DATE_TIME, "date_times");	
 						
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
@@ -656,7 +684,7 @@ public class GuiController {
 			boolean used = lsc.batchIdBinarySearch(bic.getBatchIdList(), i);
 			if (used == true)
 			{
-				batchIdAlertLabel.setText("Batch ID has already been entered");
+				batchIdAlertLabel.setText("Batch ID already exists. Please try again.");
 				return false;
 			}
 			else {
