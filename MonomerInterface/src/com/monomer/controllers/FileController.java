@@ -35,7 +35,7 @@ public class FileController {
 		
 		ArrayList<String> list = new ArrayList<String>();
 		
-		try (FileReader f = new FileReader("./" + type + ".txt"))
+		try (FileReader f = new FileReader("./data/" + type + ".txt"))
 		{
 			
 			StringBuffer sb = new StringBuffer();

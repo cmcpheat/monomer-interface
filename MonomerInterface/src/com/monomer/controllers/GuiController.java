@@ -105,15 +105,10 @@ public class GuiController {
 	private DateTimeModel dtc;
 	private SearchController lsc;
 	private CustomEventHandler customEventHandler;
-	
-	// Test or Production mode (enter "test" or "prod")
-	private String mode = "prod";
 
 	// GUI constructor 
 	public GuiController() {
-		
-		System.out.println("Running in " + mode + " mode.\n");
-		
+	
 		// custom event handler for buttons etc.
 		customEventHandler = new CustomEventHandler();
 		lsc = new SearchController();
@@ -144,35 +139,6 @@ public class GuiController {
 						else {
 							// do nothing - just close dialog
 						}
-
-						// TODO tidy this up
-						
-////							ArrayList<String> batchSaveList = bic.getBatchIdList();
-////							ArrayList<String> bubbleSaveList = bcc.getBubbleCountList();	
-////							ArrayList<String> machineSaveList = mnc.getMachineNumberList();	
-////							ArrayList<String> dateSaveList = dtc.getDateTimeList();	
-//							
-//							// save models to file if user selects 'yes'
-//							try {
-//								FileController fc = new FileController();
-////								fc.saveToFile(batchSaveList, "batch_ids");
-////								fc.saveToFile(bubbleSaveList, "bubble_counts");
-////								fc.saveToFile(machineSaveList, "machine_numbers");
-////								fc.saveToFile(dateSaveList, "date_times");
-//								
-//								System.exit(0);
-//							}
-//							catch (Exception ex) {
-//								System.out.println("Error saving data.");
-//							}
-//						}
-//						// just quit if user selects 'no'
-//						else if (confirm == 1) {
-//							break'
-//						}
-//						else {
-//							System.out.println("Error occurred with dialog box.");
-//						}
 			}
 		};	
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // override default window close
@@ -249,19 +215,12 @@ public class GuiController {
 		ArrayList<String> bubbles = null;
 		ArrayList<String> dates = null;
 		try {
-			if (mode == "prod") {
-				batches = fc.readFromFile("data/batch_ids");
-				machines = fc.readFromFile("data/machine_numbers");
-				bubbles = fc.readFromFile("data/bubble_counts");
-				dates = fc.readFromFile("data/date_times");
-			}
-			else if (mode == "test") {
-				batches = fc.readFromFile("test/batch_ids");
-				machines = fc.readFromFile("test/machine_numbers");
-				bubbles = fc.readFromFile("test/bubble_counts");
-				dates = fc.readFromFile("test/date_times");
-			}
 			
+			batches = fc.readFromFile("batch_ids");
+			machines = fc.readFromFile("machine_numbers");
+			bubbles = fc.readFromFile("bubble_counts");
+			dates = fc.readFromFile("date_times");
+		
 			updateTable(batches, machines, bubbles, dates);
 			
 			// initialise array lists with data from files
