@@ -10,21 +10,22 @@ import com.monomer.views.Theme;
 
 public class Main {
 	
-	public static ServerSocket ss;
+	private static Theme theme;
+	public static ServerSocket socket;
 	
 	// run the application
 	public static void main(String[] args) {
 		
 		// set theme to custom
-		Theme theme = new Theme();
+		theme = new Theme();
 		theme.setTheme();
 		
-		ss = null;
+		socket = null;
 		System.out.println("Starting app... \n");
 		
 		// only one instance of app is allowed to run
 		try {
-			ss = new ServerSocket(1044);
+			socket = new ServerSocket(1044);
 			
 			// GUI runs on its own thread
 			SwingUtilities.invokeLater(new Runnable() {

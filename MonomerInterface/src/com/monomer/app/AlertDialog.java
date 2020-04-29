@@ -11,28 +11,31 @@ import javax.swing.JLabel;
 
 public class AlertDialog {
 	
+	private static JDialog dialog;
+	private JFrame frame;
+	
 	// Alert dialog that shows when an instance of app is already running
-    private static JDialog d;  
+
     public AlertDialog() {  
-        JFrame f= new JFrame();  
         
-        f.setLocationRelativeTo(null); // centres the alert
-        d = new JDialog(f , "Warning", true);  
-        d.setLayout( new BorderLayout() );  
-        d.setBounds(1000, 0, 0, 0);
+    	frame= new JFrame();     
+        frame.setLocationRelativeTo(null); // centres the alert
+        dialog = new JDialog(frame , "Warning", true);  
+        dialog.setLayout( new BorderLayout() );  
+        dialog.setBounds(1000, 0, 0, 0);
         JButton b = new JButton ("Cancel");  
         b.addActionListener ( new ActionListener()  
         {  
             public void actionPerformed( ActionEvent e )  
             {  
-                AlertDialog.d.setVisible(false);  
+                AlertDialog.dialog.setVisible(false);  
             }
         });  
-        d.add( new JLabel ("Application is already running."));  
-        d.add(b, BorderLayout.PAGE_END);
-        d.setSize(200,150);
-        d.setResizable(false);
-        d.setLocationRelativeTo(null);
-        d.setVisible(true);     
+        dialog.add( new JLabel ("Application is already running."));  
+        dialog.add(b, BorderLayout.PAGE_END);
+        dialog.setSize(200,150);
+        dialog.setResizable(false);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);     
     }  
 }
