@@ -5,3 +5,7 @@ batch_ids.txt
 bubble_counts.txt
 date_times.txt
 machine_numbers.txt
+test_batch_ids.txt
+test_bubble_counts.txt
+test_date_times.txt
+test_machine_numbers.txt

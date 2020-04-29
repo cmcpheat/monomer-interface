@@ -16,6 +16,9 @@ public class SearchController {
 	
 	public boolean batchIdBinarySearch(ArrayList<String> array, int id) {
 		
+		// testing speed
+		long startTime = System.nanoTime();
+		
 		int firstIndex = 0;
 	    int lastIndex = array.size() - 1;
 
@@ -28,7 +31,14 @@ public class SearchController {
 	        
 	        // if the middle element is the user's batch ID, return its index
 	        if (index == id) {
-	            return true;
+	        	
+	        	// testing speed
+	    	    long endTime = System.nanoTime();
+	    		long duration = ((endTime - startTime) / 1000000);
+	    		System.out.println("batchIdBinarySearch() duration: " + duration + " milliseconds.");
+	            
+	    		
+	    		return true;
 	        }
 
 	        // if the middle element is smaller
@@ -41,6 +51,12 @@ public class SearchController {
 	        else if (index > id)
 	            lastIndex = middleIndex - 1;
 	    }
+	    
+	    // testing speed
+	    long endTime = System.nanoTime();
+		long duration = ((endTime - startTime) / 1000000);
+		System.out.println("batchIdBinarySearch() duration: " + duration + " milliseconds.");
+	    
 	    // return false if batch ID doesn't exist in array
 		return false;
 	}
@@ -52,6 +68,9 @@ public class SearchController {
 	
 	public ArrayList<Integer> linearSearchForIndexes(ArrayList<String> array, int key) {
 		
+		// testing speed
+	    long startTime = System.nanoTime();
+		
 		INDEX_RESULT = new ArrayList<Integer>();
 		
 		for (int index = 0; index < array.size(); index++) {
@@ -62,6 +81,12 @@ public class SearchController {
 				INDEX_RESULT.add(index);
 			}
 		}
+
+		// testing speed
+	    long endTime = System.nanoTime();
+		long duration = ((endTime - startTime) / 1000000);
+		System.out.println("linearSearchForIndexes() duration: " + duration + " milliseconds.");
+		
 		return INDEX_RESULT;
 	}
 	
@@ -70,6 +95,9 @@ public class SearchController {
 	// returns the list of values in the elements at array at those index positions
 	
 	public ArrayList<String> arrayLinearSearch(ArrayList<Integer> indexes, ArrayList<String> elements) {
+		
+		// testing speed
+	    long startTime = System.nanoTime();
 		
 		VALUE_RESULT = new ArrayList<String>();
 		
@@ -82,6 +110,12 @@ public class SearchController {
 				}
 			}
 		}
+		
+		// testing speed
+	    long endTime = System.nanoTime();
+		long duration = ((endTime - startTime) / 1000000);
+		System.out.println("arrayLinearSearch() duration: " + duration + " milliseconds.");
+		
 		return VALUE_RESULT;
 	}
 	
@@ -90,6 +124,9 @@ public class SearchController {
 	// returns the list of index numbers
 	
 	public ArrayList<Integer> dateRangeSearch(ArrayList<String> array, String range) {
+		
+		// testing speed
+	    long startTime = System.nanoTime();
 		
 		// get current time
 		final LocalDateTime now = LocalDateTime.now();
@@ -128,6 +165,11 @@ public class SearchController {
 				 listOfIndexesInRange.add(index);
 			}
 		}
+		
+		// testing speed
+	    long endTime = System.nanoTime();
+		long duration = ((endTime - startTime) / 1000000);
+		System.out.println("dateRangeSearch() duration: " + duration + " milliseconds.");		
 			
 		return listOfIndexesInRange;
 	}

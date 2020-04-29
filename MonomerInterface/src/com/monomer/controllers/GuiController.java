@@ -106,8 +106,14 @@ public class GuiController {
 	private SearchController lsc;
 	private CustomEventHandler customEventHandler;
 
+	// set to "prod" for production
+	// or "test" for test mode
+	private String mode = "prod";
+	
 	// GUI constructor 
-	public GuiController() {
+	public GuiController() {		
+		
+		System.out.println("Running in " + mode + " mode...");
 	
 		// custom event handler for buttons etc.
 		customEventHandler = new CustomEventHandler();
@@ -216,11 +222,20 @@ public class GuiController {
 		ArrayList<String> dates = null;
 		try {
 			
-			batches = fc.readFromFile("batch_ids");
-			machines = fc.readFromFile("machine_numbers");
-			bubbles = fc.readFromFile("bubble_counts");
-			dates = fc.readFromFile("date_times");
-		
+			if (mode == "prod") {
+				batches = fc.readFromFile(mode, "batch_ids");
+				machines = fc.readFromFile(mode, "machine_numbers");
+				bubbles = fc.readFromFile(mode, "bubble_counts");
+				dates = fc.readFromFile(mode, "date_times");
+			}
+			
+			else if (mode == "test") {
+				batches = fc.readFromFile(mode, "batch_ids");
+				machines = fc.readFromFile(mode, "machine_numbers");
+				bubbles = fc.readFromFile(mode, "bubble_counts");
+				dates = fc.readFromFile(mode, "date_times");
+			}
+			
 			updateTable(batches, machines, bubbles, dates);
 			
 			// initialise array lists with data from files
@@ -337,8 +352,7 @@ public class GuiController {
 			
 			// handle 'submit' button click
 			if (e.getSource() == submitButton)
-			{	
-				
+			{					
 				LocalDateTime datetime = LocalDateTime.now();
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				
@@ -366,10 +380,13 @@ public class GuiController {
 						dtc.getDateTimeList().add(DATE_TIME);
 						
 						FileController fc = new FileController();
-						fc.saveToFile(BATCH_ID, "batch_ids");
-						fc.saveToFile(MACHINE_NUM, "machine_numbers");
-						fc.saveToFile(BUBBLE_COUNT, "bubble_counts");
-						fc.saveToFile(DATE_TIME, "date_times");	
+						fc.saveToFile(BATCH_ID, "batch_ids", mode);
+						fc.saveToFile(MACHINE_NUM, "machine_numbers", mode);
+						fc.saveToFile(BUBBLE_COUNT, "bubble_counts", mode);
+						fc.saveToFile(DATE_TIME, "date_times", mode);	
+						
+						// set Live Data table to view all data
+						dateFilter.setSelectedItem("View All...");
 						
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
@@ -390,6 +407,7 @@ public class GuiController {
 			// handle 'clear' button click
 			else if (e.getSource() == cancelButton) {
 				clearForm();
+				submitButton.setEnabled(true);
 			}
 			
 			// handle 'machine 1' button click
@@ -402,6 +420,10 @@ public class GuiController {
 					machineOneButton.setEnabled(false);
 					machineTwoButton.setEnabled(false);
 					machineThreeButton.setEnabled(false);
+					
+					// set Live Data table to view all data
+					dateFilter.setSelectedItem("View All...");
+					dateFilter.setEnabled(false);
 					
 					// only show machine 1 data - catch any errors
 					try {
@@ -420,6 +442,7 @@ public class GuiController {
 						machineOneButton.setEnabled(true);
 						machineTwoButton.setEnabled(true);
 						machineThreeButton.setEnabled(true);
+						dateFilter.setEnabled(true);
 						e1.printStackTrace();
 					}
 					
@@ -445,6 +468,7 @@ public class GuiController {
 					machineOneButton.setEnabled(true);
 					machineTwoButton.setEnabled(true);
 					machineThreeButton.setEnabled(true);
+					dateFilter.setEnabled(true);
 				}
 			}
 			
@@ -458,6 +482,10 @@ public class GuiController {
 					machineTwoButton.setEnabled(false);
 					machineOneButton.setEnabled(false);
 					machineThreeButton.setEnabled(false);
+					
+					// set Live Data table to view all data
+					dateFilter.setSelectedItem("View All...");
+					dateFilter.setEnabled(false);
 					
 					// only show machine 2 data - catch any errors
 					try {
@@ -477,6 +505,7 @@ public class GuiController {
 						machineOneButton.setEnabled(true);
 						machineTwoButton.setEnabled(true);
 						machineThreeButton.setEnabled(true);
+						dateFilter.setEnabled(true);
 					}
 					
 					// enable button 
@@ -501,6 +530,7 @@ public class GuiController {
 					machineTwoButton.setEnabled(true);
 					machineThreeButton.setEnabled(true);
 					machineOneButton.setEnabled(true);
+					dateFilter.setEnabled(true);
 				}
 			}
 			
@@ -514,6 +544,10 @@ public class GuiController {
 					machineThreeButton.setEnabled(false);
 					machineTwoButton.setEnabled(false);
 					machineOneButton.setEnabled(false);
+
+					// set Live Data table to view all data
+					dateFilter.setSelectedItem("View All...");
+					dateFilter.setEnabled(false);
 					
 					// only show machine 3 data - catch any errors
 					try {
@@ -533,6 +567,7 @@ public class GuiController {
 						machineOneButton.setEnabled(true);
 						machineTwoButton.setEnabled(true);
 						machineThreeButton.setEnabled(true);
+						dateFilter.setEnabled(true);
 					}
 					
 					// enable button 
@@ -557,6 +592,7 @@ public class GuiController {
 					machineThreeButton.setEnabled(true);
 					machineTwoButton.setEnabled(true);
 					machineOneButton.setEnabled(true);
+					dateFilter.setEnabled(true);
 				}
 			}
 			

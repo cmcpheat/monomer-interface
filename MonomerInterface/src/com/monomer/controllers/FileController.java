@@ -10,7 +10,7 @@ public class FileController {
 	
 	// class for saving data to file so it can be loaded upon reopening the application
 		
-	public void saveToFile(String toSave, String type) {
+	public void saveToFile(String toSave, String type, String mode) {
 			//ArrayList<String> list, String type) {
 		
 		// TODO omit batch IDs that are already saved? 
@@ -18,7 +18,7 @@ public class FileController {
 		try {
 			//for (int i = 0; i < list.size(); i++) {
 				
-				Writer wr = new FileWriter("./data/" + type + ".txt", true);
+				Writer wr = new FileWriter("./data/" + mode + "/" + type + ".txt", true);
 				wr.write(toSave);
 				wr.write("\n");
 				wr.close();				
@@ -31,11 +31,11 @@ public class FileController {
 	}
 	
 	// read data from files and save in arrays
-	public ArrayList<String> readFromFile(String type) {
+	public ArrayList<String> readFromFile(String mode, String type) {
 		
 		ArrayList<String> list = new ArrayList<String>();
 		
-		try (FileReader f = new FileReader("./data/" + type + ".txt"))
+		try (FileReader f = new FileReader("./data/" + mode + "/" + type + ".txt"))
 		{
 			
 			StringBuffer sb = new StringBuffer();
@@ -54,7 +54,7 @@ public class FileController {
 			}
 		}
 		catch (IOException exc) {
-			System.out.println("Datastore error. File '" + type + ".txt' not found.");
+			System.out.println("Datastore error. File '/" + mode + "/" + type + ".txt' not found.");
 		}
 
 		return list;
