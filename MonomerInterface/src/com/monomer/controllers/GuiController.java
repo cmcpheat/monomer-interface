@@ -108,7 +108,7 @@ public class GuiController {
 
 	// set to "prod" for production
 	// or "test" for test mode
-	private String mode = "prod";
+	private String mode = "test";
 	
 	// GUI constructor 
 	public GuiController() {		
