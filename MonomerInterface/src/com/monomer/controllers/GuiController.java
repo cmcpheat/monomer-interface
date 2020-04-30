@@ -385,9 +385,6 @@ public class GuiController {
 						fc.saveToFile(BUBBLE_COUNT, "bubble_counts", mode);
 						fc.saveToFile(DATE_TIME, "date_times", mode);	
 						
-						// set Live Data table to view all data
-						dateFilter.setSelectedItem("View All...");
-						
 						// show confirmation to user
 						showSubmitMessage(BATCH_ID);
 
